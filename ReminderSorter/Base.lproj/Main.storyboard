@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="8191" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="B0P-zm-6Ym">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8154"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+    </dependencies>
+    <scenes>
+        <!--Reminder Sort View Controller-->
+        <scene sceneID="kdi-hB-WiV">
+            <objects>
+                <tableViewController id="5Ag-tc-sUf" customClass="ReminderSortViewController" customModule="ReminderSorter" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" keyboardDismissMode="onDrag" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="gn4-vH-fZP">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="ReminderCell" id="9Z4-o8-zaC" customClass="ShoppingListItemTableViewCell" customModule="ReminderSorter" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="86" width="600" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="9Z4-o8-zaC" id="7r9-Qh-qDR">
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Lib-C6-ncm">
+                                            <rect key="frame" x="77" y="8" width="515" height="27"/>
+                                            <gestureRecognizers/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                            <textInputTraits key="textInputTraits"/>
+                                            <connections>
+                                                <action selector="shoppingListItemTextFieldEditingDidEnd:" destination="9Z4-o8-zaC" eventType="editingDidEnd" id="7BV-wL-9sg"/>
+                                            </connections>
+                                        </textField>
+                                        <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ReJ-9B-XiB">
+                                            <rect key="frame" x="8" y="4" width="51" height="31"/>
+                                            <connections>
+                                                <action selector="completedSwitchValueChanged:" destination="9Z4-o8-zaC" eventType="valueChanged" id="T3g-xp-Yw4"/>
+                                            </connections>
+                                        </switch>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstAttribute="trailingMargin" secondItem="Lib-C6-ncm" secondAttribute="trailing" id="3tz-r6-WjO"/>
+                                        <constraint firstItem="Lib-C6-ncm" firstAttribute="leading" secondItem="ReJ-9B-XiB" secondAttribute="trailing" constant="20" id="Jw9-IK-2Lt"/>
+                                        <constraint firstItem="ReJ-9B-XiB" firstAttribute="top" secondItem="7r9-Qh-qDR" secondAttribute="topMargin" constant="-4" id="N9Q-lp-5wR"/>
+                                        <constraint firstItem="ReJ-9B-XiB" firstAttribute="leading" secondItem="7r9-Qh-qDR" secondAttribute="leadingMargin" id="f4E-Yg-lUn"/>
+                                        <constraint firstItem="Lib-C6-ncm" firstAttribute="top" secondItem="7r9-Qh-qDR" secondAttribute="topMargin" id="j5V-eh-mmF"/>
+                                        <constraint firstItem="Lib-C6-ncm" firstAttribute="bottom" secondItem="7r9-Qh-qDR" secondAttribute="bottomMargin" id="kCa-T1-5bf"/>
+                                        <constraint firstItem="Lib-C6-ncm" firstAttribute="leading" secondItem="7r9-Qh-qDR" secondAttribute="leadingMargin" id="m4d-Xs-1II"/>
+                                        <constraint firstItem="ReJ-9B-XiB" firstAttribute="bottom" secondItem="7r9-Qh-qDR" secondAttribute="bottomMargin" id="oJ6-8B-nUA"/>
+                                    </constraints>
+                                    <variation key="default">
+                                        <mask key="constraints">
+                                            <exclude reference="m4d-Xs-1II"/>
+                                        </mask>
+                                    </variation>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="completedSwitch" destination="ReJ-9B-XiB" id="JS0-Dj-ab2"/>
+                                    <outlet property="shoppingListItemTextField" destination="Lib-C6-ncm" id="syT-Kp-nAD"/>
+                                </connections>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="5Ag-tc-sUf" id="d6c-Zz-SBQ"/>
+                            <outlet property="delegate" destination="5Ag-tc-sUf" id="080-N5-CJx"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" id="hpQ-dm-z0K"/>
+                    <refreshControl key="refreshControl" opaque="NO" multipleTouchEnabled="YES" contentMode="center" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" id="Qve-7w-cU2">
+                        <autoresizingMask key="autoresizingMask"/>
+                        <connections>
+                            <action selector="refresh:" destination="5Ag-tc-sUf" eventType="valueChanged" id="Qe3-AG-Vck"/>
+                        </connections>
+                    </refreshControl>
+                    <connections>
+                        <outlet property="remindersTableView" destination="gn4-vH-fZP" id="CE5-nw-mnO"/>
+                    </connections>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="WHI-qa-sdU" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1022" y="115"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="0NA-z0-36o">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="B0P-zm-6Ym" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="uyJ-o9-D8y">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="5Ag-tc-sUf" kind="relationship" relationship="rootViewController" id="DpU-Le-c3C"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="mUX-BO-o22" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="210" y="115"/>
+        </scene>
+    </scenes>
+</document>
