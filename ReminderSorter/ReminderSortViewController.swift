@@ -9,7 +9,7 @@
 import UIKit
 import EventKit
 
-class ReminderSortViewController: UITableViewController, UITableViewDataSource {
+class ReminderSortViewController: UITableViewController {
     
     //Outlet for the Table View so we can access it in code
     @IBOutlet var remindersTableView: UITableView!
@@ -21,7 +21,7 @@ class ReminderSortViewController: UITableViewController, UITableViewDataSource {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.title = "Cloud Shopping"
+        self.title = "Cloud Shopping List"
         
         startRefreshControl()
         
@@ -99,8 +99,8 @@ class ReminderSortViewController: UITableViewController, UITableViewDataSource {
             return reminder1.title.lowercaseString < reminder2.title.lowercaseString
         }
         
-        let itemsToGet : [EKReminder] = sorted(iCloudShoppingList.filter({(reminder : EKReminder) in !reminder.completed}), reminderSort)
-        let completedItems : [EKReminder] = sorted(iCloudShoppingList.filter({(reminder : EKReminder) in reminder.completed}), reminderSort)
+        let itemsToGet : [EKReminder] = iCloudShoppingList.filter({(reminder : EKReminder) in !reminder.completed}).sort(reminderSort)
+        let completedItems : [EKReminder] = iCloudShoppingList.filter({(reminder : EKReminder) in reminder.completed}).sort(reminderSort)
         
         shoppingList = itemsToGet + completedItems
         

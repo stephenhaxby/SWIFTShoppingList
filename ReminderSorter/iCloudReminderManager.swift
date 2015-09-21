@@ -22,7 +22,7 @@ class iCloudReminderManager{
         if(!eventStoreAccessGranted){
             
             //Request access to the users Reminders
-            eventStore.requestAccessToEntityType(EKEntityTypeReminder, completion: {
+            eventStore.requestAccessToEntityType(EKEntityType.Reminder, completion: {
                 granted, error in
                 
                 //Save the 'granted' value - if we were granted access
@@ -31,7 +31,7 @@ class iCloudReminderManager{
                 if(granted)
                 {
                     //For some reason we need to call this in this method, otherwise we get errors the first time it's ran...
-                    let calendars : [EKCalendar] = self.eventStore.calendarsForEntityType(EKEntityTypeReminder) as! [EKCalendar]
+                    let calendars : [EKCalendar] = self.eventStore.calendarsForEntityType(EKEntityType.Reminder) 
                 }
                 
                 self.getReminderList()
@@ -52,7 +52,7 @@ class iCloudReminderManager{
                 //var shoppingListCalendar = EKCalendar(forEntityType: EKEntityTypeReminder, eventStore: eventStore)
                 
                 //Get the Reminders
-                var calendars = eventStore.calendarsForEntityType(EKEntityTypeReminder) as! [EKCalendar]
+                let calendars = eventStore.calendarsForEntityType(EKEntityType.Reminder) 
                 
                 var reminderListCalendars = calendars.filter({(calendar : EKCalendar) in calendar.title == self.remindersListName})
                 
@@ -64,14 +64,18 @@ class iCloudReminderManager{
                     //TODO: Print error
                 }
                 else{
-                    reminderList = EKCalendar(forEntityType: EKEntityTypeReminder, eventStore: eventStore)
+                    reminderList = EKCalendar(forEntityType: EKEntityType.Reminder, eventStore: eventStore)
                     
                     //Save the new calendar
                     reminderList!.title = remindersListName;
                     reminderList!.source = eventStore.defaultCalendarForNewReminders().source
                     
                     var error: NSError?
-                    eventStore.saveCalendar(reminderList!, commit: true, error: &error)
+                    do {
+                        try eventStore.saveCalendar(reminderList!, commit: true)
+                    } catch let error1 as NSError {
+                        error = error1
+                    }
                     
                     //TODO: What to do if this fails...
                 }
@@ -82,7 +86,7 @@ class iCloudReminderManager{
         }
         
         //TODO: This will cause huge problems if access is NOT granted!
-        return EKCalendar(forEntityType: EKEntityTypeReminder, eventStore: eventStore)
+        return EKCalendar(forEntityType: EKEntityType.Reminder, eventStore: eventStore)
     }
     
     func getReminders(returnReminders : [EKReminder] -> ()){
@@ -98,7 +102,7 @@ class iCloudReminderManager{
             eventStore.fetchRemindersMatchingPredicate(predicate) { reminders in
                 
                 //For each reminder in iCloud
-                for reminder in reminders {
+                for reminder in reminders! {
                     
                     remindersList.append(reminder as! EKReminder)
                 }
@@ -112,11 +116,15 @@ class iCloudReminderManager{
         
         var error: NSError?
         
-        var reminder:EKReminder = EKReminder(eventStore: eventStore)
+        let reminder:EKReminder = EKReminder(eventStore: eventStore)
         reminder.title = title
         reminder.calendar = getReminderList()
         
-        eventStore.saveReminder(reminder, commit: true, error: &error)
+        do {
+            try eventStore.saveReminder(reminder, commit: true)
+        } catch let error1 as NSError {
+            error = error1
+        }
         
         return reminder
     }
@@ -124,23 +132,38 @@ class iCloudReminderManager{
     func saveReminder(reminder : EKReminder) -> Bool{
         
         var error: NSError?
-        return eventStore.saveReminder(reminder, commit: true, error: &error)
+        do {
+            try eventStore.saveReminder(reminder, commit: true)
+            return true
+        } catch _ {
+            return false
+        }
     }
     
     func removeReminder(reminder : EKReminder) -> Bool{
         
         var error: NSError?
         
-        //TODO: What to do when eventStore is nil or this errors
-        return eventStore.removeReminder(reminder, commit: true, error: &error)
+        do {
+            //TODO: What to do when eventStore is nil or this errors
+            try eventStore.removeReminder(reminder, commit: true)
+            return true
+        } catch _ {
+            return false
+        }
     }
     
     func getNewReminder() -> EKReminder{
         
-        //Create a new reminder using the 'title' of the old one.
-        var reminder : EKReminder = EKReminder(eventStore: eventStore)
-        reminder.calendar = reminderList
+        if reminderList != nil
+        {
+            //Create a new reminder using the 'title' of the old one.
+            let reminder : EKReminder = EKReminder(eventStore: eventStore)
+            reminder.calendar = reminderList!
+            
+            return reminder
+        }
         
-        return reminder
+        return EKReminder()
     }
 }

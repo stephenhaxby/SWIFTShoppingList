@@ -37,7 +37,7 @@ class ShoppingListItemTableViewCell: UITableViewCell, UITextFieldDelegate
                         
                         let string = shoppingListItemReminder.title as NSString
                         
-                        var attributedString = NSMutableAttributedString(string: string as String)
+                        let attributedString = NSMutableAttributedString(string: string as String)
                         let attributes = [NSStrikethroughStyleAttributeName: 1]
                         attributedString.addAttributes(attributes, range: string.rangeOfString(string as String))
                         
@@ -56,7 +56,7 @@ class ShoppingListItemTableViewCell: UITableViewCell, UITextFieldDelegate
             
             if sender.text != ""{
                 
-                editedReminder.title = sender.text
+                editedReminder.title = sender.text!
                 
                 if let viewController = reminderSortViewController{
                     
