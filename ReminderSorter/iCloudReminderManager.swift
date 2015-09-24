@@ -28,12 +28,6 @@ class iCloudReminderManager{
                 //Save the 'granted' value - if we were granted access
                 self.eventStoreAccessGranted = granted
                 
-                if(granted)
-                {
-                    //For some reason we need to call this in this method, otherwise we get errors the first time it's ran...
-                    let calendars : [EKCalendar] = self.eventStore.calendarsForEntityType(EKEntityType.Reminder) 
-                }
-                
                 self.getReminderList()
                 
                 accessStatus(granted)

@@ -21,7 +21,7 @@ class ReminderSortViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.title = "Cloud Shopping List"
+        self.navigationController?.navigationBar.titleTextAttributes = [NSFontAttributeName: UIFont.boldSystemFontOfSize(18.0)]
         
         startRefreshControl()
         
@@ -153,6 +153,7 @@ class ReminderSortViewController: UITableViewController {
         return cell
     }
     
+    //CUSTOM EDIT ROW ACTIONS
 //    override func tableView(tableView: UITableView, editActionsForRowAtIndexPath indexPath: NSIndexPath) -> [AnyObject]? {
 //        
 //        let more = UITableViewRowAction(style: .Normal, title: "More") { action, index in

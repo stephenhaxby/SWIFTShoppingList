@@ -29,7 +29,7 @@ class ShoppingListItemTableViewCell: UITableViewCell, UITextFieldDelegate
                 shoppingListItemTextField.text = shoppingListItemReminder.title
                 completedSwitch.on = !shoppingListItemReminder.completed
                 
-                if let checkSwitch = completedSwitch{
+                if let checkSwitch = completedSwitch {
                     
                     checkSwitch.hidden = shoppingListItemReminder.title == ""
                     
@@ -39,6 +39,7 @@ class ShoppingListItemTableViewCell: UITableViewCell, UITextFieldDelegate
                         
                         let attributedString = NSMutableAttributedString(string: string as String)
                         let attributes = [NSStrikethroughStyleAttributeName: 1]
+                        
                         attributedString.addAttributes(attributes, range: string.rangeOfString(string as String))
                         
                         shoppingListItemTextField.attributedText = attributedString
@@ -60,7 +61,7 @@ class ShoppingListItemTableViewCell: UITableViewCell, UITextFieldDelegate
                 
                 if let viewController = reminderSortViewController{
                     
-                    reminderSortViewController!.saveReminder(editedReminder)
+                    viewController.saveReminder(editedReminder)
                 }
             }
         }
@@ -76,7 +77,16 @@ class ShoppingListItemTableViewCell: UITableViewCell, UITextFieldDelegate
                 
                 if let viewController = reminderSortViewController{
                     
-                    reminderSortViewController!.saveReminder(editedReminder)
+                    let delayInMilliSeconds = (editedReminder.completed) ? 500.0 : 200.00
+                    
+                    //The dalay is in nano seconds so we just convert it using the standard NSEC_PER_MSEC value
+                    let delay = Int64(delayInMilliSeconds * Double(NSEC_PER_MSEC))
+                    
+                    let dispatchTime = dispatch_time(DISPATCH_TIME_NOW, delay)
+                    dispatch_after(dispatchTime, dispatch_get_main_queue()) {
+                        
+                        viewController.saveReminder(editedReminder)
+                    }
                 }
             }
         }
@@ -89,7 +99,8 @@ class ShoppingListItemTableViewCell: UITableViewCell, UITextFieldDelegate
         shoppingListItemTextField.delegate = self
     }
     
-    func textFieldShouldReturn(textField: UITextField) -> Bool {   //delegate method
+    //delegate method
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
         
         textField.resignFirstResponder()
         return true
