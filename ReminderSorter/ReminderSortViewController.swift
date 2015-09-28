@@ -135,10 +135,18 @@ class ReminderSortViewController: UITableViewController {
         var shoppingListItem : EKReminder?
         
         let cell : ShoppingListItemTableViewCell = tableView.dequeueReusableCellWithIdentifier("ReminderCell") as! ShoppingListItemTableViewCell
+        cell.shoppingListItemTextField.autocapitalizationType = UITextAutocapitalizationType.Words
         
         if indexPath.row == shoppingList.count{
             
             shoppingListItem = reminderManager.getNewReminder()
+            
+            //getNewReminder can return nil if the EventStore isn't ready. This happens when the table is first loaded...
+            if shoppingListItem == nil{
+                
+                return ShoppingListItemTableViewCell()
+            }
+            
             shoppingListItem!.title = ""
             shoppingListItem!.completed = false
         }
