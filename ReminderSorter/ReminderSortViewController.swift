@@ -92,8 +92,6 @@ class ReminderSortViewController: UITableViewController {
     //Once the reminders have been loaded from iCloud
     func getShoppingList(iCloudShoppingList : [EKReminder]){
         
-        shoppingList = [EKReminder]()
-        
         func reminderSort(reminder1: EKReminder, reminder2: EKReminder) -> Bool {
             
             return reminder1.title.lowercaseString < reminder2.title.lowercaseString
@@ -102,11 +100,11 @@ class ReminderSortViewController: UITableViewController {
         let itemsToGet : [EKReminder] = iCloudShoppingList.filter({(reminder : EKReminder) in !reminder.completed}).sort(reminderSort)
         let completedItems : [EKReminder] = iCloudShoppingList.filter({(reminder : EKReminder) in reminder.completed}).sort(reminderSort)
         
-        shoppingList = itemsToGet + completedItems
-        
         dispatch_async(dispatch_get_main_queue()) { () -> Void in
 
             if let shoppingListTable = self.tableView{
+
+                self.shoppingList = itemsToGet + completedItems
                 
                 //Request a reload of the Table
                 shoppingListTable.reloadData()
@@ -151,6 +149,8 @@ class ReminderSortViewController: UITableViewController {
             shoppingListItem!.completed = false
         }
         else{
+            
+            //TODO: We ended up in a situation where indexPath.row = 10 but shoppingList had 0 elements in it...
             
             shoppingListItem = shoppingList[indexPath.row]
         }
