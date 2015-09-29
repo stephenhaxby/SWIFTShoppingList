@@ -140,7 +140,7 @@ class iCloudReminderManager{
             
             try eventStore.saveReminder(reminder, commit: true)
             
-            return false
+            return true
             
         } catch _ {
             
