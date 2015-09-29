@@ -84,8 +84,11 @@ class ReminderSortViewController: UITableViewController {
             
             loadShoppingList()
         }
+        else{
+            
+            displayError("Please allow Shopping to access 'Reminders'...")
+        }
         
-        //TODO: Report if it failed...
         endRefreshControl()
     }
     
@@ -114,11 +117,31 @@ class ReminderSortViewController: UITableViewController {
 
     func saveReminder(reminder : EKReminder){
         
-        reminderManager.saveReminder(reminder)
+        guard reminderManager.saveReminder(reminder) else {
+            
+            displayError("Your shopping list item could not be saved...")
+            
+            return
+        }
         
         refresh()
     }
 
+    func displayError(message : String){
+        
+        //Display an alert to specify that we couldn't get access
+        let errorAlert = UIAlertController(title: "Error!", message: message, preferredStyle: UIAlertControllerStyle.Alert)
+        
+        //Add an Ok button to the alert
+        errorAlert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler:
+            { (action: UIAlertAction!) in
+                
+        }))
+        
+        //Present the alert
+        self.presentViewController(errorAlert, animated: true, completion: nil)
+    }
+    
     // MARK: - UITableViewDataSource
     
     //To return the number of items that the table view needs to show
@@ -201,7 +224,12 @@ class ReminderSortViewController: UITableViewController {
 
             let shoppingListItem : EKReminder = shoppingList[indexPath.row]
             
-            reminderManager.removeReminder(shoppingListItem)
+            guard reminderManager.removeReminder(shoppingListItem) else {
+                
+                displayError("Your shopping list item could not be removed...")
+                
+                return
+            }
         }
         
         refresh()

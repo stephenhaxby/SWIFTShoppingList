@@ -107,7 +107,8 @@ class iCloudReminderManager{
             }
         }
     }
-    
+
+    //NOTE: Not currently used, but may come in handy...
     func addReminder(title : String) -> EKReminder?{
         
         let calendar : EKCalendar? = getReminderList()
@@ -139,7 +140,7 @@ class iCloudReminderManager{
             
             try eventStore.saveReminder(reminder, commit: true)
             
-            return true
+            return false
             
         } catch _ {
             
