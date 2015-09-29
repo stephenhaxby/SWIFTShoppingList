@@ -10,7 +10,6 @@
 		0E6BF30D1B2EE3450005F4E2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E6BF30C1B2EE3450005F4E2 /* AppDelegate.swift */; };
 		0E6BF3121B2EE3450005F4E2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0E6BF3101B2EE3450005F4E2 /* Main.storyboard */; };
 		0E6BF3141B2EE3450005F4E2 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0E6BF3131B2EE3450005F4E2 /* Images.xcassets */; };
-		0E6BF3231B2EE3460005F4E2 /* ReminderSorterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E6BF3221B2EE3460005F4E2 /* ReminderSorterTests.swift */; };
 		0E6BF32D1B2EE54C0005F4E2 /* ReminderSortViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E6BF32C1B2EE54C0005F4E2 /* ReminderSortViewController.swift */; };
 		0EE5ED351B984E01008A2F26 /* iCloudReminderManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EE5ED341B984E01008A2F26 /* iCloudReminderManager.swift */; };
 		0EED9C191B8C4E7E000A98E0 /* ShoppingListItemTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EED9C181B8C4E7E000A98E0 /* ShoppingListItemTableViewCell.swift */; };
@@ -33,8 +32,6 @@
 		0E6BF3111B2EE3450005F4E2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		0E6BF3131B2EE3450005F4E2 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		0E6BF31C1B2EE3460005F4E2 /* ReminderSorterTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ReminderSorterTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		0E6BF3211B2EE3460005F4E2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		0E6BF3221B2EE3460005F4E2 /* ReminderSorterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderSorterTests.swift; sourceTree = "<group>"; };
 		0E6BF32C1B2EE54C0005F4E2 /* ReminderSortViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReminderSortViewController.swift; sourceTree = "<group>"; };
 		0EE5ED341B984E01008A2F26 /* iCloudReminderManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = iCloudReminderManager.swift; sourceTree = "<group>"; };
 		0EED9C181B8C4E7E000A98E0 /* ShoppingListItemTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShoppingListItemTableViewCell.swift; sourceTree = "<group>"; };
@@ -62,7 +59,6 @@
 			isa = PBXGroup;
 			children = (
 				0E6BF3091B2EE3450005F4E2 /* ReminderSorter */,
-				0E6BF31F1B2EE3460005F4E2 /* ReminderSorterTests */,
 				0E6BF3081B2EE3450005F4E2 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -94,23 +90,6 @@
 			isa = PBXGroup;
 			children = (
 				0E6BF30B1B2EE3450005F4E2 /* Info.plist */,
-			);
-			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		0E6BF31F1B2EE3460005F4E2 /* ReminderSorterTests */ = {
-			isa = PBXGroup;
-			children = (
-				0E6BF3221B2EE3460005F4E2 /* ReminderSorterTests.swift */,
-				0E6BF3201B2EE3460005F4E2 /* Supporting Files */,
-			);
-			path = ReminderSorterTests;
-			sourceTree = "<group>";
-		};
-		0E6BF3201B2EE3460005F4E2 /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				0E6BF3211B2EE3460005F4E2 /* Info.plist */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -161,7 +140,7 @@
 			attributes = {
 				LastSwiftMigration = 0700;
 				LastSwiftUpdateCheck = 0700;
-				LastUpgradeCheck = 0630;
+				LastUpgradeCheck = 0700;
 				ORGANIZATIONNAME = "Stephen Haxby";
 				TargetAttributes = {
 					0E6BF3061B2EE3450005F4E2 = {
@@ -228,7 +207,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0E6BF3231B2EE3460005F4E2 /* ReminderSorterTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -275,6 +253,7 @@
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -344,6 +323,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = ReminderSorter/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.MyCompany.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -356,6 +336,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = ReminderSorter/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.MyCompany.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -369,14 +350,20 @@
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
 				);
+				"FRAMEWORK_SEARCH_PATHS[arch=*]" = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
 				);
 				INFOPLIST_FILE = ReminderSorterTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.MyCompany.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ReminderSorter.app/ReminderSorter";
+				TEST_HOST = "";
+				"TEST_HOST[sdk=*]" = "";
 			};
 			name = Debug;
 		};
@@ -388,10 +375,16 @@
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
 				);
+				"FRAMEWORK_SEARCH_PATHS[arch=*]" = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
 				INFOPLIST_FILE = ReminderSorterTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.MyCompany.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ReminderSorter.app/ReminderSorter";
+				TEST_HOST = "";
+				"TEST_HOST[sdk=*]" = "";
 			};
 			name = Release;
 		};
