@@ -37,16 +37,27 @@
                                                 <action selector="completedSwitchValueChanged:" destination="9Z4-o8-zaC" eventType="valueChanged" id="T3g-xp-Yw4"/>
                                             </connections>
                                         </switch>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uyh-4K-TeC">
+                                            <rect key="frame" x="8" y="-2" width="46" height="37"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="48"/>
+                                            <state key="normal" title="+">
+                                                <color key="titleColor" red="0.40000000596046448" green="0.40000000596046448" blue="0.40000000596046448" alpha="1" colorSpace="calibratedRGB"/>
+                                            </state>
+                                        </button>
                                     </subviews>
                                     <constraints>
                                         <constraint firstAttribute="trailingMargin" secondItem="Lib-C6-ncm" secondAttribute="trailing" id="3tz-r6-WjO"/>
+                                        <constraint firstItem="uyh-4K-TeC" firstAttribute="leading" secondItem="7r9-Qh-qDR" secondAttribute="leadingMargin" id="Jp4-ff-pex"/>
                                         <constraint firstItem="Lib-C6-ncm" firstAttribute="leading" secondItem="ReJ-9B-XiB" secondAttribute="trailing" constant="20" id="Jw9-IK-2Lt"/>
                                         <constraint firstItem="ReJ-9B-XiB" firstAttribute="top" secondItem="7r9-Qh-qDR" secondAttribute="topMargin" constant="-4" id="N9Q-lp-5wR"/>
+                                        <constraint firstAttribute="bottomMargin" secondItem="uyh-4K-TeC" secondAttribute="bottom" id="bCp-sM-mTo"/>
                                         <constraint firstItem="ReJ-9B-XiB" firstAttribute="leading" secondItem="7r9-Qh-qDR" secondAttribute="leadingMargin" id="f4E-Yg-lUn"/>
                                         <constraint firstItem="Lib-C6-ncm" firstAttribute="top" secondItem="7r9-Qh-qDR" secondAttribute="topMargin" id="j5V-eh-mmF"/>
                                         <constraint firstItem="Lib-C6-ncm" firstAttribute="bottom" secondItem="7r9-Qh-qDR" secondAttribute="bottomMargin" id="kCa-T1-5bf"/>
                                         <constraint firstItem="Lib-C6-ncm" firstAttribute="leading" secondItem="7r9-Qh-qDR" secondAttribute="leadingMargin" id="m4d-Xs-1II"/>
                                         <constraint firstItem="ReJ-9B-XiB" firstAttribute="bottom" secondItem="7r9-Qh-qDR" secondAttribute="bottomMargin" id="oJ6-8B-nUA"/>
+                                        <constraint firstItem="uyh-4K-TeC" firstAttribute="top" secondItem="7r9-Qh-qDR" secondAttribute="topMargin" constant="-10" id="rwh-Wh-kYP"/>
+                                        <constraint firstItem="Lib-C6-ncm" firstAttribute="leading" secondItem="uyh-4K-TeC" secondAttribute="trailing" constant="23" id="v17-Dl-Ayh"/>
                                     </constraints>
                                     <variation key="default">
                                         <mask key="constraints">
@@ -55,6 +66,7 @@
                                     </variation>
                                 </tableViewCellContentView>
                                 <connections>
+                                    <outlet property="addNewButton" destination="uyh-4K-TeC" id="Y3h-AD-kMR"/>
                                     <outlet property="completedSwitch" destination="ReJ-9B-XiB" id="JS0-Dj-ab2"/>
                                     <outlet property="shoppingListItemTextField" destination="Lib-C6-ncm" id="syT-Kp-nAD"/>
                                 </connections>

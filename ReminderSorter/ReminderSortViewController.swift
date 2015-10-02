@@ -14,6 +14,8 @@ class ReminderSortViewController: UITableViewController {
     //Outlet for the Table View so we can access it in code
     @IBOutlet var remindersTableView: UITableView!
     
+    @IBOutlet weak var addNewButton: UIButton!
+    
     let reminderManager : iCloudReminderManager = iCloudReminderManager()
     
     var shoppingList = [EKReminder]()

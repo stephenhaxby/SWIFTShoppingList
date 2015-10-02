@@ -18,6 +18,8 @@ class ShoppingListItemTableViewCell: UITableViewCell, UITextFieldDelegate
     
     @IBOutlet weak var completedSwitch: UISwitch!
     
+    @IBOutlet weak var addNewButton: UIButton!
+    
     weak var reminderSortViewController : ReminderSortViewController?
     
     //REVISIT: This could be a huge problem as it may stick around in memory...
@@ -32,6 +34,7 @@ class ShoppingListItemTableViewCell: UITableViewCell, UITextFieldDelegate
                 if let checkSwitch = completedSwitch {
                     
                     checkSwitch.hidden = shoppingListItemReminder.title == ""
+                    addNewButton.hidden = !checkSwitch.hidden
                     
                     if !checkSwitch.on{
                         
