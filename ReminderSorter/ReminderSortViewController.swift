@@ -20,6 +20,25 @@ class ReminderSortViewController: UITableViewController {
     
     var shoppingList = [EKReminder]()
     
+    var eventStoreObserver : NSObjectProtocol?
+    
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        
+        eventStoreObserver = NSNotificationCenter.defaultCenter().addObserverForName(EKEventStoreChangedNotification, object: nil, queue: nil){
+            (notification) -> Void in
+            self.refresh()
+        }
+    }
+    
+    deinit{
+        
+        if let observer = eventStoreObserver{
+            
+            NSNotificationCenter.defaultCenter().removeObserver(observer, name: EKEventStoreChangedNotification, object: nil)
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -27,10 +46,7 @@ class ReminderSortViewController: UITableViewController {
         
         self.navigationController?.navigationBar.titleTextAttributes = [NSFontAttributeName: UIFont.boldSystemFontOfSize(18.0)]
         
-        NSNotificationCenter.defaultCenter().addObserverForName(EKEventStoreChangedNotification, object: nil, queue: nil){
-            (notification) -> Void in
-                self.refresh()
-        }
+        
         
         startRefreshControl()
         
