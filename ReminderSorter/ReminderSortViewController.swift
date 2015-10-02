@@ -23,7 +23,14 @@ class ReminderSortViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        UIApplication.sharedApplication().idleTimerDisabled = true
+        
         self.navigationController?.navigationBar.titleTextAttributes = [NSFontAttributeName: UIFont.boldSystemFontOfSize(18.0)]
+        
+        NSNotificationCenter.defaultCenter().addObserverForName(EKEventStoreChangedNotification, object: nil, queue: nil){
+            (notification) -> Void in
+                self.refresh()
+        }
         
         startRefreshControl()
         
@@ -33,6 +40,8 @@ class ReminderSortViewController: UITableViewController {
     
     //Event for pull down to refresh
     @IBAction private func refresh(sender: UIRefreshControl?) {
+        
+        //reminderManager.eventStore.refreshSourcesIfNecessary()
         
         loadShoppingList()
         
