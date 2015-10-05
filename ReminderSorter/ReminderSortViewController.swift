@@ -20,13 +20,28 @@ class ReminderSortViewController: UITableViewController {
     
     var shoppingList = [EKReminder]()
     
+    var alphabeticalSortIncomplete : Bool = true
+    var alphabeticalSortComplete : Bool = true
+    
     var eventStoreObserver : NSObjectProtocol?
+    var settingsObserver : NSObjectProtocol?
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         
+        setSettings()
+        
+        //Observer for the app for when the event store is changed in the background (or when our app isn't running)
         eventStoreObserver = NSNotificationCenter.defaultCenter().addObserverForName(EKEventStoreChangedNotification, object: nil, queue: nil){
             (notification) -> Void in
+            self.refresh()
+        }
+        
+        //Observer for when our settings change
+        settingsObserver = NSNotificationCenter.defaultCenter().addObserverForName(NSUserDefaultsDidChangeNotification, object: nil, queue: nil){
+            (notification) -> Void in
+            
+            self.setSettings()
             self.refresh()
         }
     }
@@ -37,6 +52,11 @@ class ReminderSortViewController: UITableViewController {
             
             NSNotificationCenter.defaultCenter().removeObserver(observer, name: EKEventStoreChangedNotification, object: nil)
         }
+        
+        if let observer = settingsObserver{
+            
+            NSNotificationCenter.defaultCenter().removeObserver(observer, name: NSUserDefaultsDidChangeNotification, object: nil)
+        }
     }
     
     override func viewDidLoad() {
@@ -44,9 +64,7 @@ class ReminderSortViewController: UITableViewController {
         
         UIApplication.sharedApplication().idleTimerDisabled = true
         
-        self.navigationController?.navigationBar.titleTextAttributes = [NSFontAttributeName: UIFont.boldSystemFontOfSize(18.0)]
-        
-        
+        self.navigationController?.navigationBar.titleTextAttributes = [NSFontAttributeName: UIFont.boldSystemFontOfSize(18.0)]  
         
         startRefreshControl()
         
@@ -62,6 +80,12 @@ class ReminderSortViewController: UITableViewController {
         loadShoppingList()
         
         endRefreshControl(sender)
+    }
+    
+    func setSettings(){
+        
+        alphabeticalSortIncomplete = NSUserDefaults.standardUserDefaults().boolForKey("alphabeticalSortIncomplete")
+        alphabeticalSortComplete = NSUserDefaults.standardUserDefaults().boolForKey("alphabeticalSortComplete")
     }
     
     //Gets the shopping list from the manager and reloads the table
@@ -127,8 +151,18 @@ class ReminderSortViewController: UITableViewController {
             return reminder1.title.lowercaseString < reminder2.title.lowercaseString
         }
         
-        let itemsToGet : [EKReminder] = iCloudShoppingList.filter({(reminder : EKReminder) in !reminder.completed}).sort(reminderSort)
-        let completedItems : [EKReminder] = iCloudShoppingList.filter({(reminder : EKReminder) in reminder.completed}).sort(reminderSort)
+        var itemsToGet : [EKReminder] = iCloudShoppingList.filter({(reminder : EKReminder) in !reminder.completed})
+        var completedItems : [EKReminder] = iCloudShoppingList.filter({(reminder : EKReminder) in reminder.completed})
+            
+        if alphabeticalSortIncomplete {
+            
+            itemsToGet = itemsToGet.sort(reminderSort)
+        }
+        
+        if alphabeticalSortComplete {
+
+            completedItems = completedItems.sort(reminderSort)
+        }
         
         dispatch_async(dispatch_get_main_queue()) { () -> Void in
 
