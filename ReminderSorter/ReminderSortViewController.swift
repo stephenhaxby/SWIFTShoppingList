@@ -73,10 +73,14 @@ class ReminderSortViewController: UITableViewController {
         
         settingsButton.setTitle("\u{2699}", forState: UIControlState.Normal)
         settingsButton.titleLabel?.font = UIFont.boldSystemFontOfSize(26)
+        
+        infoButton.setTitle("\u{24D8}", forState: UIControlState.Normal)
+        infoButton.titleLabel?.font = UIFont.boldSystemFontOfSize(20)
     }
     
     @IBOutlet weak var settingsButton: UIButton!
     
+    @IBOutlet weak var infoButton: UIButton!
     
     @IBAction func settingsButtonTouchUpInside(sender: AnyObject) {
         
