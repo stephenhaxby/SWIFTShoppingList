@@ -64,12 +64,26 @@ class ReminderSortViewController: UITableViewController {
         
         UIApplication.sharedApplication().idleTimerDisabled = true
         
-        self.navigationController?.navigationBar.titleTextAttributes = [NSFontAttributeName: UIFont.boldSystemFontOfSize(18.0)]  
+        self.navigationController?.navigationBar.titleTextAttributes = [NSFontAttributeName: UIFont.boldSystemFontOfSize(18.0)]
         
         startRefreshControl()
         
         reminderManager.remindersListName = "Shopping"
         reminderManager.requestAccessToReminders(requestedAccessToReminders)
+        
+        settingsButton.setTitle("\u{2699}", forState: UIControlState.Normal)
+        settingsButton.titleLabel?.font = UIFont.boldSystemFontOfSize(26)
+    }
+    
+    @IBOutlet weak var settingsButton: UIButton!
+    
+    
+    @IBAction func settingsButtonTouchUpInside(sender: AnyObject) {
+        
+        if let appSettings = NSURL(string: UIApplicationOpenSettingsURLString){
+            
+            UIApplication.sharedApplication().openURL(appSettings)
+        }
     }
     
     //Event for pull down to refresh
