@@ -22,6 +22,7 @@ class ReminderSortViewController: UITableViewController {
     
     var alphabeticalSortIncomplete : Bool = true
     var alphabeticalSortComplete : Bool = true
+    var autocapitalisation : Bool = true
     
     var eventStoreObserver : NSObjectProtocol?
     var settingsObserver : NSObjectProtocol?
@@ -104,6 +105,7 @@ class ReminderSortViewController: UITableViewController {
         
         alphabeticalSortIncomplete = NSUserDefaults.standardUserDefaults().boolForKey("alphabeticalSortIncomplete")
         alphabeticalSortComplete = NSUserDefaults.standardUserDefaults().boolForKey("alphabeticalSortComplete")
+        autocapitalisation = NSUserDefaults.standardUserDefaults().boolForKey("autocapitalisation")
     }
     
     //Gets the shopping list from the manager and reloads the table
@@ -235,7 +237,16 @@ class ReminderSortViewController: UITableViewController {
         var shoppingListItem : EKReminder?
         
         let cell : ShoppingListItemTableViewCell = tableView.dequeueReusableCellWithIdentifier("ReminderCell") as! ShoppingListItemTableViewCell
-        cell.shoppingListItemTextField.autocapitalizationType = UITextAutocapitalizationType.Words
+        
+        if autocapitalisation{
+            
+            cell.shoppingListItemTextField.autocapitalizationType = UITextAutocapitalizationType.Words
+        }
+        else{
+            
+            cell.shoppingListItemTextField.autocapitalizationType = UITextAutocapitalizationType.Sentences
+        }
+        
         
         if indexPath.row == shoppingList.count{
             

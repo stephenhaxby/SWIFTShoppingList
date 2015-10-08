@@ -12,11 +12,6 @@ class InfoViewController : UIViewController {
     
     @IBOutlet weak var closeButton: UIButton!
     
-    @IBAction func closeButtonTouchUpInside(sender: AnyObject) {
-        
-        presentingViewController?.dismissViewControllerAnimated(true, completion: nil)
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
      
@@ -28,6 +23,16 @@ class InfoViewController : UIViewController {
         let backString : NSMutableAttributedString = NSMutableAttributedString(string: "<", attributes: arrowAttributes)
         backString.appendAttributedString(NSMutableAttributedString(string: " Back", attributes: textAttributes))
         
-        closeButton.setAttributedTitle(backString, forState: UIControlState.Normal)
+        closeButton.setAttributedTitle(backString, forState: UIControlState.Normal)        
+    }
+    
+    @IBAction func closeButtonTouchUpInside(sender: AnyObject) {
+        
+        closeInformation()
+    }
+    
+    func closeInformation(){
+        
+        presentingViewController?.dismissViewControllerAnimated(true, completion: nil)
     }
 }

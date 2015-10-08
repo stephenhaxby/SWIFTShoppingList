@@ -141,14 +141,64 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <webView contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lT6-wc-AK2">
-                                <rect key="frame" x="0.0" y="64" width="600" height="536"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Information:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CR0-QT-Gfp">
+                                <rect key="frame" x="20" y="72" width="560" height="22"/>
                                 <animations/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                            </webView>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Features:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yUd-MJ-Aje">
+                                <rect key="frame" x="20" y="227" width="560" height="22"/>
+                                <animations/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <textView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" delaysContentTouches="NO" canCancelContentTouches="NO" bouncesZoom="NO" editable="NO" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aFP-nM-11S">
+                                <rect key="frame" x="20" y="102" width="560" height="117"/>
+                                <animations/>
+                                <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. 
+
+Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat.</string>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                            <textView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" delaysContentTouches="NO" canCancelContentTouches="NO" bouncesZoom="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="IBS-NX-3at">
+                                <rect key="frame" x="20" y="257" width="560" height="133"/>
+                                <animations/>
+                                <mutableString key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</mutableString>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
                         </subviews>
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <gestureRecognizers/>
+                        <constraints>
+                            <constraint firstAttribute="leadingMargin" secondItem="IBS-NX-3at" secondAttribute="leading" id="8Ta-ed-43H"/>
+                            <constraint firstAttribute="leadingMargin" secondItem="IBS-NX-3at" secondAttribute="leading" id="DWJ-7e-Eom"/>
+                            <constraint firstItem="CR0-QT-Gfp" firstAttribute="top" secondItem="f6b-nj-r9J" secondAttribute="bottom" constant="8" symbolic="YES" id="F7e-3q-FrD"/>
+                            <constraint firstAttribute="leadingMargin" secondItem="CR0-QT-Gfp" secondAttribute="leading" id="J4s-Fa-MtW"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="IBS-NX-3at" secondAttribute="trailing" id="WIE-wb-sWU"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="CR0-QT-Gfp" secondAttribute="trailing" id="YxB-zq-qMV"/>
+                            <constraint firstItem="aFP-nM-11S" firstAttribute="top" secondItem="CR0-QT-Gfp" secondAttribute="bottom" constant="8" symbolic="YES" id="eOH-Ry-hZR"/>
+                            <constraint firstItem="IBS-NX-3at" firstAttribute="top" secondItem="yUd-MJ-Aje" secondAttribute="bottom" constant="8" symbolic="YES" id="fKo-hT-HgA"/>
+                            <constraint firstAttribute="leadingMargin" secondItem="IBS-NX-3at" secondAttribute="leading" id="hjn-WJ-woV"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="yUd-MJ-Aje" secondAttribute="trailing" id="hqa-Rp-AeX"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="IBS-NX-3at" secondAttribute="trailing" id="kEn-Xx-EIm"/>
+                            <constraint firstAttribute="leadingMargin" secondItem="yUd-MJ-Aje" secondAttribute="leading" id="l2U-lh-fyM"/>
+                            <constraint firstItem="yUd-MJ-Aje" firstAttribute="top" secondItem="aFP-nM-11S" secondAttribute="bottom" constant="8" symbolic="YES" id="oUA-7j-dls"/>
+                            <constraint firstAttribute="leadingMargin" secondItem="aFP-nM-11S" secondAttribute="leading" id="sDd-ac-KMs"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="aFP-nM-11S" secondAttribute="trailing" id="xGg-ip-cCy"/>
+                        </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="8Ta-ed-43H"/>
+                                <exclude reference="DWJ-7e-Eom"/>
+                                <exclude reference="kEn-Xx-EIm"/>
+                            </mask>
+                        </variation>
                     </view>
                     <navigationItem key="navigationItem" id="Qrk-jS-5dL">
                         <barButtonItem key="leftBarButtonItem" style="done" id="6JR-Id-kR6">
