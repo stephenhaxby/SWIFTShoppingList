@@ -23,8 +23,26 @@ class InfoViewController : UIViewController {
         let backString : NSMutableAttributedString = NSMutableAttributedString(string: "<", attributes: arrowAttributes)
         backString.appendAttributedString(NSMutableAttributedString(string: " Back", attributes: textAttributes))
         
-        closeButton.setAttributedTitle(backString, forState: UIControlState.Normal)        
+        closeButton.setAttributedTitle(backString, forState: UIControlState.Normal)
+
+        
+        //scrollView.delegate = self
+        
+        //scrollView.showsHorizontalScrollIndicator = false
+        
+//        let screenSize: CGRect = UIScreen.mainScreen().bounds
+//        
+//        let scrollSize = CGSizeMake(screenSize.width, screenSize.height)
+//        scrollView.contentSize = scrollSize
     }
+    
+//    override func viewWillAppear(animated: Bool) {
+//        
+//        let screenSize: CGRect = UIScreen.mainScreen().bounds
+//        
+//        let scrollSize = CGSizeMake(screenSize.width, screenSize.height)
+//        scrollView.contentSize = scrollSize
+//    }
     
     @IBAction func closeButtonTouchUpInside(sender: AnyObject) {
         

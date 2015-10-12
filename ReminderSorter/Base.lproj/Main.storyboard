@@ -129,10 +129,10 @@
             </objects>
             <point key="canvasLocation" x="1022" y="115"/>
         </scene>
-        <!--Info View Controller-->
+        <!--Help-->
         <scene sceneID="RxP-ya-XXD">
             <objects>
-                <viewController id="VI3-1w-ipy" customClass="InfoViewController" customModule="ReminderSorter" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController automaticallyAdjustsScrollViewInsets="NO" id="VI3-1w-ipy" customClass="InfoViewController" customModule="ReminderSorter" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="f6b-nj-r9J"/>
                         <viewControllerLayoutGuide type="bottom" id="jnn-hy-VxU"/>
@@ -141,66 +141,104 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Information:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CR0-QT-Gfp">
-                                <rect key="frame" x="20" y="72" width="560" height="22"/>
-                                <animations/>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Features:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yUd-MJ-Aje">
-                                <rect key="frame" x="20" y="227" width="560" height="22"/>
-                                <animations/>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <textView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" delaysContentTouches="NO" canCancelContentTouches="NO" bouncesZoom="NO" editable="NO" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aFP-nM-11S">
-                                <rect key="frame" x="20" y="102" width="560" height="117"/>
-                                <animations/>
-                                <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. 
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="a8F-KK-weE">
+                                <rect key="frame" x="20" y="72" width="560" height="528"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EIG-6C-MiI">
+                                        <rect key="frame" x="0.0" y="0.0" width="560" height="508"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Information:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CR0-QT-Gfp">
+                                                <rect key="frame" x="0.0" y="8" width="560" height="22"/>
+                                                <animations/>
+                                                <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
+                                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Features:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yUd-MJ-Aje">
+                                                <rect key="frame" x="0.0" y="204" width="560" height="22"/>
+                                                <animations/>
+                                                <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
+                                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <textView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" delaysContentTouches="NO" canCancelContentTouches="NO" bouncesZoom="NO" editable="NO" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aFP-nM-11S">
+                                                <rect key="frame" x="0.0" y="38" width="560" height="150"/>
+                                                <animations/>
+                                                <string key="text">Shopping taps into your iCloud Reminders to enable you to access your shopping list across all your iDevices (and iCloud on the web).
 
-Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat.</string>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                            </textView>
-                            <textView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" delaysContentTouches="NO" canCancelContentTouches="NO" bouncesZoom="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="IBS-NX-3at">
-                                <rect key="frame" x="20" y="257" width="560" height="133"/>
+We will create a new list called 'Shopping' (or attempt to use an existing one if one already exists) so look for this next time you access your built in Reminders app.
+
+You can then share this list with any of your contacts, the same as you would do for any other Reminders list.</string>
+                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                            </textView>
+                                            <textView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" delaysContentTouches="NO" canCancelContentTouches="NO" bouncesZoom="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="IBS-NX-3at">
+                                                <rect key="frame" x="0.0" y="234" width="560" height="167"/>
+                                                <animations/>
+                                                <string key="text">* Add new item
+* Swipe left to delete
+* Press to edit
+* Mark an item as completed
+* Mark an item as incomplete
+* Sorted completed and incomplete lists (via Settings)
+* Auto word capitalisation (via Settings)
+* Pull down to refresh
+* Auto refresh whenever your Calendar database is refreshed in the background</string>
+                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                            </textView>
+                                        </subviews>
+                                        <animations/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <constraints>
+                                            <constraint firstItem="CR0-QT-Gfp" firstAttribute="trailing" secondItem="aFP-nM-11S" secondAttribute="trailing" id="3yh-HZ-TTv"/>
+                                            <constraint firstAttribute="height" constant="508" id="4oK-iF-q3r"/>
+                                            <constraint firstAttribute="trailing" secondItem="aFP-nM-11S" secondAttribute="trailing" id="5KH-OC-QrL"/>
+                                            <constraint firstItem="CR0-QT-Gfp" firstAttribute="top" secondItem="EIG-6C-MiI" secondAttribute="topMargin" id="756-lT-iHZ"/>
+                                            <constraint firstItem="CR0-QT-Gfp" firstAttribute="trailing" secondItem="IBS-NX-3at" secondAttribute="trailing" id="9Pw-b2-R72"/>
+                                            <constraint firstItem="CR0-QT-Gfp" firstAttribute="leading" secondItem="IBS-NX-3at" secondAttribute="leading" id="ABx-3k-59m"/>
+                                            <constraint firstItem="CR0-QT-Gfp" firstAttribute="trailing" secondItem="yUd-MJ-Aje" secondAttribute="trailing" id="BaE-wK-U9p"/>
+                                            <constraint firstItem="CR0-QT-Gfp" firstAttribute="leading" secondItem="yUd-MJ-Aje" secondAttribute="leading" id="ToK-ce-Avc"/>
+                                            <constraint firstItem="aFP-nM-11S" firstAttribute="leading" secondItem="EIG-6C-MiI" secondAttribute="leading" id="UaO-Mf-5aw"/>
+                                            <constraint firstItem="IBS-NX-3at" firstAttribute="top" secondItem="yUd-MJ-Aje" secondAttribute="bottom" constant="8" symbolic="YES" id="aPp-me-X2o"/>
+                                            <constraint firstItem="yUd-MJ-Aje" firstAttribute="top" secondItem="aFP-nM-11S" secondAttribute="bottom" constant="16" id="spk-ff-06J"/>
+                                            <constraint firstItem="aFP-nM-11S" firstAttribute="top" secondItem="CR0-QT-Gfp" secondAttribute="bottom" constant="8" id="tG4-g6-3fl"/>
+                                            <constraint firstItem="CR0-QT-Gfp" firstAttribute="leading" secondItem="aFP-nM-11S" secondAttribute="leading" id="zrs-Sa-RHW"/>
+                                        </constraints>
+                                    </view>
+                                </subviews>
                                 <animations/>
-                                <mutableString key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</mutableString>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                            </textView>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="EIG-6C-MiI" secondAttribute="trailing" id="A7N-mc-aoh"/>
+                                    <constraint firstItem="EIG-6C-MiI" firstAttribute="top" secondItem="a8F-KK-weE" secondAttribute="top" id="HPU-Z5-dKj"/>
+                                    <constraint firstAttribute="bottom" secondItem="EIG-6C-MiI" secondAttribute="bottom" constant="40" id="HTi-R8-Ep8"/>
+                                    <constraint firstItem="EIG-6C-MiI" firstAttribute="leading" secondItem="a8F-KK-weE" secondAttribute="leading" id="jXJ-OE-Lus"/>
+                                </constraints>
+                            </scrollView>
                         </subviews>
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <gestureRecognizers/>
                         <constraints>
-                            <constraint firstAttribute="leadingMargin" secondItem="IBS-NX-3at" secondAttribute="leading" id="8Ta-ed-43H"/>
-                            <constraint firstAttribute="leadingMargin" secondItem="IBS-NX-3at" secondAttribute="leading" id="DWJ-7e-Eom"/>
-                            <constraint firstItem="CR0-QT-Gfp" firstAttribute="top" secondItem="f6b-nj-r9J" secondAttribute="bottom" constant="8" symbolic="YES" id="F7e-3q-FrD"/>
-                            <constraint firstAttribute="leadingMargin" secondItem="CR0-QT-Gfp" secondAttribute="leading" id="J4s-Fa-MtW"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="IBS-NX-3at" secondAttribute="trailing" id="WIE-wb-sWU"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="CR0-QT-Gfp" secondAttribute="trailing" id="YxB-zq-qMV"/>
-                            <constraint firstItem="aFP-nM-11S" firstAttribute="top" secondItem="CR0-QT-Gfp" secondAttribute="bottom" constant="8" symbolic="YES" id="eOH-Ry-hZR"/>
-                            <constraint firstItem="IBS-NX-3at" firstAttribute="top" secondItem="yUd-MJ-Aje" secondAttribute="bottom" constant="8" symbolic="YES" id="fKo-hT-HgA"/>
-                            <constraint firstAttribute="leadingMargin" secondItem="IBS-NX-3at" secondAttribute="leading" id="hjn-WJ-woV"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="yUd-MJ-Aje" secondAttribute="trailing" id="hqa-Rp-AeX"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="IBS-NX-3at" secondAttribute="trailing" id="kEn-Xx-EIm"/>
-                            <constraint firstAttribute="leadingMargin" secondItem="yUd-MJ-Aje" secondAttribute="leading" id="l2U-lh-fyM"/>
-                            <constraint firstItem="yUd-MJ-Aje" firstAttribute="top" secondItem="aFP-nM-11S" secondAttribute="bottom" constant="8" symbolic="YES" id="oUA-7j-dls"/>
-                            <constraint firstAttribute="leadingMargin" secondItem="aFP-nM-11S" secondAttribute="leading" id="sDd-ac-KMs"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="aFP-nM-11S" secondAttribute="trailing" id="xGg-ip-cCy"/>
+                            <constraint firstItem="a8F-KK-weE" firstAttribute="top" secondItem="f6b-nj-r9J" secondAttribute="bottom" constant="8" id="7Eh-ES-wyq"/>
+                            <constraint firstItem="a8F-KK-weE" firstAttribute="top" secondItem="f6b-nj-r9J" secondAttribute="bottom" constant="8" id="7K7-WG-9hx"/>
+                            <constraint firstAttribute="leadingMargin" secondItem="EIG-6C-MiI" secondAttribute="leading" id="9Vk-yv-HQC"/>
+                            <constraint firstItem="jnn-hy-VxU" firstAttribute="top" secondItem="a8F-KK-weE" secondAttribute="bottom" id="Cdd-pO-fag"/>
+                            <constraint firstAttribute="leadingMargin" secondItem="a8F-KK-weE" secondAttribute="leading" id="ETO-nJ-AL1"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="EIG-6C-MiI" secondAttribute="trailing" id="YV3-Mf-S3L"/>
+                            <constraint firstItem="a8F-KK-weE" firstAttribute="top" secondItem="f6b-nj-r9J" secondAttribute="bottom" constant="8" id="kl5-Le-AMU"/>
+                            <constraint firstItem="a8F-KK-weE" firstAttribute="top" secondItem="f6b-nj-r9J" secondAttribute="bottom" constant="8" symbolic="YES" id="ql5-Na-uAp"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="a8F-KK-weE" secondAttribute="trailing" id="veR-Ny-lVs"/>
                         </constraints>
                         <variation key="default">
                             <mask key="constraints">
-                                <exclude reference="8Ta-ed-43H"/>
-                                <exclude reference="DWJ-7e-Eom"/>
-                                <exclude reference="kEn-Xx-EIm"/>
+                                <exclude reference="7K7-WG-9hx"/>
+                                <exclude reference="kl5-Le-AMU"/>
+                                <exclude reference="ql5-Na-uAp"/>
                             </mask>
                         </variation>
                     </view>
-                    <navigationItem key="navigationItem" id="Qrk-jS-5dL">
+                    <navigationItem key="navigationItem" title="Help" id="Qrk-jS-5dL">
                         <barButtonItem key="leftBarButtonItem" style="done" id="6JR-Id-kR6">
                             <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" hasAttributedTitle="YES" id="HHw-QH-cb9">
                                 <rect key="frame" x="20" y="7" width="60" height="30"/>
