@@ -14,8 +14,6 @@ class ReminderSortViewController: UITableViewController {
     //Outlet for the Table View so we can access it in code
     @IBOutlet var remindersTableView: UITableView!
     
-    @IBOutlet weak var addNewButton: UIButton!
-    
     let reminderManager : iCloudReminderManager = iCloudReminderManager()
     
     var shoppingList = [EKReminder]()
@@ -26,6 +24,8 @@ class ReminderSortViewController: UITableViewController {
     
     var eventStoreObserver : NSObjectProtocol?
     var settingsObserver : NSObjectProtocol?
+    
+    let alphabet = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"]
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -44,6 +44,15 @@ class ReminderSortViewController: UITableViewController {
             
             self.setSettings()
             self.refresh()
+        }
+        
+        eventStoreObserver = NSNotificationCenter.defaultCenter().addObserverForName("QuickScrollButtonPressed", object: nil, queue: nil){
+            (notification) -> Void in
+            
+            if let quickScrollButton : UIButton = notification.object as? UIButton {
+
+                self.scrollToLetter(quickScrollButton.currentTitle!)
+            }
         }
     }
     
@@ -71,24 +80,21 @@ class ReminderSortViewController: UITableViewController {
         
         reminderManager.remindersListName = "Shopping"
         reminderManager.requestAccessToReminders(requestedAccessToReminders)
-        
-        settingsButton.setTitle("\u{2699}", forState: UIControlState.Normal)
-        settingsButton.titleLabel?.font = UIFont.boldSystemFontOfSize(26)
-        
-        infoButton.setTitle("\u{24D8}", forState: UIControlState.Normal)
-        infoButton.titleLabel?.font = UIFont.boldSystemFontOfSize(20)
     }
     
-    @IBOutlet weak var settingsButton: UIButton!
-    
-    @IBOutlet weak var infoButton: UIButton!
-    
-    @IBAction func settingsButtonTouchUpInside(sender: AnyObject) {
+    override func shouldAutorotate() -> Bool {
         
-        if let appSettings = NSURL(string: UIApplicationOpenSettingsURLString){
-            
-            UIApplication.sharedApplication().openURL(appSettings)
-        }
+        return false
+    }
+    
+    override func supportedInterfaceOrientations() -> UIInterfaceOrientationMask{
+        
+        return UIInterfaceOrientationMask.Portrait
+    }
+    
+    override func preferredInterfaceOrientationForPresentation() -> UIInterfaceOrientation {
+        
+        return UIInterfaceOrientation.Portrait
     }
     
     //Event for pull down to refresh
@@ -221,6 +227,49 @@ class ReminderSortViewController: UITableViewController {
         
         //Present the alert
         self.presentViewController(errorAlert, animated: true, completion: nil)
+    }
+    
+    func scrollToLetter(letter: String){
+        
+        if letter == "+"{
+            
+            let indexPath = NSIndexPath(forRow: shoppingList.count, inSection: 0)
+
+            remindersTableView.scrollToRowAtIndexPath(indexPath, atScrollPosition: UITableViewScrollPosition.Top, animated: true)
+        }
+        else{
+            
+            scrollToNearestLetter(letter)
+        }
+    }
+    
+    func scrollToNearestLetter(letter: String){
+        
+        var itemsBeginingWith : [EKReminder] = shoppingList.filter({(reminder : EKReminder) in reminder.completed && reminder.title.hasPrefix(letter)})
+        
+        if itemsBeginingWith.count > 0{
+            
+            let index = shoppingList.indexOf(itemsBeginingWith[0])
+            
+            let indexPath = NSIndexPath(forRow: index!, inSection: 0)
+            
+            remindersTableView.scrollToRowAtIndexPath(indexPath, atScrollPosition: UITableViewScrollPosition.Top, animated: true)
+        }
+        else{
+            
+            //If no items exist that start with that letter, go back up the alphabet to find one that exists
+            
+            let indexOfLetter = alphabet.indexOf(letter)
+            
+            if(indexOfLetter > 0){
+                
+                scrollToNearestLetter(alphabet[indexOfLetter!-1])
+            }
+            else{
+                
+                remindersTableView.scrollToRowAtIndexPath(NSIndexPath(forRow: 0, inSection: 0), atScrollPosition: UITableViewScrollPosition.Top, animated: true)
+            }
+        }
     }
     
     // MARK: - UITableViewDataSource

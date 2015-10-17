@@ -10,10 +10,7 @@ import UIKit
 import EventKit
 
 class ShoppingListItemTableViewCell: UITableViewCell, UITextFieldDelegate
-{
-    //var originalText = ""
-    //var cellIsEdited = false
-    
+{   
     @IBOutlet weak var shoppingListItemTextField: UITextField!
     
     @IBOutlet weak var completedSwitch: UISwitch!

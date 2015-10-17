@@ -8,11 +8,14 @@
 
 /* Begin PBXBuildFile section */
 		0E3E88841BC3E22900A3BCD2 /* InfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E3E88831BC3E22900A3BCD2 /* InfoViewController.swift */; settings = {ASSET_TAGS = (); }; };
+		0E3F2F831BCD11A000B1E323 /* ContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E3F2F821BCD11A000B1E323 /* ContainerViewController.swift */; settings = {ASSET_TAGS = (); }; };
 		0E6BF30D1B2EE3450005F4E2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E6BF30C1B2EE3450005F4E2 /* AppDelegate.swift */; };
 		0E6BF3121B2EE3450005F4E2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0E6BF3101B2EE3450005F4E2 /* Main.storyboard */; };
 		0E6BF3141B2EE3450005F4E2 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0E6BF3131B2EE3450005F4E2 /* Images.xcassets */; };
 		0E6BF32D1B2EE54C0005F4E2 /* ReminderSortViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E6BF32C1B2EE54C0005F4E2 /* ReminderSortViewController.swift */; };
+		0E77741E1BCFAD2E00D6720D /* QuickScrollViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E77741D1BCFAD2E00D6720D /* QuickScrollViewController.swift */; settings = {ASSET_TAGS = (); }; };
 		0ED67A851BC27E1E00F91BF8 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 0ED67A841BC27E1E00F91BF8 /* Settings.bundle */; settings = {ASSET_TAGS = (); }; };
+		0EDDCADC1BD1DC9900431C3F /* NavigationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EDDCADB1BD1DC9900431C3F /* NavigationViewController.swift */; settings = {ASSET_TAGS = (); }; };
 		0EE5ED351B984E01008A2F26 /* iCloudReminderManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EE5ED341B984E01008A2F26 /* iCloudReminderManager.swift */; };
 		0EED9C191B8C4E7E000A98E0 /* ShoppingListItemTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EED9C181B8C4E7E000A98E0 /* ShoppingListItemTableViewCell.swift */; };
 /* End PBXBuildFile section */
@@ -29,6 +32,7 @@
 
 /* Begin PBXFileReference section */
 		0E3E88831BC3E22900A3BCD2 /* InfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InfoViewController.swift; sourceTree = "<group>"; };
+		0E3F2F821BCD11A000B1E323 /* ContainerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContainerViewController.swift; sourceTree = "<group>"; };
 		0E6BF3071B2EE3450005F4E2 /* ReminderSorter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ReminderSorter.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0E6BF30B1B2EE3450005F4E2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0E6BF30C1B2EE3450005F4E2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -36,7 +40,9 @@
 		0E6BF3131B2EE3450005F4E2 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		0E6BF31C1B2EE3460005F4E2 /* ReminderSorterTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ReminderSorterTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		0E6BF32C1B2EE54C0005F4E2 /* ReminderSortViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReminderSortViewController.swift; sourceTree = "<group>"; };
+		0E77741D1BCFAD2E00D6720D /* QuickScrollViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QuickScrollViewController.swift; sourceTree = "<group>"; };
 		0ED67A841BC27E1E00F91BF8 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
+		0EDDCADB1BD1DC9900431C3F /* NavigationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationViewController.swift; sourceTree = "<group>"; };
 		0EE5ED341B984E01008A2F26 /* iCloudReminderManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = iCloudReminderManager.swift; sourceTree = "<group>"; };
 		0EED9C181B8C4E7E000A98E0 /* ShoppingListItemTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShoppingListItemTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -88,6 +94,9 @@
 				0E6BF32C1B2EE54C0005F4E2 /* ReminderSortViewController.swift */,
 				0EE5ED341B984E01008A2F26 /* iCloudReminderManager.swift */,
 				0E3E88831BC3E22900A3BCD2 /* InfoViewController.swift */,
+				0E3F2F821BCD11A000B1E323 /* ContainerViewController.swift */,
+				0E77741D1BCFAD2E00D6720D /* QuickScrollViewController.swift */,
+				0EDDCADB1BD1DC9900431C3F /* NavigationViewController.swift */,
 			);
 			path = ReminderSorter;
 			sourceTree = "<group>";
@@ -203,10 +212,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0EDDCADC1BD1DC9900431C3F /* NavigationViewController.swift in Sources */,
 				0E6BF32D1B2EE54C0005F4E2 /* ReminderSortViewController.swift in Sources */,
 				0EED9C191B8C4E7E000A98E0 /* ShoppingListItemTableViewCell.swift in Sources */,
 				0E6BF30D1B2EE3450005F4E2 /* AppDelegate.swift in Sources */,
 				0EE5ED351B984E01008A2F26 /* iCloudReminderManager.swift in Sources */,
+				0E77741E1BCFAD2E00D6720D /* QuickScrollViewController.swift in Sources */,
+				0E3F2F831BCD11A000B1E323 /* ContainerViewController.swift in Sources */,
 				0E3E88841BC3E22900A3BCD2 /* InfoViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
