@@ -10,7 +10,7 @@
 			<key>Type</key>
 			<string>PSToggleSwitchSpecifier</string>
 			<key>Title</key>
-			<string>Auto-Ccapitalisation</string>
+			<string>Auto-Capitalisation</string>
 			<key>Key</key>
 			<string>autocapitalisation</string>
 			<key>DefaultValue</key>
