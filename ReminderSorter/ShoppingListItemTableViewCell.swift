@@ -25,7 +25,28 @@ class ShoppingListItemTableViewCell: UITableViewCell, UITextFieldDelegate
             
             if let shoppingListItemReminder = reminder{
                 
-                shoppingListItemTextField.text = shoppingListItemReminder.title
+                var listItem = shoppingListItemReminder.title
+                
+                if let viewController = reminderSortViewController {
+                    
+                    let words = listItem.componentsSeparatedByString(" ")
+                    
+                    listItem = words[0]
+                    
+                    for var i = 1; i < words.count; ++i{
+                        
+                        if viewController.autocapitalisation {
+                            
+                            listItem = listItem + " " + words[i].capitalizedString
+                        }
+                        else{
+                            
+                            listItem = listItem + " " + words[i].lowercaseString
+                        }
+                    }
+                }
+                
+                shoppingListItemTextField.text = listItem
                 completedSwitch.on = !shoppingListItemReminder.completed
                 
                 if let checkSwitch = completedSwitch {
