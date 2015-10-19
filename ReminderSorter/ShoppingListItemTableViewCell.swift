@@ -19,19 +19,28 @@ class ShoppingListItemTableViewCell: UITableViewCell, UITextFieldDelegate
     
     weak var reminderSortViewController : ReminderSortViewController?
     
-    //REVISIT: This could be a huge problem as it may stick around in memory...
+    //Setter for the cells reminder
     var reminder: EKReminder? {
         didSet {
             
             if let shoppingListItemReminder = reminder{
                 
+                //Setting the text value based on the auto-capitalisation settings
                 shoppingListItemTextField.text = getAutoCapitalisationTitle(shoppingListItemReminder.title)
                 
+                //Extra section for completed items
                 setShoppingListItemCompletedText(shoppingListItemReminder)
             }
         }
     }
     
+    @IBAction func addNewTouchUpInside(sender: AnyObject) {
+        
+        //When the '+' is clicked we bring up the keyboard for the text field
+        shoppingListItemTextField.becomeFirstResponder()
+    }
+    
+    //When editing has finished on the text field, save the reminder
     @IBAction func shoppingListItemTextFieldEditingDidEnd(sender: UITextField) {
         
         sender.resignFirstResponder()
@@ -50,6 +59,8 @@ class ShoppingListItemTableViewCell: UITableViewCell, UITextFieldDelegate
         }
     }
     
+    //When an item is marked as complete or in-complete.
+    //Add a small delay for useability so the item doesn't go off the list straight away
     @IBAction func completedSwitchValueChanged(sender: AnyObject) {
         
         if let checkSwitch = sender as? UISwitch{
@@ -82,17 +93,20 @@ class ShoppingListItemTableViewCell: UITableViewCell, UITextFieldDelegate
         shoppingListItemTextField.delegate = self
     }
     
+    //Return the title based on the auto-capitalisation settings
     func getAutoCapitalisationTitle(title : String) -> String {
         
         var listItem = title
         
         if let viewController = reminderSortViewController {
             
+            //Split the string into an array of strings around the ' ' character
             let words = listItem.componentsSeparatedByString(" ")
             
             listItem = words[0]
             
-            for var i = 1; i < words.count; ++i{
+            //Loop through each word in the string and make it lower case or first letter upper-case
+            for var i = 1; i < words.count; ++i {
                 
                 if viewController.autocapitalisation {
                     
@@ -108,6 +122,7 @@ class ShoppingListItemTableViewCell: UITableViewCell, UITextFieldDelegate
         return listItem
     }
     
+    //Puts a strike through the text of completed items
     func setShoppingListItemCompletedText(shoppingListItemReminder : EKReminder) {
         
         completedSwitch.on = !shoppingListItemReminder.completed
@@ -131,7 +146,7 @@ class ShoppingListItemTableViewCell: UITableViewCell, UITextFieldDelegate
         }
     }
     
-    //delegate method
+    //delegate method for when the return button is pressed
     func textFieldShouldReturn(textField: UITextField) -> Bool {
         
         textField.resignFirstResponder()

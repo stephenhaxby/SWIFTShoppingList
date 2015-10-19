@@ -14,8 +14,6 @@ class InfoViewController : UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-     
-        //TODO: Swipe left to go back...
         
         let arrowAttributes = [NSFontAttributeName : UIFont.boldSystemFontOfSize(22.0)]
         let textAttributes = [NSFontAttributeName : UIFont.systemFontOfSize(18.0)]

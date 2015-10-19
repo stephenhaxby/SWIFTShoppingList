@@ -24,17 +24,20 @@ class ReminderSortViewController: UITableViewController {
     
     var eventStoreObserver : NSObjectProtocol?
     var settingsObserver : NSObjectProtocol?
+    var quickScrollObserver : NSObjectProtocol?
     
     let alphabet = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"]
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         
+        //Pull out and save all the items from the settings
         setSettings()
         
         //Observer for the app for when the event store is changed in the background (or when our app isn't running)
         eventStoreObserver = NSNotificationCenter.defaultCenter().addObserverForName(EKEventStoreChangedNotification, object: nil, queue: nil){
             (notification) -> Void in
+            
             self.refresh()
         }
         
@@ -46,7 +49,8 @@ class ReminderSortViewController: UITableViewController {
             self.refresh()
         }
         
-        eventStoreObserver = NSNotificationCenter.defaultCenter().addObserverForName("QuickScrollButtonPressed", object: nil, queue: nil){
+        //Custom observer for when a quickscroll button is pressed
+        quickScrollObserver = NSNotificationCenter.defaultCenter().addObserverForName("QuickScrollButtonPressed", object: nil, queue: nil){
             (notification) -> Void in
             
             if let quickScrollButton : UIButton = notification.object as? UIButton {
@@ -58,6 +62,8 @@ class ReminderSortViewController: UITableViewController {
     
     deinit{
         
+        //When this class is dealocated we are removing the observers...
+        //Don't really need to do this, but it's nice...
         if let observer = eventStoreObserver{
             
             NSNotificationCenter.defaultCenter().removeObserver(observer, name: EKEventStoreChangedNotification, object: nil)
@@ -67,48 +73,44 @@ class ReminderSortViewController: UITableViewController {
             
             NSNotificationCenter.defaultCenter().removeObserver(observer, name: NSUserDefaultsDidChangeNotification, object: nil)
         }
+        
+        if let observer = quickScrollObserver{
+            
+            NSNotificationCenter.defaultCenter().removeObserver(observer, name: "QuickScrollButtonPressed", object: nil)
+        }
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        //Make it so the screen doesn't turn off
         UIApplication.sharedApplication().idleTimerDisabled = true
         
+        //Set the font size of the navigation view controller
         self.navigationController?.navigationBar.titleTextAttributes = [NSFontAttributeName: UIFont.boldSystemFontOfSize(18.0)]
         
+        //Set the refresh controll spinning
         startRefreshControl()
         
+        //Setup the reminders manager to access a list called 'Shopping'
         reminderManager.remindersListName = "Shopping"
+        //Request access to the users reminders list; call 'requestedAccessToReminders' when done
         reminderManager.requestAccessToReminders(requestedAccessToReminders)
-    }
-    
-    override func shouldAutorotate() -> Bool {
-        
-        return false
-    }
-    
-    override func supportedInterfaceOrientations() -> UIInterfaceOrientationMask{
-        
-        return UIInterfaceOrientationMask.Portrait
-    }
-    
-    override func preferredInterfaceOrientationForPresentation() -> UIInterfaceOrientation {
-        
-        return UIInterfaceOrientation.Portrait
     }
     
     //Event for pull down to refresh
     @IBAction private func refresh(sender: UIRefreshControl?) {
         
-        //reminderManager.eventStore.refreshSourcesIfNecessary()
-        
+        //Reload the shopping list
         loadShoppingList()
         
+        //Stop the refresh controll spinner if its running
         endRefreshControl(sender)
     }
     
     func setSettings(){
         
+        //Pull out and save all the items from the settings
         alphabeticalSortIncomplete = NSUserDefaults.standardUserDefaults().boolForKey("alphabeticalSortIncomplete")
         alphabeticalSortComplete = NSUserDefaults.standardUserDefaults().boolForKey("alphabeticalSortComplete")
         autocapitalisation = NSUserDefaults.standardUserDefaults().boolForKey("autocapitalisation")
@@ -172,28 +174,35 @@ class ReminderSortViewController: UITableViewController {
     //Once the reminders have been loaded from iCloud
     func getShoppingList(iCloudShoppingList : [EKReminder]){
         
+        //Small function for sorting reminders
         func reminderSort(reminder1: EKReminder, reminder2: EKReminder) -> Bool {
             
             return reminder1.title.lowercaseString < reminder2.title.lowercaseString
         }
         
+        //Find all items that are NOT completed
         var itemsToGet : [EKReminder] = iCloudShoppingList.filter({(reminder : EKReminder) in !reminder.completed})
+        //Find all items that ARE completed
         var completedItems : [EKReminder] = iCloudShoppingList.filter({(reminder : EKReminder) in reminder.completed})
-            
+        
+        //If the setting specify alphabetical sorting of incomplete items
         if alphabeticalSortIncomplete {
             
             itemsToGet = itemsToGet.sort(reminderSort)
         }
         
+        //If the settings specify alphabetical sorting of complete items
         if alphabeticalSortComplete {
 
             completedItems = completedItems.sort(reminderSort)
         }
         
+        //As we a in another thread, post back to the main thread so we can update the UI
         dispatch_async(dispatch_get_main_queue()) { () -> Void in
 
             if let shoppingListTable = self.tableView{
 
+                //Join the two lists from above
                 self.shoppingList = itemsToGet + completedItems
                 
                 //Request a reload of the Table
@@ -202,6 +211,7 @@ class ReminderSortViewController: UITableViewController {
         }
     }
 
+    //Save a reminder to the users reminders list
     func saveReminder(reminder : EKReminder){
         
         guard reminderManager.saveReminder(reminder) else {
@@ -229,25 +239,31 @@ class ReminderSortViewController: UITableViewController {
         self.presentViewController(errorAlert, animated: true, completion: nil)
     }
     
-    func scrollToLetter(letter: String){
+    //Called when we receive the notification from the buttons on the quick sort view
+    func scrollToLetter(letter: String) {
         
-        if letter == "+"{
+        //If pressing '+' just scroll to the bottom
+        if letter == "+" {
             
             let indexPath = NSIndexPath(forRow: shoppingList.count, inSection: 0)
 
             remindersTableView.scrollToRowAtIndexPath(indexPath, atScrollPosition: UITableViewScrollPosition.Top, animated: true)
         }
-        else{
+        else {
             
+            //Scroll to the nearest letter (upwards)
             scrollToNearestLetter(letter)
         }
     }
     
+    //Recursive function to find the nearest letter in the alphabet
     func scrollToNearestLetter(letter: String){
         
+        //Find any items begining with the specified letter
         var itemsBeginingWith : [EKReminder] = shoppingList.filter({(reminder : EKReminder) in reminder.completed && reminder.title.hasPrefix(letter)})
         
-        if itemsBeginingWith.count > 0{
+        //If one exists, find the item first item in the list with that letter
+        if itemsBeginingWith.count > 0 {
             
             let index = shoppingList.indexOf(itemsBeginingWith[0])
             
@@ -258,15 +274,15 @@ class ReminderSortViewController: UITableViewController {
         else{
             
             //If no items exist that start with that letter, go back up the alphabet to find one that exists
-            
             let indexOfLetter = alphabet.indexOf(letter)
             
-            if(indexOfLetter > 0){
+            if(indexOfLetter > 0) {
                 
                 scrollToNearestLetter(alphabet[indexOfLetter!-1])
             }
-            else{
+            else {
                 
+                //If we are at the begining, scroll to the top
                 remindersTableView.scrollToRowAtIndexPath(NSIndexPath(forRow: 0, inSection: 0), atScrollPosition: UITableViewScrollPosition.Top, animated: true)
             }
         }
@@ -280,13 +296,15 @@ class ReminderSortViewController: UITableViewController {
         return shoppingList.count + 1
     }
     
-    //To populate each cell's text based on the index into the calendars array
+    //To populate each cell's text based on the index into the calendars array, with the extra item at the bottom
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
         var shoppingListItem : EKReminder?
         
+        //Get the cell
         let cell : ShoppingListItemTableViewCell = tableView.dequeueReusableCellWithIdentifier("ReminderCell") as! ShoppingListItemTableViewCell
         
+        //Based on the settings, set up the auto-capitalisation for the keyboard
         if autocapitalisation{
             
             cell.shoppingListItemTextField.autocapitalizationType = UITextAutocapitalizationType.Words
@@ -296,7 +314,7 @@ class ReminderSortViewController: UITableViewController {
             cell.shoppingListItemTextField.autocapitalizationType = UITextAutocapitalizationType.Sentences
         }
         
-        
+        //Add in the extra item at the bottom
         if indexPath.row == shoppingList.count{
             
             shoppingListItem = reminderManager.getNewReminder()
@@ -311,8 +329,6 @@ class ReminderSortViewController: UITableViewController {
             shoppingListItem!.completed = false
         }
         else{
-            
-            //TODO: We ended up in a situation where indexPath.row = 10 but shoppingList had 0 elements in it...
             
             shoppingListItem = shoppingList[indexPath.row]
         }
@@ -344,8 +360,8 @@ class ReminderSortViewController: UITableViewController {
 //        return [share, favorite, more]
 //    }
     
+    //This method is setting which cells can be edited
     override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        // the cells you would like the actions to appear needs to be editable
         
         //Don't allow delete of the last blank row...
         if(indexPath.row < shoppingList.count){
@@ -357,7 +373,6 @@ class ReminderSortViewController: UITableViewController {
 
     //This method is for the swipe left to delete
     override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-        // you need to implement this method too or you can't swipe to display the actions
         
         if(indexPath.row < shoppingList.count){
 

@@ -37,6 +37,9 @@
                                             <state key="normal" title="+">
                                                 <color key="titleColor" red="0.40000000596046448" green="0.40000000596046448" blue="0.40000000596046448" alpha="1" colorSpace="calibratedRGB"/>
                                             </state>
+                                            <connections>
+                                                <action selector="addNewTouchUpInside:" destination="9Z4-o8-zaC" eventType="touchUpInside" id="Y9a-sg-SR2"/>
+                                            </connections>
                                         </button>
                                         <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Lib-C6-ncm">
                                             <rect key="frame" x="75" y="8" width="487" height="27"/>

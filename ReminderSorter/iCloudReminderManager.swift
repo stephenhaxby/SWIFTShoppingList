@@ -50,15 +50,16 @@ class iCloudReminderManager{
                 
                 var reminderListCalendars = calendars.filter({(calendar : EKCalendar) in calendar.title == self.remindersListName})
                 
-                if(reminderListCalendars.count == 1){
+                if(reminderListCalendars.count == 1) {
                     
                     reminderList = reminderListCalendars[0];
                 }
-                else if(reminderListCalendars.count > 1){
+                else if(reminderListCalendars.count > 1) {
                     
                     return nil
                 }
-                else{
+                else {
+                    
                     reminderList = EKCalendar(forEntityType: EKEntityType.Reminder, eventStore: eventStore)
                     
                     //Save the new calendar

@@ -10,6 +10,7 @@ import UIKit
 
 class NavigationViewController : UINavigationController {
     
+    //All these three methods lock the orentation
     override func shouldAutorotate() -> Bool {
         
         return false
