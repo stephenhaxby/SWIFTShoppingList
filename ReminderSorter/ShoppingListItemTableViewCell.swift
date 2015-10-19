@@ -25,47 +25,9 @@ class ShoppingListItemTableViewCell: UITableViewCell, UITextFieldDelegate
             
             if let shoppingListItemReminder = reminder{
                 
-                var listItem = shoppingListItemReminder.title
+                shoppingListItemTextField.text = getAutoCapitalisationTitle(shoppingListItemReminder.title)
                 
-                if let viewController = reminderSortViewController {
-                    
-                    let words = listItem.componentsSeparatedByString(" ")
-                    
-                    listItem = words[0]
-                    
-                    for var i = 1; i < words.count; ++i{
-                        
-                        if viewController.autocapitalisation {
-                            
-                            listItem = listItem + " " + words[i].capitalizedString
-                        }
-                        else{
-                            
-                            listItem = listItem + " " + words[i].lowercaseString
-                        }
-                    }
-                }
-                
-                shoppingListItemTextField.text = listItem
-                completedSwitch.on = !shoppingListItemReminder.completed
-                
-                if let checkSwitch = completedSwitch {
-                    
-                    checkSwitch.hidden = shoppingListItemReminder.title == ""
-                    addNewButton.hidden = !checkSwitch.hidden
-                    
-                    if !checkSwitch.on{
-                        
-                        let string = shoppingListItemReminder.title as NSString
-                        
-                        let attributedString = NSMutableAttributedString(string: string as String)
-                        let attributes = [NSStrikethroughStyleAttributeName: 1]
-                        
-                        attributedString.addAttributes(attributes, range: string.rangeOfString(string as String))
-                        
-                        shoppingListItemTextField.attributedText = attributedString
-                    }
-                }
+                setShoppingListItemCompletedText(shoppingListItemReminder)
             }
         }
     }
@@ -76,7 +38,7 @@ class ShoppingListItemTableViewCell: UITableViewCell, UITextFieldDelegate
         
         if let editedReminder = reminder{
             
-            if sender.text != ""{
+            if sender.text != "" {
                 
                 editedReminder.title = sender.text!
                 
@@ -113,11 +75,60 @@ class ShoppingListItemTableViewCell: UITableViewCell, UITextFieldDelegate
         }
     }
     
-    func setShoppingListItem(reminder: EKReminder){
+    func setShoppingListItem(reminder: EKReminder) {
         
         self.reminder = reminder
         
         shoppingListItemTextField.delegate = self
+    }
+    
+    func getAutoCapitalisationTitle(title : String) -> String {
+        
+        var listItem = title
+        
+        if let viewController = reminderSortViewController {
+            
+            let words = listItem.componentsSeparatedByString(" ")
+            
+            listItem = words[0]
+            
+            for var i = 1; i < words.count; ++i{
+                
+                if viewController.autocapitalisation {
+                    
+                    listItem = listItem + " " + words[i].capitalizedString
+                }
+                else{
+                    
+                    listItem = listItem + " " + words[i].lowercaseString
+                }
+            }
+        }
+        
+        return listItem
+    }
+    
+    func setShoppingListItemCompletedText(shoppingListItemReminder : EKReminder) {
+        
+        completedSwitch.on = !shoppingListItemReminder.completed
+        
+        if let checkSwitch = completedSwitch {
+            
+            checkSwitch.hidden = shoppingListItemReminder.title == ""
+            addNewButton.hidden = !checkSwitch.hidden
+            
+            if !checkSwitch.on{
+                
+                let string = shoppingListItemReminder.title as NSString
+                
+                let attributedString = NSMutableAttributedString(string: string as String)
+                let attributes = [NSStrikethroughStyleAttributeName: 1]
+                
+                attributedString.addAttributes(attributes, range: string.rangeOfString(string as String))
+                
+                shoppingListItemTextField.attributedText = attributedString
+            }
+        }
     }
     
     //delegate method
