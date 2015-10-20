@@ -157,7 +157,7 @@ You can then share this list with any of your contacts, the same as you would do
                                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                             </textView>
                                             <textView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" delaysContentTouches="NO" canCancelContentTouches="NO" bouncesZoom="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="IBS-NX-3at">
-                                                <rect key="frame" x="0.0" y="234" width="560" height="167"/>
+                                                <rect key="frame" x="0.0" y="234" width="560" height="184"/>
                                                 <animations/>
                                                 <string key="text">* Add new item
 * Swipe left to delete
@@ -167,7 +167,8 @@ You can then share this list with any of your contacts, the same as you would do
 * Sorted completed and incomplete lists (via Settings)
 * Auto word capitalisation (via Settings)
 * Pull down to refresh
-* Auto refresh whenever your Calendar database is refreshed in the background</string>
+* Auto refresh whenever your Calendar database is refreshed in the background
+* Quick jump links</string>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                             </textView>
