@@ -290,7 +290,8 @@ class ReminderSortViewController: UITableViewController {
     
     // MARK: - UITableViewDataSource
     
-    //To return the number of items that the table view needs to show
+    //To return the number of items that the table view needs to show.
+    //We increase it by two for the first blank row and the final "+" (add new item) row
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
         return shoppingList.count + 2
@@ -324,7 +325,7 @@ class ReminderSortViewController: UITableViewController {
                 return ShoppingListItemTableViewCell()
             }
             
-            shoppingListItem!.title = "_"
+            shoppingListItem!.title = Constants.ShoppingListItemTableViewCell.EmptyCell
             shoppingListItem!.completed = false
         }
         
@@ -339,9 +340,11 @@ class ReminderSortViewController: UITableViewController {
                 return ShoppingListItemTableViewCell()
             }
             
-            shoppingListItem!.title = ""
+            shoppingListItem!.title = Constants.ShoppingListItemTableViewCell.NewItemCell
             shoppingListItem!.completed = false
         }
+        
+        //Each actual list item...
         else{
             
             shoppingListItem = shoppingList[indexPath.row-1]
@@ -407,7 +410,7 @@ class ReminderSortViewController: UITableViewController {
         
         if indexPath.row == 0{
             
-            return CGFloat(5)
+            return CGFloat(16)
         }
         
         return tableView.rowHeight

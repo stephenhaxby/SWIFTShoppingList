@@ -11,7 +11,7 @@
             <objects>
                 <tableViewController id="5Ag-tc-sUf" customClass="ReminderSortViewController" customModule="ReminderSorter" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" keyboardDismissMode="onDrag" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="gn4-vH-fZP">
-                        <rect key="frame" x="0.0" y="0.0" width="570" height="528"/>
+                        <rect key="frame" x="0.0" y="0.0" width="570" height="536"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -69,7 +69,7 @@
                                         <constraint firstItem="Lib-C6-ncm" firstAttribute="leading" secondItem="uyh-4K-TeC" secondAttribute="trailing" constant="23" id="gcf-RY-V6U"/>
                                         <constraint firstItem="Lib-C6-ncm" firstAttribute="leading" secondItem="7r9-Qh-qDR" secondAttribute="leadingMargin" id="m4d-Xs-1II"/>
                                         <constraint firstItem="Lib-C6-ncm" firstAttribute="bottom" secondItem="ReJ-9B-XiB" secondAttribute="bottom" id="noS-Vo-UWC"/>
-                                        <constraint firstItem="ReJ-9B-XiB" firstAttribute="bottom" secondItem="7r9-Qh-qDR" secondAttribute="bottomMargin" id="oJ6-8B-nUA"/>
+                                        <constraint firstItem="ReJ-9B-XiB" firstAttribute="bottom" secondItem="7r9-Qh-qDR" secondAttribute="bottomMargin" priority="750" id="oJ6-8B-nUA"/>
                                         <constraint firstItem="Lib-C6-ncm" firstAttribute="leading" secondItem="ReJ-9B-XiB" secondAttribute="trailing" constant="18" id="p93-3M-ixF"/>
                                         <constraint firstAttribute="trailingMargin" secondItem="Lib-C6-ncm" secondAttribute="trailing" constant="64" id="vA5-pk-MP2"/>
                                     </constraints>
@@ -273,7 +273,7 @@ You can then share this list with any of your contacts, the same as you would do
                                 </connections>
                             </containerView>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gyl-GM-m4T">
-                                <rect key="frame" x="0.0" y="72" width="570" height="528"/>
+                                <rect key="frame" x="0.0" y="64" width="570" height="536"/>
                                 <animations/>
                                 <connections>
                                     <segue destination="5Ag-tc-sUf" kind="embed" id="Hl8-yx-S4N"/>
@@ -287,8 +287,8 @@ You can then share this list with any of your contacts, the same as you would do
                             <constraint firstItem="gyl-GM-m4T" firstAttribute="leading" secondItem="ZAt-hv-4hm" secondAttribute="leading" id="20M-gF-kpc"/>
                             <constraint firstAttribute="trailingMargin" secondItem="akY-23-ae6" secondAttribute="trailing" id="9RI-OU-LTr"/>
                             <constraint firstAttribute="trailingMargin" secondItem="akY-23-ae6" secondAttribute="trailing" constant="259" id="Dop-ke-MVu"/>
-                            <constraint firstItem="gyl-GM-m4T" firstAttribute="top" secondItem="Cz4-pT-SRo" secondAttribute="bottom" constant="8" symbolic="YES" id="EwU-4c-L1u"/>
-                            <constraint firstItem="gyl-GM-m4T" firstAttribute="top" secondItem="akY-23-ae6" secondAttribute="top" id="Htp-Df-acQ"/>
+                            <constraint firstItem="gyl-GM-m4T" firstAttribute="top" secondItem="Cz4-pT-SRo" secondAttribute="bottom" id="EwU-4c-L1u"/>
+                            <constraint firstItem="gyl-GM-m4T" firstAttribute="top" secondItem="akY-23-ae6" secondAttribute="top" constant="-8" id="Htp-Df-acQ"/>
                             <constraint firstItem="gyl-GM-m4T" firstAttribute="leading" secondItem="ZAt-hv-4hm" secondAttribute="leading" id="S66-b2-LNS"/>
                             <constraint firstItem="gyl-GM-m4T" firstAttribute="bottom" secondItem="kum-re-Wa8" secondAttribute="top" id="Sr2-bh-Sl7"/>
                             <constraint firstItem="kum-re-Wa8" firstAttribute="top" secondItem="gyl-GM-m4T" secondAttribute="bottom" constant="-2" id="Tzv-nL-L0s"/>

@@ -128,18 +128,22 @@ class ShoppingListItemTableViewCell: UITableViewCell, UITextFieldDelegate
         completedSwitch.on = !shoppingListItemReminder.completed
         
         if let checkSwitch = completedSwitch {
+
+            //TODO: Try and remove the constraint
             
-            if shoppingListItemReminder.title == "_"{
+            switch shoppingListItemReminder.title{
                 
-                checkSwitch.hidden = true
-                addNewButton.hidden = true
-                shoppingListItemTextField.text = ""
-                
-            }
-            else{
-                
-                checkSwitch.hidden = shoppingListItemReminder.title == ""
-                addNewButton.hidden = !checkSwitch.hidden
+                case Constants.ShoppingListItemTableViewCell.EmptyCell:
+                    checkSwitch.hidden = true
+                    addNewButton.hidden = true
+                    shoppingListItemTextField.text = ""
+                case Constants.ShoppingListItemTableViewCell.NewItemCell:
+                    checkSwitch.hidden = true
+                    addNewButton.hidden = false
+                    shoppingListItemTextField.text = ""
+                default:
+                    checkSwitch.hidden = false
+                    addNewButton.hidden = true
             }
             
             if !checkSwitch.on{
