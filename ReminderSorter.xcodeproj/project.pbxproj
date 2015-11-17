@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		0E01EEA31BFB2D5E00365CF3 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E01EEA21BFB2D5E00365CF3 /* Constants.swift */; };
+		0E01EEA51BFB3FCB00365CF3 /* SettingsUserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E01EEA41BFB3FCB00365CF3 /* SettingsUserDefaults.swift */; };
 		0E3E88841BC3E22900A3BCD2 /* InfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E3E88831BC3E22900A3BCD2 /* InfoViewController.swift */; };
 		0E3F2F831BCD11A000B1E323 /* ContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E3F2F821BCD11A000B1E323 /* ContainerViewController.swift */; };
 		0E6BF30D1B2EE3450005F4E2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E6BF30C1B2EE3450005F4E2 /* AppDelegate.swift */; };
@@ -33,6 +34,7 @@
 
 /* Begin PBXFileReference section */
 		0E01EEA21BFB2D5E00365CF3 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		0E01EEA41BFB3FCB00365CF3 /* SettingsUserDefaults.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsUserDefaults.swift; sourceTree = "<group>"; };
 		0E3E88831BC3E22900A3BCD2 /* InfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InfoViewController.swift; sourceTree = "<group>"; };
 		0E3F2F821BCD11A000B1E323 /* ContainerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContainerViewController.swift; sourceTree = "<group>"; };
 		0E6BF3071B2EE3450005F4E2 /* ReminderSorter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ReminderSorter.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -100,6 +102,7 @@
 				0E77741D1BCFAD2E00D6720D /* QuickScrollViewController.swift */,
 				0EDDCADB1BD1DC9900431C3F /* NavigationViewController.swift */,
 				0E01EEA21BFB2D5E00365CF3 /* Constants.swift */,
+				0E01EEA41BFB3FCB00365CF3 /* SettingsUserDefaults.swift */,
 			);
 			path = ReminderSorter;
 			sourceTree = "<group>";
@@ -224,6 +227,7 @@
 				0E3F2F831BCD11A000B1E323 /* ContainerViewController.swift in Sources */,
 				0E01EEA31BFB2D5E00365CF3 /* Constants.swift in Sources */,
 				0E3E88841BC3E22900A3BCD2 /* InfoViewController.swift in Sources */,
+				0E01EEA51BFB3FCB00365CF3 /* SettingsUserDefaults.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

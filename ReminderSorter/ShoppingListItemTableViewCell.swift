@@ -97,25 +97,22 @@ class ShoppingListItemTableViewCell: UITableViewCell, UITextFieldDelegate
     func getAutoCapitalisationTitle(title : String) -> String {
         
         var listItem = title
+            
+        //Split the string into an array of strings around the ' ' character
+        let words = listItem.componentsSeparatedByString(" ")
         
-        if let viewController = reminderSortViewController {
+        listItem = words[0]
+        
+        //Loop through each word in the string and make it lower case or first letter upper-case
+        for var i = 1; i < words.count; ++i {
             
-            //Split the string into an array of strings around the ' ' character
-            let words = listItem.componentsSeparatedByString(" ")
-            
-            listItem = words[0]
-            
-            //Loop through each word in the string and make it lower case or first letter upper-case
-            for var i = 1; i < words.count; ++i {
+            if SettingsUserDefaults.autocapitalisation {
                 
-                if viewController.autocapitalisation {
-                    
-                    listItem = listItem + " " + words[i].capitalizedString
-                }
-                else{
-                    
-                    listItem = listItem + " " + words[i].lowercaseString
-                }
+                listItem = listItem + " " + words[i].capitalizedString
+            }
+            else{
+                
+                listItem = listItem + " " + words[i].lowercaseString
             }
         }
         

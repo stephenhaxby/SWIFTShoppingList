@@ -18,10 +18,6 @@ class ReminderSortViewController: UITableViewController {
     
     var shoppingList = [EKReminder]()
     
-    var alphabeticalSortIncomplete : Bool = true
-    var alphabeticalSortComplete : Bool = true
-    var autocapitalisation : Bool = true
-    
     var eventStoreObserver : NSObjectProtocol?
     var settingsObserver : NSObjectProtocol?
     var quickScrollObserver : NSObjectProtocol?
@@ -30,9 +26,6 @@ class ReminderSortViewController: UITableViewController {
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        
-        //Pull out and save all the items from the settings
-        setSettings()
         
         //Observer for the app for when the event store is changed in the background (or when our app isn't running)
         eventStoreObserver = NSNotificationCenter.defaultCenter().addObserverForName(EKEventStoreChangedNotification, object: nil, queue: nil){
@@ -45,7 +38,6 @@ class ReminderSortViewController: UITableViewController {
         settingsObserver = NSNotificationCenter.defaultCenter().addObserverForName(NSUserDefaultsDidChangeNotification, object: nil, queue: nil){
             (notification) -> Void in
             
-            self.setSettings()
             self.refresh()
         }
         
@@ -106,14 +98,6 @@ class ReminderSortViewController: UITableViewController {
         
         //Stop the refresh controll spinner if its running
         endRefreshControl(sender)
-    }
-    
-    func setSettings(){
-        
-        //Pull out and save all the items from the settings
-        alphabeticalSortIncomplete = NSUserDefaults.standardUserDefaults().boolForKey("alphabeticalSortIncomplete")
-        alphabeticalSortComplete = NSUserDefaults.standardUserDefaults().boolForKey("alphabeticalSortComplete")
-        autocapitalisation = NSUserDefaults.standardUserDefaults().boolForKey("autocapitalisation")
     }
     
     //Gets the shopping list from the manager and reloads the table
@@ -186,13 +170,13 @@ class ReminderSortViewController: UITableViewController {
         var completedItems : [EKReminder] = iCloudShoppingList.filter({(reminder : EKReminder) in reminder.completed})
         
         //If the setting specify alphabetical sorting of incomplete items
-        if alphabeticalSortIncomplete {
+        if SettingsUserDefaults.alphabeticalSortIncomplete {
             
             itemsToGet = itemsToGet.sort(reminderSort)
         }
         
         //If the settings specify alphabetical sorting of complete items
-        if alphabeticalSortComplete {
+        if SettingsUserDefaults.alphabeticalSortComplete {
 
             completedItems = completedItems.sort(reminderSort)
         }
@@ -267,7 +251,8 @@ class ReminderSortViewController: UITableViewController {
             
             let index = shoppingList.indexOf(itemsBeginingWith[0])
             
-            let indexPath = NSIndexPath(forRow: index!, inSection: 0)
+            //+1 is for the blank row at the start
+            let indexPath = NSIndexPath(forRow: index!+1, inSection: 0)
             
             remindersTableView.scrollToRowAtIndexPath(indexPath, atScrollPosition: UITableViewScrollPosition.Top, animated: true)
         }
@@ -306,7 +291,7 @@ class ReminderSortViewController: UITableViewController {
         let cell : ShoppingListItemTableViewCell = tableView.dequeueReusableCellWithIdentifier("ReminderCell") as! ShoppingListItemTableViewCell
         
         //Based on the settings, set up the auto-capitalisation for the keyboard
-        if autocapitalisation{
+        if SettingsUserDefaults.autocapitalisation{
             
             cell.shoppingListItemTextField.autocapitalizationType = UITextAutocapitalizationType.Words
         }
