@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="8191" systemVersion="15A284" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="jGZ-Bv-awX">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9059" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="jGZ-Bv-awX">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8154"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9049"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
@@ -11,7 +11,7 @@
             <objects>
                 <tableViewController id="5Ag-tc-sUf" customClass="ReminderSortViewController" customModule="ReminderSorter" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" keyboardDismissMode="onDrag" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="gn4-vH-fZP">
-                        <rect key="frame" x="0.0" y="0.0" width="570" height="596"/>
+                        <rect key="frame" x="0.0" y="0.0" width="570" height="528"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -145,17 +145,6 @@
                                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <textView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" delaysContentTouches="NO" canCancelContentTouches="NO" bouncesZoom="NO" editable="NO" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aFP-nM-11S">
-                                                <rect key="frame" x="0.0" y="38" width="560" height="150"/>
-                                                <animations/>
-                                                <string key="text">Shopping taps into your iCloud Reminders to enable you to access your shopping list across all your iDevices (and iCloud on the web).
-
-We will create a new list called 'Shopping' (or attempt to use an existing one if one already exists) so look for this next time you access your built in Reminders app.
-
-You can then share this list with any of your contacts, the same as you would do for any other Reminders list.</string>
-                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                                            </textView>
                                             <textView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" delaysContentTouches="NO" canCancelContentTouches="NO" bouncesZoom="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="IBS-NX-3at">
                                                 <rect key="frame" x="0.0" y="234" width="560" height="184"/>
                                                 <animations/>
@@ -169,6 +158,17 @@ You can then share this list with any of your contacts, the same as you would do
 * Pull down to refresh
 * Auto refresh whenever your Calendar database is refreshed in the background
 * Quick jump links</string>
+                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                            </textView>
+                                            <textView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" delaysContentTouches="NO" canCancelContentTouches="NO" bouncesZoom="NO" editable="NO" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aFP-nM-11S">
+                                                <rect key="frame" x="0.0" y="38" width="560" height="150"/>
+                                                <animations/>
+                                                <string key="text">Shopping taps into your iCloud Reminders to enable you to access your shopping list across all your iDevices (and iCloud on the web).
+
+We will create a new list called 'Shopping' (or attempt to use an existing one if one already exists) so look for this next time you access your built in Reminders app.
+
+You can then share this list with any of your contacts, the same as you would do for any other Reminders list.</string>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                             </textView>
@@ -265,18 +265,18 @@ You can then share this list with any of your contacts, the same as you would do
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gyl-GM-m4T">
-                                <rect key="frame" x="0.0" y="4" width="570" height="596"/>
-                                <animations/>
-                                <connections>
-                                    <segue destination="5Ag-tc-sUf" kind="embed" id="Hl8-yx-S4N"/>
-                                </connections>
-                            </containerView>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="akY-23-ae6">
-                                <rect key="frame" x="570" y="64" width="30" height="532"/>
+                                <rect key="frame" x="570" y="72" width="30" height="524"/>
                                 <animations/>
                                 <connections>
                                     <segue destination="Vzy-XB-8iC" kind="embed" id="soW-E8-VGD"/>
+                                </connections>
+                            </containerView>
+                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gyl-GM-m4T">
+                                <rect key="frame" x="0.0" y="72" width="570" height="528"/>
+                                <animations/>
+                                <connections>
+                                    <segue destination="5Ag-tc-sUf" kind="embed" id="Hl8-yx-S4N"/>
                                 </connections>
                             </containerView>
                         </subviews>
@@ -287,8 +287,8 @@ You can then share this list with any of your contacts, the same as you would do
                             <constraint firstItem="gyl-GM-m4T" firstAttribute="leading" secondItem="ZAt-hv-4hm" secondAttribute="leading" id="20M-gF-kpc"/>
                             <constraint firstAttribute="trailingMargin" secondItem="akY-23-ae6" secondAttribute="trailing" id="9RI-OU-LTr"/>
                             <constraint firstAttribute="trailingMargin" secondItem="akY-23-ae6" secondAttribute="trailing" constant="259" id="Dop-ke-MVu"/>
-                            <constraint firstItem="gyl-GM-m4T" firstAttribute="top" secondItem="Cz4-pT-SRo" secondAttribute="bottom" constant="-60" id="EwU-4c-L1u"/>
-                            <constraint firstItem="gyl-GM-m4T" firstAttribute="top" secondItem="akY-23-ae6" secondAttribute="top" constant="-60" id="Htp-Df-acQ"/>
+                            <constraint firstItem="gyl-GM-m4T" firstAttribute="top" secondItem="Cz4-pT-SRo" secondAttribute="bottom" constant="8" symbolic="YES" id="EwU-4c-L1u"/>
+                            <constraint firstItem="gyl-GM-m4T" firstAttribute="top" secondItem="akY-23-ae6" secondAttribute="top" id="Htp-Df-acQ"/>
                             <constraint firstItem="gyl-GM-m4T" firstAttribute="leading" secondItem="ZAt-hv-4hm" secondAttribute="leading" id="S66-b2-LNS"/>
                             <constraint firstItem="gyl-GM-m4T" firstAttribute="bottom" secondItem="kum-re-Wa8" secondAttribute="top" id="Sr2-bh-Sl7"/>
                             <constraint firstItem="kum-re-Wa8" firstAttribute="top" secondItem="gyl-GM-m4T" secondAttribute="bottom" constant="-2" id="Tzv-nL-L0s"/>
@@ -396,7 +396,7 @@ You can then share this list with any of your contacts, the same as you would do
                         <viewControllerLayoutGuide type="bottom" id="MQr-a3-fXH"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="7bZ-Bj-n9q">
-                        <rect key="frame" x="0.0" y="0.0" width="30" height="532"/>
+                        <rect key="frame" x="0.0" y="0.0" width="30" height="524"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="o2o-IO-QLi">

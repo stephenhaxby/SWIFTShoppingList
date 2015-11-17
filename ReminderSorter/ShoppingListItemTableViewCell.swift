@@ -129,8 +129,18 @@ class ShoppingListItemTableViewCell: UITableViewCell, UITextFieldDelegate
         
         if let checkSwitch = completedSwitch {
             
-            checkSwitch.hidden = shoppingListItemReminder.title == ""
-            addNewButton.hidden = !checkSwitch.hidden
+            if shoppingListItemReminder.title == "_"{
+                
+                checkSwitch.hidden = true
+                addNewButton.hidden = true
+                shoppingListItemTextField.text = ""
+                
+            }
+            else{
+                
+                checkSwitch.hidden = shoppingListItemReminder.title == ""
+                addNewButton.hidden = !checkSwitch.hidden
+            }
             
             if !checkSwitch.on{
                 

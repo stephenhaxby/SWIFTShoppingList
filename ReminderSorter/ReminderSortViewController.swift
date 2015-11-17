@@ -293,7 +293,7 @@ class ReminderSortViewController: UITableViewController {
     //To return the number of items that the table view needs to show
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        return shoppingList.count + 1
+        return shoppingList.count + 2
     }
     
     //To populate each cell's text based on the index into the calendars array, with the extra item at the bottom
@@ -314,8 +314,22 @@ class ReminderSortViewController: UITableViewController {
             cell.shoppingListItemTextField.autocapitalizationType = UITextAutocapitalizationType.Sentences
         }
         
+        if indexPath.row == 0{
+            
+            shoppingListItem = reminderManager.getNewReminder()
+            
+            //getNewReminder can return nil if the EventStore isn't ready. This happens when the table is first loaded...
+            if shoppingListItem == nil{
+                
+                return ShoppingListItemTableViewCell()
+            }
+            
+            shoppingListItem!.title = "_"
+            shoppingListItem!.completed = false
+        }
+        
         //Add in the extra item at the bottom
-        if indexPath.row == shoppingList.count{
+        else if indexPath.row == shoppingList.count+1{
             
             shoppingListItem = reminderManager.getNewReminder()
             
@@ -330,7 +344,7 @@ class ReminderSortViewController: UITableViewController {
         }
         else{
             
-            shoppingListItem = shoppingList[indexPath.row]
+            shoppingListItem = shoppingList[indexPath.row-1]
         }
         
         cell.reminderSortViewController = self
@@ -387,6 +401,16 @@ class ReminderSortViewController: UITableViewController {
         }
         
         refresh()
+    }
+    
+    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        
+        if indexPath.row == 0{
+            
+            return CGFloat(5)
+        }
+        
+        return tableView.rowHeight
     }
 }
 
