@@ -18,6 +18,6 @@ class QuickScrollViewController : UIViewController {
     @IBAction func touchUpInside(sender: UIButton) {
         
         //When any of the alphabet buttons are clicked, post the notification along with the button that was pressed
-        NSNotificationCenter.defaultCenter().postNotificationName("QuickScrollButtonPressed", object: sender)
+        NSNotificationCenter.defaultCenter().postNotificationName(Constants.QuickScrollButtonPressed, object: sender)
     }
 }

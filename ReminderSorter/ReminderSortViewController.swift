@@ -22,8 +22,6 @@ class ReminderSortViewController: UITableViewController {
     var settingsObserver : NSObjectProtocol?
     var quickScrollObserver : NSObjectProtocol?
     
-    let alphabet = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"]
-    
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         
@@ -42,7 +40,7 @@ class ReminderSortViewController: UITableViewController {
         }
         
         //Custom observer for when a quickscroll button is pressed
-        quickScrollObserver = NSNotificationCenter.defaultCenter().addObserverForName("QuickScrollButtonPressed", object: nil, queue: nil){
+        quickScrollObserver = NSNotificationCenter.defaultCenter().addObserverForName(Constants.QuickScrollButtonPressed, object: nil, queue: nil){
             (notification) -> Void in
             
             if let quickScrollButton : UIButton = notification.object as? UIButton {
@@ -68,7 +66,7 @@ class ReminderSortViewController: UITableViewController {
         
         if let observer = quickScrollObserver{
             
-            NSNotificationCenter.defaultCenter().removeObserver(observer, name: "QuickScrollButtonPressed", object: nil)
+            NSNotificationCenter.defaultCenter().removeObserver(observer, name: Constants.QuickScrollButtonPressed, object: nil)
         }
     }
     
@@ -85,7 +83,7 @@ class ReminderSortViewController: UITableViewController {
         startRefreshControl()
         
         //Setup the reminders manager to access a list called 'Shopping'
-        reminderManager.remindersListName = "Shopping"
+        reminderManager.remindersListName = Constants.RemindersListName
         //Request access to the users reminders list; call 'requestedAccessToReminders' when done
         reminderManager.requestAccessToReminders(requestedAccessToReminders)
     }
@@ -259,11 +257,11 @@ class ReminderSortViewController: UITableViewController {
         else{
             
             //If no items exist that start with that letter, go back up the alphabet to find one that exists
-            let indexOfLetter = alphabet.indexOf(letter)
+            let indexOfLetter = Constants.alphabet.indexOf(letter)
             
             if(indexOfLetter > 0) {
                 
-                scrollToNearestLetter(alphabet[indexOfLetter!-1])
+                scrollToNearestLetter(Constants.alphabet[indexOfLetter!-1])
             }
             else {
                 
