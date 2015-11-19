@@ -79,6 +79,11 @@ class ReminderSortViewController: UITableViewController {
             
             NSNotificationCenter.defaultCenter().removeObserver(observer, name: Constants.QuickScrollButtonPressed, object: nil)
         }
+        
+        if let observer = saveReminderObserver{
+            
+            NSNotificationCenter.defaultCenter().removeObserver(observer, name: Constants.SaveReminder, object: nil)
+        }
     }
     
     override func viewDidLoad() {
