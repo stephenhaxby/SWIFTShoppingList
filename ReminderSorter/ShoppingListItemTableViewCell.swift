@@ -17,8 +17,6 @@ class ShoppingListItemTableViewCell: UITableViewCell, UITextFieldDelegate
     
     @IBOutlet weak var addNewButton: UIButton!
     
-    weak var reminderSortViewController : ReminderSortViewController?
-    
     //Setter for the cells reminder
     var reminder: EKReminder? {
         didSet {
@@ -51,10 +49,7 @@ class ShoppingListItemTableViewCell: UITableViewCell, UITextFieldDelegate
                 
                 editedReminder.title = sender.text!
                 
-                if let viewController = reminderSortViewController{
-                    
-                    viewController.saveReminder(editedReminder)
-                }
+                NSNotificationCenter.defaultCenter().postNotificationName(Constants.SaveReminder, object: editedReminder)
             }
         }
     }
@@ -69,18 +64,15 @@ class ShoppingListItemTableViewCell: UITableViewCell, UITextFieldDelegate
                 
                 editedReminder.completed = !checkSwitch.on
                 
-                if let viewController = reminderSortViewController{
+                let delayInMilliSeconds = (editedReminder.completed) ? 500.0 : 200.00
+                
+                //The dalay is in nano seconds so we just convert it using the standard NSEC_PER_MSEC value
+                let delay = Int64(delayInMilliSeconds * Double(NSEC_PER_MSEC))
+                
+                let dispatchTime = dispatch_time(DISPATCH_TIME_NOW, delay)
+                dispatch_after(dispatchTime, dispatch_get_main_queue()) {
                     
-                    let delayInMilliSeconds = (editedReminder.completed) ? 500.0 : 200.00
-                    
-                    //The dalay is in nano seconds so we just convert it using the standard NSEC_PER_MSEC value
-                    let delay = Int64(delayInMilliSeconds * Double(NSEC_PER_MSEC))
-                    
-                    let dispatchTime = dispatch_time(DISPATCH_TIME_NOW, delay)
-                    dispatch_after(dispatchTime, dispatch_get_main_queue()) {
-                        
-                        viewController.saveReminder(editedReminder)
-                    }
+                    NSNotificationCenter.defaultCenter().postNotificationName(Constants.SaveReminder, object: editedReminder)
                 }
             }
         }
@@ -125,8 +117,6 @@ class ShoppingListItemTableViewCell: UITableViewCell, UITextFieldDelegate
         completedSwitch.on = !shoppingListItemReminder.completed
         
         if let checkSwitch = completedSwitch {
-
-            //TODO: Try and remove the constraint
             
             switch shoppingListItemReminder.title{
                 

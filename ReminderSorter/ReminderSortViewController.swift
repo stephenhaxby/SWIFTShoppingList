@@ -21,6 +21,7 @@ class ReminderSortViewController: UITableViewController {
     var eventStoreObserver : NSObjectProtocol?
     var settingsObserver : NSObjectProtocol?
     var quickScrollObserver : NSObjectProtocol?
+    var saveReminderObserver : NSObjectProtocol?
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -46,6 +47,16 @@ class ReminderSortViewController: UITableViewController {
             if let quickScrollButton : UIButton = notification.object as? UIButton {
 
                 self.scrollToLetter(quickScrollButton.currentTitle!)
+            }
+        }
+        
+        //Custom observer for when an cell / reminder needs to be saved
+        saveReminderObserver = NSNotificationCenter.defaultCenter().addObserverForName(Constants.SaveReminder, object: nil, queue: nil){
+            (notification) -> Void in
+            
+            if let reminder : EKReminder = notification.object as? EKReminder{
+
+                self.saveReminder(reminder)
             }
         }
     }
@@ -333,7 +344,6 @@ class ReminderSortViewController: UITableViewController {
             shoppingListItem = shoppingList[indexPath.row-1]
         }
         
-        cell.reminderSortViewController = self
         cell.setShoppingListItem(shoppingListItem!)
         
         return cell
@@ -364,7 +374,7 @@ class ReminderSortViewController: UITableViewController {
     override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
         
         //Don't allow delete of the last blank row...
-        if(indexPath.row < shoppingList.count){
+        if(indexPath.row < shoppingList.count+1){
             return true
         }
         
@@ -374,9 +384,9 @@ class ReminderSortViewController: UITableViewController {
     //This method is for the swipe left to delete
     override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
         
-        if(indexPath.row < shoppingList.count){
+        if(indexPath.row < shoppingList.count-1){
 
-            let shoppingListItem : EKReminder = shoppingList[indexPath.row]
+            let shoppingListItem : EKReminder = shoppingList[indexPath.row-1]
             
             guard reminderManager.removeReminder(shoppingListItem) else {
                 
@@ -389,6 +399,7 @@ class ReminderSortViewController: UITableViewController {
         refresh()
     }
     
+    //This method is to set the row height of the first spacer row...
     override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         
         if indexPath.row == 0{
