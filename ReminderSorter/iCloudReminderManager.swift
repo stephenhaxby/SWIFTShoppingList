@@ -127,7 +127,7 @@ class iCloudReminderManager{
             
             try eventStore.saveReminder(reminder, commit: true)
             
-        } catch _ as NSError {
+        } catch {
 
             return nil
         }
@@ -141,12 +141,16 @@ class iCloudReminderManager{
             
             try eventStore.saveReminder(reminder, commit: true)
             
-            return true
+        } catch let error as NSError {
             
-        } catch _ {
-            
-            return false
+            //That event does not belong to that event store (error.code == 11).
+            guard error.code == 11 else {
+                
+                return false
+            }
         }
+        
+        return true
     }
     
     func removeReminder(reminder : EKReminder) -> Bool{
@@ -157,7 +161,7 @@ class iCloudReminderManager{
             
             return true
             
-        } catch _ {
+        } catch {
             
             return false
         }

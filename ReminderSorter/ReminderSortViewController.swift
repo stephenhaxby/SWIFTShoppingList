@@ -218,8 +218,6 @@ class ReminderSortViewController: UITableViewController {
             
             return
         }
-        
-        refresh()
     }
 
     func displayError(message : String){
@@ -400,8 +398,6 @@ class ReminderSortViewController: UITableViewController {
                 return
             }
         }
-        
-        refresh()
     }
     
     //This method is to set the row height of the first spacer row...
