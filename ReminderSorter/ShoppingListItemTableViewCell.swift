@@ -24,6 +24,7 @@ class ShoppingListItemTableViewCell: UITableViewCell, UITextFieldDelegate
             if let shoppingListItemReminder = reminder{
                 
                 //Setting the text value based on the auto-capitalisation settings
+                shoppingListItemTextField.attributedText = nil
                 shoppingListItemTextField.text = getAutoCapitalisationTitle(shoppingListItemReminder.title)
                 
                 //Extra section for completed items
@@ -98,7 +99,7 @@ class ShoppingListItemTableViewCell: UITableViewCell, UITextFieldDelegate
         //Loop through each word in the string and make it lower case or first letter upper-case
         for var i = 1; i < words.count; ++i {
             
-            if SettingsUserDefaults.autocapitalisation {
+            if SettingsUserDefaults.autoCapitalisation {
                 
                 listItem = listItem + " " + words[i].capitalizedString
             }

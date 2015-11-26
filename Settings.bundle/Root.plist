@@ -10,9 +10,19 @@
 			<key>Type</key>
 			<string>PSToggleSwitchSpecifier</string>
 			<key>Title</key>
+			<string>Dissable Screen Lock</string>
+			<key>Key</key>
+			<string>dissableScreenLock</string>
+			<key>DefaultValue</key>
+			<true/>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSToggleSwitchSpecifier</string>
+			<key>Title</key>
 			<string>Auto-Capitalisation</string>
 			<key>Key</key>
-			<string>autocapitalisation</string>
+			<string>autoCapitalisation</string>
 			<key>DefaultValue</key>
 			<true/>
 		</dict>

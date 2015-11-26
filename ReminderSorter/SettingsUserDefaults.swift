@@ -18,7 +18,11 @@ class SettingsUserDefaults{
         return NSUserDefaults.standardUserDefaults().boolForKey("alphabeticalSortComplete")
     }
     
-    static var autocapitalisation: Bool {
-        return NSUserDefaults.standardUserDefaults().boolForKey("autocapitalisation")
+    static var autoCapitalisation: Bool {
+        return NSUserDefaults.standardUserDefaults().boolForKey("autoCapitalisation")
+    }
+    
+    static var dissableScreenLock: Bool {
+        return NSUserDefaults.standardUserDefaults().boolForKey("dissableScreenLock")
     }
 }

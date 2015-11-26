@@ -90,7 +90,7 @@ class ReminderSortViewController: UITableViewController {
         super.viewDidLoad()
         
         //Make it so the screen doesn't turn off
-        UIApplication.sharedApplication().idleTimerDisabled = true
+        UIApplication.sharedApplication().idleTimerDisabled = SettingsUserDefaults.dissableScreenLock
         
         //Set the font size of the navigation view controller
         self.navigationController?.navigationBar.titleTextAttributes = [NSFontAttributeName: UIFont.boldSystemFontOfSize(18.0)]
@@ -303,7 +303,7 @@ class ReminderSortViewController: UITableViewController {
         let cell : ShoppingListItemTableViewCell = tableView.dequeueReusableCellWithIdentifier("ReminderCell") as! ShoppingListItemTableViewCell
         
         //Based on the settings, set up the auto-capitalisation for the keyboard
-        if SettingsUserDefaults.autocapitalisation{
+        if SettingsUserDefaults.autoCapitalisation{
             
             cell.shoppingListItemTextField.autocapitalizationType = UITextAutocapitalizationType.Words
         }
