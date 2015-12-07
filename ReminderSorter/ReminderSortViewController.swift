@@ -387,7 +387,7 @@ class ReminderSortViewController: UITableViewController {
     //This method is for the swipe left to delete
     override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
         
-        if(indexPath.row < shoppingList.count-1){
+        if(indexPath.row < shoppingList.count+1){
 
             let shoppingListItem : EKReminder = shoppingList[indexPath.row-1]
             
