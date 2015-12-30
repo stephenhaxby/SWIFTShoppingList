@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9059" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="jGZ-Bv-awX">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9531" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="jGZ-Bv-awX">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9049"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
@@ -13,7 +13,6 @@
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" keyboardDismissMode="onDrag" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="gn4-vH-fZP">
                         <rect key="frame" x="0.0" y="0.0" width="570" height="596"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="ReminderCell" id="9Z4-o8-zaC" customClass="ShoppingListItemTableViewCell" customModule="ReminderSorter" customModuleProvider="target">
@@ -25,14 +24,12 @@
                                     <subviews>
                                         <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ReJ-9B-XiB">
                                             <rect key="frame" x="8" y="4" width="51" height="31"/>
-                                            <animations/>
                                             <connections>
                                                 <action selector="completedSwitchValueChanged:" destination="9Z4-o8-zaC" eventType="valueChanged" id="T3g-xp-Yw4"/>
                                             </connections>
                                         </switch>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uyh-4K-TeC">
                                             <rect key="frame" x="8" y="-2" width="30" height="37"/>
-                                            <animations/>
                                             <fontDescription key="fontDescription" type="system" pointSize="48"/>
                                             <state key="normal" title="+">
                                                 <color key="titleColor" red="0.40000000596046448" green="0.40000000596046448" blue="0.40000000596046448" alpha="1" colorSpace="calibratedRGB"/>
@@ -43,7 +40,6 @@
                                         </button>
                                         <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Lib-C6-ncm">
                                             <rect key="frame" x="75" y="8" width="487" height="27"/>
-                                            <animations/>
                                             <gestureRecognizers/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="487" id="fPx-cY-UQC"/>
@@ -55,7 +51,6 @@
                                             </connections>
                                         </textField>
                                     </subviews>
-                                    <animations/>
                                     <constraints>
                                         <constraint firstItem="Lib-C6-ncm" firstAttribute="bottom" secondItem="uyh-4K-TeC" secondAttribute="bottom" id="BaH-Um-8um"/>
                                         <constraint firstItem="uyh-4K-TeC" firstAttribute="bottom" secondItem="ReJ-9B-XiB" secondAttribute="bottom" id="D8p-f3-W2u"/>
@@ -84,7 +79,6 @@
                                         </mask>
                                     </variation>
                                 </tableViewCellContentView>
-                                <animations/>
                                 <connections>
                                     <outlet property="addNewButton" destination="uyh-4K-TeC" id="Y3h-AD-kMR"/>
                                     <outlet property="completedSwitch" destination="ReJ-9B-XiB" id="JS0-Dj-ab2"/>
@@ -99,7 +93,6 @@
                     </tableView>
                     <refreshControl key="refreshControl" opaque="NO" multipleTouchEnabled="YES" contentMode="center" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" id="Qve-7w-cU2">
                         <autoresizingMask key="autoresizingMask"/>
-                        <animations/>
                         <attributedString key="attributedTitle"/>
                         <connections>
                             <action selector="refresh:" destination="5Ag-tc-sUf" eventType="valueChanged" id="Qe3-AG-Vck"/>
@@ -133,21 +126,18 @@
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Information:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CR0-QT-Gfp">
                                                 <rect key="frame" x="0.0" y="8" width="560" height="22"/>
-                                                <animations/>
                                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
                                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Features:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yUd-MJ-Aje">
                                                 <rect key="frame" x="0.0" y="204" width="560" height="22"/>
-                                                <animations/>
                                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
                                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <textView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" delaysContentTouches="NO" canCancelContentTouches="NO" bouncesZoom="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="IBS-NX-3at">
                                                 <rect key="frame" x="0.0" y="234" width="560" height="184"/>
-                                                <animations/>
                                                 <string key="text">* Add new item
 * Swipe left to delete
 * Press to edit
@@ -163,7 +153,6 @@
                                             </textView>
                                             <textView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" delaysContentTouches="NO" canCancelContentTouches="NO" bouncesZoom="NO" editable="NO" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aFP-nM-11S">
                                                 <rect key="frame" x="0.0" y="38" width="560" height="150"/>
-                                                <animations/>
                                                 <string key="text">Shopping taps into your iCloud Reminders to enable you to access your shopping list across all your iDevices (and iCloud on the web).
 
 We will create a new list called 'Shopping' (or attempt to use an existing one if one already exists) so look for this next time you access your built in Reminders app.
@@ -173,7 +162,6 @@ You can then share this list with any of your contacts, the same as you would do
                                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                             </textView>
                                         </subviews>
-                                        <animations/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
                                             <constraint firstItem="CR0-QT-Gfp" firstAttribute="trailing" secondItem="aFP-nM-11S" secondAttribute="trailing" id="3yh-HZ-TTv"/>
@@ -192,7 +180,6 @@ You can then share this list with any of your contacts, the same as you would do
                                         </constraints>
                                     </view>
                                 </subviews>
-                                <animations/>
                                 <constraints>
                                     <constraint firstAttribute="trailing" secondItem="EIG-6C-MiI" secondAttribute="trailing" id="A7N-mc-aoh"/>
                                     <constraint firstItem="EIG-6C-MiI" firstAttribute="top" secondItem="a8F-KK-weE" secondAttribute="top" id="HPU-Z5-dKj"/>
@@ -201,7 +188,6 @@ You can then share this list with any of your contacts, the same as you would do
                                 </constraints>
                             </scrollView>
                         </subviews>
-                        <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <gestureRecognizers/>
                         <constraints>
@@ -228,7 +214,6 @@ You can then share this list with any of your contacts, the same as you would do
                             <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" hasAttributedTitle="YES" id="HHw-QH-cb9">
                                 <rect key="frame" x="20" y="7" width="60" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <animations/>
                                 <state key="normal">
                                     <attributedString key="attributedTitle">
                                         <fragment content="&lt; Back">
@@ -267,14 +252,12 @@ You can then share this list with any of your contacts, the same as you would do
                         <subviews>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gyl-GM-m4T">
                                 <rect key="frame" x="0.0" y="4" width="570" height="596"/>
-                                <animations/>
                                 <connections>
                                     <segue destination="5Ag-tc-sUf" kind="embed" id="Hl8-yx-S4N"/>
                                 </connections>
                             </containerView>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="akY-23-ae6">
                                 <rect key="frame" x="570" y="64" width="30" height="536"/>
-                                <animations/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="30" id="PsG-Y0-md6"/>
                                 </constraints>
@@ -283,7 +266,6 @@ You can then share this list with any of your contacts, the same as you would do
                                 </connections>
                             </containerView>
                         </subviews>
-                        <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="gyl-GM-m4T" firstAttribute="top" secondItem="ZAt-hv-4hm" secondAttribute="top" id="0Pn-6X-iQS"/>
@@ -358,7 +340,6 @@ You can then share this list with any of your contacts, the same as you would do
                             <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" hasAttributedTitle="YES" id="kmd-5C-nsS">
                                 <rect key="frame" x="20" y="7" width="30" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <animations/>
                                 <state key="normal">
                                     <attributedString key="attributedTitle"/>
                                 </state>
@@ -371,7 +352,6 @@ You can then share this list with any of your contacts, the same as you would do
                             <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" hasAttributedTitle="YES" id="P2a-Vy-cd3">
                                 <rect key="frame" x="550" y="7" width="30" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <animations/>
                                 <state key="normal">
                                     <attributedString key="attributedTitle"/>
                                 </state>
@@ -398,7 +378,6 @@ You can then share this list with any of your contacts, the same as you would do
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="mbX-8l-jRY">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <animations/>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
@@ -426,7 +405,6 @@ You can then share this list with any of your contacts, the same as you would do
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="o2o-IO-QLi">
                                         <rect key="frame" x="0.0" y="0.0" width="30" height="25"/>
-                                        <animations/>
                                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                         <state key="normal" title="A"/>
                                         <connections>
@@ -435,7 +413,6 @@ You can then share this list with any of your contacts, the same as you would do
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KIr-Mt-Rmm">
                                         <rect key="frame" x="0.0" y="18" width="30" height="25"/>
-                                        <animations/>
                                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                         <state key="normal" title="B"/>
                                         <connections>
@@ -444,7 +421,6 @@ You can then share this list with any of your contacts, the same as you would do
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kgo-gI-4hc">
                                         <rect key="frame" x="0.0" y="36" width="30" height="25"/>
-                                        <animations/>
                                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                         <state key="normal" title="C"/>
                                         <connections>
@@ -453,7 +429,6 @@ You can then share this list with any of your contacts, the same as you would do
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zNy-dP-jmM">
                                         <rect key="frame" x="0.0" y="54" width="30" height="25"/>
-                                        <animations/>
                                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                         <state key="normal" title="D"/>
                                         <connections>
@@ -462,7 +437,6 @@ You can then share this list with any of your contacts, the same as you would do
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GQF-vZ-gIC">
                                         <rect key="frame" x="0.0" y="90" width="30" height="25"/>
-                                        <animations/>
                                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                         <state key="normal" title="F"/>
                                         <connections>
@@ -471,7 +445,6 @@ You can then share this list with any of your contacts, the same as you would do
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Y49-6A-3YB">
                                         <rect key="frame" x="0.0" y="126" width="30" height="25"/>
-                                        <animations/>
                                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                         <state key="normal" title="H"/>
                                         <connections>
@@ -480,7 +453,6 @@ You can then share this list with any of your contacts, the same as you would do
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GEM-G0-6mx">
                                         <rect key="frame" x="0.0" y="108" width="30" height="25"/>
-                                        <animations/>
                                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                         <state key="normal" title="G"/>
                                         <connections>
@@ -489,7 +461,6 @@ You can then share this list with any of your contacts, the same as you would do
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5gr-TX-2Yk">
                                         <rect key="frame" x="0.0" y="162" width="30" height="25"/>
-                                        <animations/>
                                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                         <state key="normal" title="J"/>
                                         <connections>
@@ -498,7 +469,6 @@ You can then share this list with any of your contacts, the same as you would do
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LrU-bm-Z0i">
                                         <rect key="frame" x="0.0" y="144" width="30" height="25"/>
-                                        <animations/>
                                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                         <state key="normal" title="I"/>
                                         <connections>
@@ -507,7 +477,6 @@ You can then share this list with any of your contacts, the same as you would do
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9X4-PV-kO6">
                                         <rect key="frame" x="0.0" y="198" width="30" height="25"/>
-                                        <animations/>
                                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                         <state key="normal" title="L"/>
                                         <connections>
@@ -516,7 +485,6 @@ You can then share this list with any of your contacts, the same as you would do
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dnG-tV-Nw5">
                                         <rect key="frame" x="0.0" y="252" width="30" height="25"/>
-                                        <animations/>
                                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                         <state key="normal" title="O"/>
                                         <connections>
@@ -525,7 +493,6 @@ You can then share this list with any of your contacts, the same as you would do
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2rw-Po-BNl">
                                         <rect key="frame" x="0.0" y="234" width="30" height="25"/>
-                                        <animations/>
                                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                         <state key="normal" title="N"/>
                                         <connections>
@@ -534,7 +501,6 @@ You can then share this list with any of your contacts, the same as you would do
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xm6-aA-cYi">
                                         <rect key="frame" x="0.0" y="216" width="30" height="25"/>
-                                        <animations/>
                                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                         <state key="normal" title="M"/>
                                         <connections>
@@ -543,7 +509,6 @@ You can then share this list with any of your contacts, the same as you would do
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gHR-Vl-pYU">
                                         <rect key="frame" x="0.0" y="309" width="30" height="25"/>
-                                        <animations/>
                                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                         <state key="normal" title="R"/>
                                         <connections>
@@ -552,7 +517,6 @@ You can then share this list with any of your contacts, the same as you would do
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="q3L-Jl-cRS">
                                         <rect key="frame" x="0.0" y="288" width="30" height="25"/>
-                                        <animations/>
                                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                         <state key="normal" title="Q"/>
                                         <connections>
@@ -561,7 +525,6 @@ You can then share this list with any of your contacts, the same as you would do
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lNt-wZ-vK3">
                                         <rect key="frame" x="0.0" y="270" width="30" height="25"/>
-                                        <animations/>
                                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                         <state key="normal" title="P"/>
                                         <connections>
@@ -570,7 +533,6 @@ You can then share this list with any of your contacts, the same as you would do
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bKJ-mm-eCL">
                                         <rect key="frame" x="0.0" y="360" width="30" height="25"/>
-                                        <animations/>
                                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                         <state key="normal" title="U"/>
                                         <connections>
@@ -579,7 +541,6 @@ You can then share this list with any of your contacts, the same as you would do
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="W6H-1p-QEY">
                                         <rect key="frame" x="0.0" y="342" width="30" height="25"/>
-                                        <animations/>
                                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                         <state key="normal" title="T"/>
                                         <connections>
@@ -588,7 +549,6 @@ You can then share this list with any of your contacts, the same as you would do
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pE3-GU-aOJ">
                                         <rect key="frame" x="0.0" y="324" width="30" height="25"/>
-                                        <animations/>
                                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                         <state key="normal" title="S"/>
                                         <connections>
@@ -597,7 +557,6 @@ You can then share this list with any of your contacts, the same as you would do
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AUU-kK-LTo">
                                         <rect key="frame" x="0.0" y="396" width="30" height="25"/>
-                                        <animations/>
                                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                         <state key="normal" title="W"/>
                                         <connections>
@@ -606,7 +565,6 @@ You can then share this list with any of your contacts, the same as you would do
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZXw-ar-cVf">
                                         <rect key="frame" x="0.0" y="378" width="30" height="25"/>
-                                        <animations/>
                                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                         <state key="normal" title="V"/>
                                         <connections>
@@ -615,7 +573,6 @@ You can then share this list with any of your contacts, the same as you would do
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dVQ-oF-KD0">
                                         <rect key="frame" x="0.0" y="432" width="30" height="25"/>
-                                        <animations/>
                                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                         <state key="normal" title="Y"/>
                                         <connections>
@@ -624,7 +581,6 @@ You can then share this list with any of your contacts, the same as you would do
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gC5-Jd-osY">
                                         <rect key="frame" x="0.0" y="414" width="30" height="25"/>
-                                        <animations/>
                                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                         <state key="normal" title="X"/>
                                         <connections>
@@ -633,7 +589,6 @@ You can then share this list with any of your contacts, the same as you would do
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FXj-XI-HEM">
                                         <rect key="frame" x="0.0" y="180" width="30" height="25"/>
-                                        <animations/>
                                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                         <state key="normal" title="K"/>
                                         <connections>
@@ -642,7 +597,6 @@ You can then share this list with any of your contacts, the same as you would do
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uT8-QA-WcC">
                                         <rect key="frame" x="0.0" y="450" width="30" height="25"/>
-                                        <animations/>
                                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                         <state key="normal" title="Z"/>
                                         <connections>
@@ -651,7 +605,6 @@ You can then share this list with any of your contacts, the same as you would do
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IaD-l5-qf8">
                                         <rect key="frame" x="0.0" y="468" width="30" height="25"/>
-                                        <animations/>
                                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                         <state key="normal" title="+"/>
                                         <connections>
@@ -660,7 +613,6 @@ You can then share this list with any of your contacts, the same as you would do
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5Y7-M2-IcN">
                                         <rect key="frame" x="0.0" y="72" width="30" height="25"/>
-                                        <animations/>
                                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                         <state key="normal" title="E"/>
                                         <connections>
@@ -668,14 +620,12 @@ You can then share this list with any of your contacts, the same as you would do
                                         </connections>
                                     </button>
                                 </subviews>
-                                <animations/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="495" id="VjX-Cz-XnJ"/>
                                     <constraint firstAttribute="width" constant="30" id="hKT-Vn-BQ3"/>
                                 </constraints>
                             </view>
                         </subviews>
-                        <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="cNf-j8-fbg" firstAttribute="centerY" secondItem="7bZ-Bj-n9q" secondAttribute="centerY" id="26P-08-TC8"/>
@@ -696,7 +646,6 @@ You can then share this list with any of your contacts, the same as you would do
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="epe-f6-29a">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <animations/>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>

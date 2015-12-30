@@ -107,6 +107,14 @@ class ReminderSortViewController: UITableViewController {
     //Event for pull down to refresh
     @IBAction private func refresh(sender: UIRefreshControl?) {
         
+        if let blankReminder : EKReminder = reminderManager.addReminder("") {
+            
+            if !reminderManager.removeReminder(blankReminder) {
+                
+                displayError("There was a problem refreshing your Shopping List...")
+            }
+        }
+        
         //Reload the shopping list
         loadShoppingList()
         
