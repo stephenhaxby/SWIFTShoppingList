@@ -107,16 +107,21 @@ class ReminderSortViewController: UITableViewController {
     //Event for pull down to refresh
     @IBAction private func refresh(sender: UIRefreshControl?) {
         
-        if let blankReminder : EKReminder = reminderManager.addReminder("") {
+        if let blankReminder : EKReminder = reminderManager.addReminder("", commit: false) {
             
-            if !reminderManager.removeReminder(blankReminder) {
+            if !reminderManager.removeReminder(blankReminder, commit: false) {
                 
                 displayError("There was a problem refreshing your Shopping List...")
             }
+            else {
+                
+                reminderManager.commit()
+            }
         }
-        
-        //Reload the shopping list
-        loadShoppingList()
+        else {
+
+            displayError("There was a problem refreshing your Shopping List...")
+        }
         
         //Stop the refresh controll spinner if its running
         endRefreshControl(sender)

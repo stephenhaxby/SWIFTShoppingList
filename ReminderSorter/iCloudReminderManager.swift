@@ -109,8 +109,13 @@ class iCloudReminderManager{
         }
     }
 
+    func addReminder(title : String) -> EKReminder? {
+     
+        return addReminder(title, commit: true)
+    }
+    
     //NOTE: Not currently used, but may come in handy...
-    func addReminder(title : String) -> EKReminder?{
+    func addReminder(title : String, commit : Bool) -> EKReminder? {
         
         let calendar : EKCalendar? = getReminderList()
         
@@ -125,7 +130,7 @@ class iCloudReminderManager{
         
         do {
             
-            try eventStore.saveReminder(reminder, commit: true)
+            try eventStore.saveReminder(reminder, commit: commit)
             
         } catch {
 
@@ -153,11 +158,16 @@ class iCloudReminderManager{
         return true
     }
     
-    func removeReminder(reminder : EKReminder) -> Bool{
+    func removeReminder(reminder : EKReminder) -> Bool {
+     
+        return removeReminder(reminder, commit: true)
+    }
+    
+    func removeReminder(reminder : EKReminder, commit: Bool) -> Bool{
         
         do {
 
-            try eventStore.removeReminder(reminder, commit: true)
+            try eventStore.removeReminder(reminder, commit: commit)
             
             return true
             
@@ -178,5 +188,19 @@ class iCloudReminderManager{
         }
         
         return nil
+    }
+    
+    func commit() -> Bool {
+        
+        do {
+            
+            try eventStore.commit()
+            
+            return true
+        }
+        catch {
+            
+            return false
+        }
     }
 }
