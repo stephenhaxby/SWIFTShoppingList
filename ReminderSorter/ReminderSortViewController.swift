@@ -14,6 +14,8 @@ class ReminderSortViewController: UITableViewController {
     //Outlet for the Table View so we can access it in code
     @IBOutlet var remindersTableView: UITableView!
     
+    var refreshLock : NSRecursiveLock = NSRecursiveLock()
+    
     let reminderManager : iCloudReminderManager = iCloudReminderManager()
     
     var shoppingList = [EKReminder]()
@@ -30,7 +32,7 @@ class ReminderSortViewController: UITableViewController {
         eventStoreObserver = NSNotificationCenter.defaultCenter().addObserverForName(EKEventStoreChangedNotification, object: nil, queue: nil){
             (notification) -> Void in
             
-            self.refresh()
+            self.conditionalLoadShoppingList()
         }
         
         //Observer for when our settings change
@@ -102,29 +104,48 @@ class ReminderSortViewController: UITableViewController {
         reminderManager.remindersListName = Constants.RemindersListName
         //Request access to the users reminders list; call 'requestedAccessToReminders' when done
         reminderManager.requestAccessToReminders(requestedAccessToReminders)
+        
+        
     }
     
     //Event for pull down to refresh
     @IBAction private func refresh(sender: UIRefreshControl?) {
         
-        if let blankReminder : EKReminder = reminderManager.addReminder("", commit: false) {
+//        reminderManager.commit()
+//        reminderManager.saveCalendar()
+        
+//        guard reminderManager.commit() else {
+//            
+//            displayError("There was a problem refreshing your Shopping List...")
+//            
+//            //Stop the refresh controll spinner if its running
+//            endRefreshControl(sender)
+//            
+//            return
+//        }
+        
+        //Delay for 200 milliseconds then run the refresh
+        delay(0.3){
+
+            self.endRefreshControl(sender)
             
-            if !reminderManager.removeReminder(blankReminder, commit: false) {
+            //Stop the refresh controll spinner if its running
+            self.endRefreshControl(sender)
+        
+            if let blankReminder : EKReminder = self.reminderManager.addReminder("", commit: false) {
                 
-                displayError("There was a problem refreshing your Shopping List...")
+                self.reminderManager.commit()
+                
+                if !self.reminderManager.removeReminder(blankReminder, commit: true) {
+                    
+                    self.displayError("There was a problem refreshing your Shopping List...")
+                }
             }
             else {
                 
-                reminderManager.commit()
+                self.displayError("There was a problem refreshing your Shopping List...")
             }
         }
-        else {
-
-            displayError("There was a problem refreshing your Shopping List...")
-        }
-        
-        //Stop the refresh controll spinner if its running
-        endRefreshControl(sender)
     }
     
     //Gets the shopping list from the manager and reloads the table
@@ -133,21 +154,137 @@ class ReminderSortViewController: UITableViewController {
         reminderManager.getReminders(getShoppingList)
     }
     
+    func conditionalLoadShoppingList() {
+    
+        reminderManager.getReminders(conditionalLoadShoppingList)
+    }
+    
     //Called by the table view cell when deleting an item
     func refresh(){
         
-        startRefreshControl()
+//        if let refresh = refreshControl{
+            
+//            if !refresh.refreshing {
+//                
+//                startRefreshControl()
+//            }
+//        }
         
-        loadShoppingList()
+//        if let refresh = refreshControl{
+//            
+//            if refresh.refreshing {
+//             
+//                loadShoppingList()
+//                
+//                let delayInMilliSeconds = 1.0
+//                
+//                delay(delayInMilliSeconds){
+//                    
+//                    if let shoppingListTable = self.tableView{
+//                        
+//                        //Request a reload of the Table
+//                        shoppingListTable.reloadData()
+//                    }}
+//            }
+//        }
         
-        endRefreshControl()
+//        endRefreshControl()
+
+        if let shoppingListTable = self.tableView{
+                        
+            //Request a reload of the Table
+            shoppingListTable.reloadData()
+        }
+    }
+    
+    func delay(delay: Double, closure: ()->()) {
+        dispatch_after(
+            dispatch_time(
+                DISPATCH_TIME_NOW,
+                Int64(delay * Double(NSEC_PER_SEC))
+            ),
+            dispatch_get_main_queue(),
+            closure
+        )
+    }
+    
+    func conditionalLoadShoppingList(iCloudShoppingList : [EKReminder]) {
+
+        let updatedShoppingList : [EKReminder] = iCloudShoppingList.filter({(reminder : EKReminder) in reminder.title != ""})
+        
+        if shoppingList.count != updatedShoppingList.count {
+
+            getShoppingList(updatedShoppingList)
+        }
+        else {
+
+            for var i = 0; i < shoppingList.count; i++ {
+
+                let currentItem : EKReminder = shoppingList[i]
+                
+                let updatedItemIndex : Int? = updatedShoppingList.indexOf({(reminder : EKReminder) in reminder.calendarItemExternalIdentifier == currentItem.calendarItemExternalIdentifier})
+                
+                if updatedItemIndex != nil {
+
+                    let updatedItem : EKReminder = updatedShoppingList[updatedItemIndex!]
+
+                    if currentItem.completed != updatedItem.completed
+                        || currentItem.title != updatedItem.title {
+                            
+                        getShoppingList(updatedShoppingList)
+                    }
+                }
+                else {
+                
+                    getShoppingList(updatedShoppingList)
+                    break
+                }
+                
+//                let matchingItem : EKReminder? = updatedShoppingList.filter({(reminder : EKReminder) in reminder.calendarItemExternalIdentifier == currentItem.calendarItemExternalIdentifier}).first
+//                
+//                if let updatedItem : EKReminder = matchingItem {
+//                
+//                    if currentItem.completed != updatedItem.completed
+//                        || currentItem.title != updatedItem.title {
+//
+//                        getShoppingList(updatedShoppingList)
+//                    }
+//                }
+//                else {
+//                
+//                    getShoppingList(updatedShoppingList)
+//                    break
+//                }
+                
+                
+                
+//                let matchingItems : [EKReminder] = updatedShoppingList.filter({(reminder : EKReminder) in reminder.id == currentItem.id})
+                
+//                if matchingItems.isEmpty {
+//                
+//                    getShoppingList(updatedShoppingList)
+//                    break
+//                }
+//                
+//                let updatedItem : EKReminder = matchingItems[0]
+//
+//                if currentItem.completed != updatedItem.completed
+//                    || currentItem.title != updatedItem.title {
+//
+//                    getShoppingList(updatedShoppingList)
+//                }
+            }
+        }
     }
     
     func startRefreshControl(){
         
         if let refresh = refreshControl{
             
-            refresh.beginRefreshing()
+            if !refresh.refreshing {
+             
+                refresh.beginRefreshing()
+            }
         }
     }
     
@@ -155,7 +292,10 @@ class ReminderSortViewController: UITableViewController {
         
         if let refresh = refreshControl{
             
-            refresh.endRefreshing()
+            if refresh.refreshing {
+            
+                refresh.endRefreshing()
+            }
         }
     }
     
@@ -225,12 +365,21 @@ class ReminderSortViewController: UITableViewController {
     //Save a reminder to the users reminders list
     func saveReminder(reminder : EKReminder){
         
-        guard reminderManager.saveReminder(reminder) else {
+        guard reminderManager.saveReminder(reminder, commit: false) else {
             
             displayError("Your shopping list item could not be saved...")
             
             return
         }
+        
+        let existingIndex : Int? = shoppingList.indexOf({(existingReminder : EKReminder) in existingReminder.calendarItemExternalIdentifier == reminder.calendarItemExternalIdentifier})
+        
+        if existingIndex == nil {
+            
+            shoppingList.append(reminder)
+        }
+        
+        getShoppingList(shoppingList)
     }
 
     func displayError(message : String){
@@ -404,12 +553,15 @@ class ReminderSortViewController: UITableViewController {
 
             let shoppingListItem : EKReminder = shoppingList[indexPath.row-1]
             
-            guard reminderManager.removeReminder(shoppingListItem) else {
+            guard reminderManager.removeReminder(shoppingListItem, commit: false) else {
                 
                 displayError("Your shopping list item could not be removed...")
                 
                 return
             }
+            
+            shoppingList.removeAtIndex(indexPath.row-1)
+            refresh()
         }
     }
     
