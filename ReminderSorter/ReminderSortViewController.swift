@@ -28,10 +28,14 @@ class ReminderSortViewController: UITableViewController {
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         
+        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+        appDelegate.reminderSortViewController = self
+        
         //Observer for the app for when the event store is changed in the background (or when our app isn't running)
         eventStoreObserver = NSNotificationCenter.defaultCenter().addObserverForName(EKEventStoreChangedNotification, object: nil, queue: nil){
             (notification) -> Void in
             
+            //Reload the grid only if there are new items from iCloud that we don't have
             self.conditionalLoadShoppingList()
         }
         
@@ -104,47 +108,35 @@ class ReminderSortViewController: UITableViewController {
         reminderManager.remindersListName = Constants.RemindersListName
         //Request access to the users reminders list; call 'requestedAccessToReminders' when done
         reminderManager.requestAccessToReminders(requestedAccessToReminders)
-        
-        
     }
     
     //Event for pull down to refresh
     @IBAction private func refresh(sender: UIRefreshControl?) {
         
-//        reminderManager.commit()
-//        reminderManager.saveCalendar()
-        
-//        guard reminderManager.commit() else {
-//            
-//            displayError("There was a problem refreshing your Shopping List...")
-//            
-//            //Stop the refresh controll spinner if its running
-//            endRefreshControl(sender)
-//            
-//            return
-//        }
-        
-        //Delay for 200 milliseconds then run the refresh
+        //Delay for 300 milliseconds then run the refresh
         delay(0.3){
-
-            self.endRefreshControl(sender)
-            
+           
             //Stop the refresh controll spinner if its running
             self.endRefreshControl(sender)
         
-            if let blankReminder : EKReminder = self.reminderManager.addReminder("", commit: false) {
-                
-                self.reminderManager.commit()
-                
-                if !self.reminderManager.removeReminder(blankReminder, commit: true) {
-                    
-                    self.displayError("There was a problem refreshing your Shopping List...")
-                }
-            }
-            else {
+            self.commitShoppingList()
+        }
+    }
+    
+    func commitShoppingList() {
+        
+        if let blankReminder : EKReminder = self.reminderManager.addReminder("", commit: false) {
+            
+            self.reminderManager.commit()
+            
+            if !self.reminderManager.removeReminder(blankReminder, commit: true) {
                 
                 self.displayError("There was a problem refreshing your Shopping List...")
             }
+        }
+        else {
+            
+            self.displayError("There was a problem refreshing your Shopping List...")
         }
     }
     
