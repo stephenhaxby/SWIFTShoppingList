@@ -28,6 +28,7 @@ class ReminderSortViewController: UITableViewController {
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         
+        //Used for when the app goes into the background (as we want to commit any changes...)
         let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
         appDelegate.reminderSortViewController = self
         
@@ -106,6 +107,7 @@ class ReminderSortViewController: UITableViewController {
         
         //Setup the reminders manager to access a list called 'Shopping'
         reminderManager.remindersListName = Constants.RemindersListName
+        
         //Request access to the users reminders list; call 'requestedAccessToReminders' when done
         reminderManager.requestAccessToReminders(requestedAccessToReminders)
     }
@@ -113,7 +115,7 @@ class ReminderSortViewController: UITableViewController {
     //Event for pull down to refresh
     @IBAction private func refresh(sender: UIRefreshControl?) {
         
-        //Delay for 300 milliseconds then run the refresh
+        //Delay for 300 milliseconds then run the refresh / commit
         delay(0.3){
            
             //Stop the refresh controll spinner if its running
@@ -125,10 +127,13 @@ class ReminderSortViewController: UITableViewController {
     
     func commitShoppingList() {
         
+        //Add a blank reminder to help trigger an iCloud sync
         if let blankReminder : EKReminder = self.reminderManager.addReminder("", commit: false) {
             
+            //Commit all updated items yet to be committed
             self.reminderManager.commit()
             
+            //Remove the blank reminder added above
             if !self.reminderManager.removeReminder(blankReminder, commit: true) {
                 
                 self.displayError("There was a problem refreshing your Shopping List...")
@@ -146,6 +151,7 @@ class ReminderSortViewController: UITableViewController {
         reminderManager.getReminders(getShoppingList)
     }
     
+    //Gets the shopping list from the manager and reloads the table ONLY if there are differing items
     func conditionalLoadShoppingList() {
     
         reminderManager.getReminders(conditionalLoadShoppingList)
@@ -153,34 +159,6 @@ class ReminderSortViewController: UITableViewController {
     
     //Called by the table view cell when deleting an item
     func refresh(){
-        
-//        if let refresh = refreshControl{
-            
-//            if !refresh.refreshing {
-//                
-//                startRefreshControl()
-//            }
-//        }
-        
-//        if let refresh = refreshControl{
-//            
-//            if refresh.refreshing {
-//             
-//                loadShoppingList()
-//                
-//                let delayInMilliSeconds = 1.0
-//                
-//                delay(delayInMilliSeconds){
-//                    
-//                    if let shoppingListTable = self.tableView{
-//                        
-//                        //Request a reload of the Table
-//                        shoppingListTable.reloadData()
-//                    }}
-//            }
-//        }
-        
-//        endRefreshControl()
 
         if let shoppingListTable = self.tableView{
                         
@@ -189,6 +167,7 @@ class ReminderSortViewController: UITableViewController {
         }
     }
     
+    //Delay function to delay the execution of something for a number of seconds
     func delay(delay: Double, closure: ()->()) {
         dispatch_after(
             dispatch_time(
@@ -200,22 +179,29 @@ class ReminderSortViewController: UITableViewController {
         )
     }
     
+    //Only update the shopping list if items have been updated
     func conditionalLoadShoppingList(iCloudShoppingList : [EKReminder]) {
 
+        //Filter out any blank items
         let updatedShoppingList : [EKReminder] = iCloudShoppingList.filter({(reminder : EKReminder) in reminder.title != ""})
         
+        //Count is different - update the list
         if shoppingList.count != updatedShoppingList.count {
 
             getShoppingList(updatedShoppingList)
         }
         else {
 
+            //Loop for all items in our local list
             for var i = 0; i < shoppingList.count; i++ {
 
+                //Get the local item
                 let currentItem : EKReminder = shoppingList[i]
                 
+                //Find a matching item by ID in the iCloud list
                 let updatedItemIndex : Int? = updatedShoppingList.indexOf({(reminder : EKReminder) in reminder.calendarItemExternalIdentifier == currentItem.calendarItemExternalIdentifier})
                 
+                //If the item exists, check if we need to update our local copy
                 if updatedItemIndex != nil {
 
                     let updatedItem : EKReminder = updatedShoppingList[updatedItemIndex!]
@@ -228,43 +214,10 @@ class ReminderSortViewController: UITableViewController {
                 }
                 else {
                 
+                    //Item doesn't exist so update our local copy
                     getShoppingList(updatedShoppingList)
                     break
                 }
-                
-//                let matchingItem : EKReminder? = updatedShoppingList.filter({(reminder : EKReminder) in reminder.calendarItemExternalIdentifier == currentItem.calendarItemExternalIdentifier}).first
-//                
-//                if let updatedItem : EKReminder = matchingItem {
-//                
-//                    if currentItem.completed != updatedItem.completed
-//                        || currentItem.title != updatedItem.title {
-//
-//                        getShoppingList(updatedShoppingList)
-//                    }
-//                }
-//                else {
-//                
-//                    getShoppingList(updatedShoppingList)
-//                    break
-//                }
-                
-                
-                
-//                let matchingItems : [EKReminder] = updatedShoppingList.filter({(reminder : EKReminder) in reminder.id == currentItem.id})
-                
-//                if matchingItems.isEmpty {
-//                
-//                    getShoppingList(updatedShoppingList)
-//                    break
-//                }
-//                
-//                let updatedItem : EKReminder = matchingItems[0]
-//
-//                if currentItem.completed != updatedItem.completed
-//                    || currentItem.title != updatedItem.title {
-//
-//                    getShoppingList(updatedShoppingList)
-//                }
             }
         }
     }
@@ -371,6 +324,7 @@ class ReminderSortViewController: UITableViewController {
             shoppingList.append(reminder)
         }
         
+        //Re-sort and Reload the list using our local copy
         getShoppingList(shoppingList)
     }
 
