@@ -20,6 +20,8 @@ class ReminderSortViewController: UITableViewController {
     
     var shoppingList = [EKReminder]()
     
+    var storedShoppingList = [ShoppingListItem]()
+    
     var eventStoreObserver : NSObjectProtocol?
     var settingsObserver : NSObjectProtocol?
     var quickScrollObserver : NSObjectProtocol?
@@ -186,17 +188,17 @@ class ReminderSortViewController: UITableViewController {
         let updatedShoppingList : [EKReminder] = iCloudShoppingList.filter({(reminder : EKReminder) in reminder.title != ""})
         
         //Count is different - update the list
-        if shoppingList.count != updatedShoppingList.count {
+        if storedShoppingList.count != updatedShoppingList.count {
 
             getShoppingList(updatedShoppingList)
         }
         else {
 
             //Loop for all items in our local list
-            for var i = 0; i < shoppingList.count; i++ {
+            for var i = 0; i < storedShoppingList.count; i++ {
 
                 //Get the local item
-                let currentItem : EKReminder = shoppingList[i]
+                let currentItem : ShoppingListItem = storedShoppingList[i]
                 
                 //Find a matching item by ID in the iCloud list
                 let updatedItemIndex : Int? = updatedShoppingList.indexOf({(reminder : EKReminder) in reminder.calendarItemExternalIdentifier == currentItem.calendarItemExternalIdentifier})
@@ -300,6 +302,18 @@ class ReminderSortViewController: UITableViewController {
 
                 //Join the two lists from above
                 self.shoppingList = itemsToGet + completedItems
+                
+                //NOTE: We need to do this as the bloody shoppingList get's updated in the background somehow...
+                //Each item must be held by ref, so when the cal updates in the background, shoppingList actually gets updated...???
+                for shoppingListItem in self.shoppingList {
+                    
+                    let storedShoppingListItem : ShoppingListItem = ShoppingListItem()
+                    storedShoppingListItem.calendarItemExternalIdentifier = shoppingListItem.calendarItemExternalIdentifier
+                    storedShoppingListItem.title = shoppingListItem.title
+                    storedShoppingListItem.completed = shoppingListItem.completed
+                    
+                    self.storedShoppingList.append(storedShoppingListItem)
+                }
                 
                 //Request a reload of the Table
                 shoppingListTable.reloadData()

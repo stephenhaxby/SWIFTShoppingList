@@ -16,6 +16,7 @@
 		0E6BF3141B2EE3450005F4E2 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0E6BF3131B2EE3450005F4E2 /* Images.xcassets */; };
 		0E6BF32D1B2EE54C0005F4E2 /* ReminderSortViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E6BF32C1B2EE54C0005F4E2 /* ReminderSortViewController.swift */; };
 		0E77741E1BCFAD2E00D6720D /* QuickScrollViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E77741D1BCFAD2E00D6720D /* QuickScrollViewController.swift */; };
+		0E9372421C562B680087ABE2 /* ShoppingListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E9372411C562B680087ABE2 /* ShoppingListItem.swift */; };
 		0ED638DB1BD1E0B200A7B045 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 0ED638DA1BD1E0B200A7B045 /* Settings.bundle */; };
 		0EDDCADC1BD1DC9900431C3F /* NavigationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EDDCADB1BD1DC9900431C3F /* NavigationViewController.swift */; };
 		0EE5ED351B984E01008A2F26 /* iCloudReminderManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EE5ED341B984E01008A2F26 /* iCloudReminderManager.swift */; };
@@ -45,6 +46,7 @@
 		0E6BF31C1B2EE3460005F4E2 /* ReminderSorterTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ReminderSorterTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		0E6BF32C1B2EE54C0005F4E2 /* ReminderSortViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReminderSortViewController.swift; sourceTree = "<group>"; };
 		0E77741D1BCFAD2E00D6720D /* QuickScrollViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QuickScrollViewController.swift; sourceTree = "<group>"; };
+		0E9372411C562B680087ABE2 /* ShoppingListItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShoppingListItem.swift; sourceTree = "<group>"; };
 		0ED638DA1BD1E0B200A7B045 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		0EDDCADB1BD1DC9900431C3F /* NavigationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationViewController.swift; sourceTree = "<group>"; };
 		0EE5ED341B984E01008A2F26 /* iCloudReminderManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = iCloudReminderManager.swift; sourceTree = "<group>"; };
@@ -103,6 +105,7 @@
 				0EDDCADB1BD1DC9900431C3F /* NavigationViewController.swift */,
 				0E01EEA21BFB2D5E00365CF3 /* Constants.swift */,
 				0E01EEA41BFB3FCB00365CF3 /* SettingsUserDefaults.swift */,
+				0E9372411C562B680087ABE2 /* ShoppingListItem.swift */,
 			);
 			path = ReminderSorter;
 			sourceTree = "<group>";
@@ -219,6 +222,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0EDDCADC1BD1DC9900431C3F /* NavigationViewController.swift in Sources */,
+				0E9372421C562B680087ABE2 /* ShoppingListItem.swift in Sources */,
 				0E6BF32D1B2EE54C0005F4E2 /* ReminderSortViewController.swift in Sources */,
 				0EED9C191B8C4E7E000A98E0 /* ShoppingListItemTableViewCell.swift in Sources */,
 				0E6BF30D1B2EE3450005F4E2 /* AppDelegate.swift in Sources */,

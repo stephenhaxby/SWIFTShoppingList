@@ -104,11 +104,16 @@ class iCloudReminderManager{
                         
                         remindersList.append(reminder)
                     }
+                    
+                    returnReminders(remindersList)
                 }
-                
-                returnReminders(remindersList)
             }
         }
+    }
+    
+    func getRemindersTEST(reminders : [EKReminder]?) {
+        
+        
     }
     
     func addReminder(title : String, commit : Bool) -> EKReminder? {
