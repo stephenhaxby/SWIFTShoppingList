@@ -99,7 +99,7 @@ class ReminderSortViewController: UITableViewController {
         super.viewDidLoad()
         
         //Make it so the screen doesn't turn off
-        UIApplication.sharedApplication().idleTimerDisabled = SettingsUserDefaults.dissableScreenLock
+        UIApplication.sharedApplication().idleTimerDisabled = SettingsUserDefaults.disableScreenLock
         
         //Set the font size of the navigation view controller
         self.navigationController?.navigationBar.titleTextAttributes = [NSFontAttributeName: UIFont.boldSystemFontOfSize(18.0)]

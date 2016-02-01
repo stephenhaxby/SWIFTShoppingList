@@ -10,9 +10,9 @@
 			<key>Type</key>
 			<string>PSToggleSwitchSpecifier</string>
 			<key>Title</key>
-			<string>Dissable Screen Lock</string>
+			<string>Disable Screen Lock</string>
 			<key>Key</key>
-			<string>dissableScreenLock</string>
+			<string>disableScreenLock</string>
 			<key>DefaultValue</key>
 			<true/>
 		</dict>

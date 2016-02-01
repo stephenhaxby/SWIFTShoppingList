@@ -22,7 +22,7 @@ class SettingsUserDefaults{
         return NSUserDefaults.standardUserDefaults().boolForKey("autoCapitalisation")
     }
     
-    static var dissableScreenLock: Bool {
-        return NSUserDefaults.standardUserDefaults().boolForKey("dissableScreenLock")
+    static var disableScreenLock: Bool {
+        return NSUserDefaults.standardUserDefaults().boolForKey("disableScreenLock")
     }
 }
