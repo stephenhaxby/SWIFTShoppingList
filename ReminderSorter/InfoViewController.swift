@@ -12,6 +12,13 @@ class InfoViewController : UIViewController {
     
     @IBOutlet weak var closeButton: UIButton!
     
+    @IBOutlet weak var shoppingCartExipryDatePicker: UIDatePicker!
+    
+    @IBAction func clearShoppingCartButtonTouchUpInside(sender: AnyObject) {
+        
+        NSNotificationCenter.defaultCenter().postNotificationName(Constants.ClearShoppingList, object: nil)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         

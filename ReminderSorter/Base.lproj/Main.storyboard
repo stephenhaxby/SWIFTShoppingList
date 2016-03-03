@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9531" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="jGZ-Bv-awX">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9532" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="jGZ-Bv-awX">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
@@ -118,96 +118,50 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="a8F-KK-weE">
-                                <rect key="frame" x="20" y="72" width="560" height="528"/>
-                                <subviews>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EIG-6C-MiI">
-                                        <rect key="frame" x="0.0" y="0.0" width="560" height="508"/>
-                                        <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Information:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CR0-QT-Gfp">
-                                                <rect key="frame" x="0.0" y="8" width="560" height="22"/>
-                                                <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
-                                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Features:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yUd-MJ-Aje">
-                                                <rect key="frame" x="0.0" y="204" width="560" height="22"/>
-                                                <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
-                                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
-                                            <textView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" delaysContentTouches="NO" canCancelContentTouches="NO" bouncesZoom="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="IBS-NX-3at">
-                                                <rect key="frame" x="0.0" y="234" width="560" height="184"/>
-                                                <string key="text">* Add new item
-* Swipe left to delete
-* Press to edit
-* Mark an item as completed
-* Mark an item as incomplete
-* Sorted completed and incomplete lists (via Settings)
-* Auto word capitalisation (via Settings)
-* Pull down to refresh
-* Auto refresh whenever your Calendar database is refreshed in the background
-* Quick jump links</string>
-                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                                            </textView>
-                                            <textView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" delaysContentTouches="NO" canCancelContentTouches="NO" bouncesZoom="NO" editable="NO" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aFP-nM-11S">
-                                                <rect key="frame" x="0.0" y="38" width="560" height="150"/>
-                                                <string key="text">Shopping taps into your iCloud Reminders to enable you to access your shopping list across all your iDevices (and iCloud on the web).
-
-We will create a new list called 'Shopping' (or attempt to use an existing one if one already exists) so look for this next time you access your built in Reminders app.
-
-You can then share this list with any of your contacts, the same as you would do for any other Reminders list.</string>
-                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                                            </textView>
-                                        </subviews>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        <constraints>
-                                            <constraint firstItem="CR0-QT-Gfp" firstAttribute="trailing" secondItem="aFP-nM-11S" secondAttribute="trailing" id="3yh-HZ-TTv"/>
-                                            <constraint firstAttribute="height" constant="508" id="4oK-iF-q3r"/>
-                                            <constraint firstAttribute="trailing" secondItem="aFP-nM-11S" secondAttribute="trailing" id="5KH-OC-QrL"/>
-                                            <constraint firstItem="CR0-QT-Gfp" firstAttribute="top" secondItem="EIG-6C-MiI" secondAttribute="topMargin" id="756-lT-iHZ"/>
-                                            <constraint firstItem="CR0-QT-Gfp" firstAttribute="trailing" secondItem="IBS-NX-3at" secondAttribute="trailing" id="9Pw-b2-R72"/>
-                                            <constraint firstItem="CR0-QT-Gfp" firstAttribute="leading" secondItem="IBS-NX-3at" secondAttribute="leading" id="ABx-3k-59m"/>
-                                            <constraint firstItem="CR0-QT-Gfp" firstAttribute="trailing" secondItem="yUd-MJ-Aje" secondAttribute="trailing" id="BaE-wK-U9p"/>
-                                            <constraint firstItem="CR0-QT-Gfp" firstAttribute="leading" secondItem="yUd-MJ-Aje" secondAttribute="leading" id="ToK-ce-Avc"/>
-                                            <constraint firstItem="aFP-nM-11S" firstAttribute="leading" secondItem="EIG-6C-MiI" secondAttribute="leading" id="UaO-Mf-5aw"/>
-                                            <constraint firstItem="IBS-NX-3at" firstAttribute="top" secondItem="yUd-MJ-Aje" secondAttribute="bottom" constant="8" symbolic="YES" id="aPp-me-X2o"/>
-                                            <constraint firstItem="yUd-MJ-Aje" firstAttribute="top" secondItem="aFP-nM-11S" secondAttribute="bottom" constant="16" id="spk-ff-06J"/>
-                                            <constraint firstItem="aFP-nM-11S" firstAttribute="top" secondItem="CR0-QT-Gfp" secondAttribute="bottom" constant="8" id="tG4-g6-3fl"/>
-                                            <constraint firstItem="CR0-QT-Gfp" firstAttribute="leading" secondItem="aFP-nM-11S" secondAttribute="leading" id="zrs-Sa-RHW"/>
-                                        </constraints>
-                                    </view>
-                                </subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Shopping Cart Exipry" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0vR-0t-mnH">
+                                <rect key="frame" x="20" y="72" width="179" height="21"/>
                                 <constraints>
-                                    <constraint firstAttribute="trailing" secondItem="EIG-6C-MiI" secondAttribute="trailing" id="A7N-mc-aoh"/>
-                                    <constraint firstItem="EIG-6C-MiI" firstAttribute="top" secondItem="a8F-KK-weE" secondAttribute="top" id="HPU-Z5-dKj"/>
-                                    <constraint firstAttribute="bottom" secondItem="EIG-6C-MiI" secondAttribute="bottom" constant="40" id="HTi-R8-Ep8"/>
-                                    <constraint firstItem="EIG-6C-MiI" firstAttribute="leading" secondItem="a8F-KK-weE" secondAttribute="leading" id="jXJ-OE-Lus"/>
+                                    <constraint firstAttribute="width" constant="179" id="EMw-m7-AGB"/>
                                 </constraints>
-                            </scrollView>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                <color key="textColor" red="0.0" green="0.50196081400000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tKa-UI-f1d">
+                                <rect key="frame" x="221" y="288" width="158" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="Gek-sS-ILd"/>
+                                    <constraint firstAttribute="width" constant="158" id="ZyU-pv-l9K"/>
+                                </constraints>
+                                <state key="normal" title="Clear Shopping Cart">
+                                    <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="clearShoppingCartButtonTouchUpInside:" destination="VI3-1w-ipy" eventType="touchUpInside" id="SCD-qr-QUw"/>
+                                </connections>
+                            </button>
+                            <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="time" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="98q-CM-t01">
+                                <rect key="frame" x="200" y="112" width="200" height="120"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="200" id="EbS-RP-9gl"/>
+                                </constraints>
+                                <date key="date" timeIntervalSinceReferenceDate="478695089.04229301">
+                                    <!--2016-03-03 10:51:29 +0000-->
+                                </date>
+                                <locale key="locale" localeIdentifier="nl_NL"/>
+                            </datePicker>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <gestureRecognizers/>
                         <constraints>
-                            <constraint firstItem="a8F-KK-weE" firstAttribute="top" secondItem="f6b-nj-r9J" secondAttribute="bottom" constant="8" id="7Eh-ES-wyq"/>
-                            <constraint firstItem="a8F-KK-weE" firstAttribute="top" secondItem="f6b-nj-r9J" secondAttribute="bottom" constant="8" id="7K7-WG-9hx"/>
-                            <constraint firstAttribute="leadingMargin" secondItem="EIG-6C-MiI" secondAttribute="leading" id="9Vk-yv-HQC"/>
-                            <constraint firstItem="jnn-hy-VxU" firstAttribute="top" secondItem="a8F-KK-weE" secondAttribute="bottom" id="Cdd-pO-fag"/>
-                            <constraint firstAttribute="leadingMargin" secondItem="a8F-KK-weE" secondAttribute="leading" id="ETO-nJ-AL1"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="EIG-6C-MiI" secondAttribute="trailing" id="YV3-Mf-S3L"/>
-                            <constraint firstItem="a8F-KK-weE" firstAttribute="top" secondItem="f6b-nj-r9J" secondAttribute="bottom" constant="8" id="kl5-Le-AMU"/>
-                            <constraint firstItem="a8F-KK-weE" firstAttribute="top" secondItem="f6b-nj-r9J" secondAttribute="bottom" constant="8" symbolic="YES" id="ql5-Na-uAp"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="a8F-KK-weE" secondAttribute="trailing" id="veR-Ny-lVs"/>
+                            <constraint firstItem="98q-CM-t01" firstAttribute="centerX" secondItem="tKa-UI-f1d" secondAttribute="centerX" id="DRW-SW-fvJ"/>
+                            <constraint firstItem="98q-CM-t01" firstAttribute="centerX" secondItem="pz3-9h-JUp" secondAttribute="centerX" id="O11-Lm-DiT"/>
+                            <constraint firstItem="0vR-0t-mnH" firstAttribute="top" secondItem="f6b-nj-r9J" secondAttribute="bottom" constant="8" symbolic="YES" id="Xqt-wp-bGQ"/>
+                            <constraint firstItem="0vR-0t-mnH" firstAttribute="leading" secondItem="pz3-9h-JUp" secondAttribute="leadingMargin" id="abg-iF-jlC"/>
+                            <constraint firstItem="98q-CM-t01" firstAttribute="top" secondItem="f6b-nj-r9J" secondAttribute="bottom" constant="48" id="k6A-sJ-Voh"/>
+                            <constraint firstItem="jnn-hy-VxU" firstAttribute="top" secondItem="tKa-UI-f1d" secondAttribute="bottom" constant="282" id="t3n-ly-m2S"/>
+                            <constraint firstItem="tKa-UI-f1d" firstAttribute="top" secondItem="98q-CM-t01" secondAttribute="bottom" constant="56" id="x2C-6z-MPh"/>
                         </constraints>
-                        <variation key="default">
-                            <mask key="constraints">
-                                <exclude reference="7K7-WG-9hx"/>
-                                <exclude reference="kl5-Le-AMU"/>
-                                <exclude reference="ql5-Na-uAp"/>
-                            </mask>
-                        </variation>
                     </view>
                     <navigationItem key="navigationItem" title="Help" id="Qrk-jS-5dL">
                         <barButtonItem key="leftBarButtonItem" style="done" id="6JR-Id-kR6">
@@ -232,11 +186,12 @@ You can then share this list with any of your contacts, the same as you would do
                     </navigationItem>
                     <connections>
                         <outlet property="closeButton" destination="HHw-QH-cb9" id="Sfz-jj-C5x"/>
+                        <outlet property="shoppingCartExipryDatePicker" destination="98q-CM-t01" id="yjK-Yl-0Tb"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ywx-bw-kOe" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2576" y="115"/>
+            <point key="canvasLocation" x="2507" y="115"/>
         </scene>
         <!--iCloud Shopping List-->
         <scene sceneID="raG-mQ-E6b">

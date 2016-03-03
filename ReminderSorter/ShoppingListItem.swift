@@ -15,4 +15,6 @@ class ShoppingListItem {
     var title : String = String()
     
     var completed : Bool = true
+    
+    var notes : String?
 }

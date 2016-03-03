@@ -21,15 +21,32 @@ class ShoppingListItemTableViewCell: UITableViewCell, UITextFieldDelegate
     var reminder: EKReminder? {
         didSet {
             
-            if let shoppingListItemReminder = reminder{
-                
-                //Setting the text value based on the auto-capitalisation settings
-                shoppingListItemTextField.attributedText = nil
-                shoppingListItemTextField.text = getAutoCapitalisationTitle(shoppingListItemReminder.title)
-                
-                //Extra section for completed items
-                setShoppingListItemCompletedText(shoppingListItemReminder)
-            }
+//            if let shoppingListItemReminder = reminder{
+//                
+//                //Setting the text value based on the auto-capitalisation settings
+//                shoppingListItemTextField.attributedText = nil
+//                shoppingListItemTextField.text = getAutoCapitalisationTitle(shoppingListItemReminder.title)
+//                
+//                //Extra section for completed items
+//                setShoppingListItemCompletedText(shoppingListItemReminder)
+//            }
+        }
+    }
+    
+    override func layoutSubviews() {
+        
+        if let shoppingListItemReminder = reminder{
+            
+            //Setting the text value based on the auto-capitalisation settings
+            shoppingListItemTextField.attributedText = nil
+            shoppingListItemTextField.text = getAutoCapitalisationTitle(shoppingListItemReminder.title)
+            
+            //Extra section for completed items
+            setShoppingListItemCompletedText(shoppingListItemReminder)
+            
+            self.layer.backgroundColor = shoppingListItemReminder.notes != nil
+                ? UIColor(red:0.00, green:0.50196081400000003, blue:1, alpha:1.0).CGColor
+                : UIColor.whiteColor().CGColor
         }
     }
     
@@ -64,6 +81,21 @@ class ShoppingListItemTableViewCell: UITableViewCell, UITextFieldDelegate
             if let editedReminder = reminder{
                 
                 editedReminder.completed = !checkSwitch.on
+                
+                if editedReminder.completed {
+                    
+                    //Add the datetime to the reminder as notes (Jan 27, 2010, 1:00 PM)
+                    let dateformatter = NSDateFormatter()
+                    
+                    dateformatter.dateStyle = NSDateFormatterStyle.MediumStyle
+                    dateformatter.timeStyle = NSDateFormatterStyle.ShortStyle
+
+                    editedReminder.notes = dateformatter.stringFromDate(NSDate())
+                }
+                else {
+                    
+                    editedReminder.notes = nil
+                }
                 
                 let delayInMilliSeconds = (editedReminder.completed) ? 500.0 : 200.00
                 
@@ -134,7 +166,7 @@ class ShoppingListItemTableViewCell: UITableViewCell, UITextFieldDelegate
                     addNewButton.hidden = true
             }
             
-            if !checkSwitch.on{
+            if !checkSwitch.on && shoppingListItemReminder.notes == nil {
                 
                 let string = shoppingListItemReminder.title as NSString
                 

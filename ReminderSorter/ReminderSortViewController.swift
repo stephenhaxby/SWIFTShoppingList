@@ -26,6 +26,7 @@ class ReminderSortViewController: UITableViewController {
     var settingsObserver : NSObjectProtocol?
     var quickScrollObserver : NSObjectProtocol?
     var saveReminderObserver : NSObjectProtocol?
+    var clearShoppingCartObserver : NSObjectProtocol?
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -68,6 +69,12 @@ class ReminderSortViewController: UITableViewController {
                 self.saveReminder(reminder)
             }
         }
+        
+        clearShoppingCartObserver = NSNotificationCenter.defaultCenter().addObserverForName(Constants.ClearShoppingList, object: nil, queue: nil){
+            (notification) -> Void in
+            
+            self.clearShoppingCart()
+        }
     }
     
     deinit{
@@ -92,6 +99,11 @@ class ReminderSortViewController: UITableViewController {
         if let observer = saveReminderObserver{
             
             NSNotificationCenter.defaultCenter().removeObserver(observer, name: Constants.SaveReminder, object: nil)
+        }
+        
+        if let observer = clearShoppingCartObserver{
+            
+            NSNotificationCenter.defaultCenter().removeObserver(observer, name: Constants.ClearShoppingList, object: nil)
         }
     }
     
@@ -125,6 +137,19 @@ class ReminderSortViewController: UITableViewController {
         
             self.commitShoppingList()
         }
+    }
+    
+    func clearShoppingCart() {
+        
+        for shoppingListItem in shoppingList {
+            
+            shoppingListItem.notes = nil
+            
+            saveReminder(shoppingListItem)
+            
+        }
+        
+        getShoppingList(shoppingList)
     }
     
     func commitShoppingList() {
@@ -209,7 +234,8 @@ class ReminderSortViewController: UITableViewController {
                     let updatedItem : EKReminder = updatedShoppingList[updatedItemIndex!]
 
                     if currentItem.completed != updatedItem.completed
-                        || currentItem.title != updatedItem.title {
+                        || currentItem.title != updatedItem.title
+                        || currentItem.notes != updatedItem.notes {
                             
                         getShoppingList(updatedShoppingList)
                     }
@@ -280,13 +306,21 @@ class ReminderSortViewController: UITableViewController {
         
         //Find all items that are NOT completed
         var itemsToGet : [EKReminder] = iCloudShoppingList.filter({(reminder : EKReminder) in !reminder.completed})
+        
+        var itemsGot : [EKReminder] = iCloudShoppingList.filter({(reminder : EKReminder) in reminder.notes != nil})
+        
         //Find all items that ARE completed
-        var completedItems : [EKReminder] = iCloudShoppingList.filter({(reminder : EKReminder) in reminder.completed})
+        var completedItems : [EKReminder] = iCloudShoppingList.filter({(reminder : EKReminder) in reminder.completed && reminder.notes == nil})
         
         //If the setting specify alphabetical sorting of incomplete items
         if SettingsUserDefaults.alphabeticalSortIncomplete {
             
             itemsToGet = itemsToGet.sort(reminderSort)
+        }
+        
+        if SettingsUserDefaults.alphabeticalSortIncomplete {
+
+            itemsGot = itemsGot.sort(reminderSort)
         }
         
         //If the settings specify alphabetical sorting of complete items
@@ -301,7 +335,7 @@ class ReminderSortViewController: UITableViewController {
             if let shoppingListTable = self.tableView{
 
                 //Join the two lists from above
-                self.shoppingList = itemsToGet + completedItems
+                self.shoppingList = itemsToGet + itemsGot + completedItems
                 
                 //NOTE: We need to do this as the bloody shoppingList get's updated in the background somehow...
                 //Each item must be held by ref, so when the cal updates in the background, shoppingList actually gets updated...???
@@ -311,6 +345,7 @@ class ReminderSortViewController: UITableViewController {
                     storedShoppingListItem.calendarItemExternalIdentifier = shoppingListItem.calendarItemExternalIdentifier
                     storedShoppingListItem.title = shoppingListItem.title
                     storedShoppingListItem.completed = shoppingListItem.completed
+                    storedShoppingListItem.notes = shoppingListItem.notes
                     
                     self.storedShoppingList.append(storedShoppingListItem)
                 }
