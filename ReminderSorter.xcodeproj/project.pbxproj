@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		0E01EEA31BFB2D5E00365CF3 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E01EEA21BFB2D5E00365CF3 /* Constants.swift */; };
 		0E01EEA51BFB3FCB00365CF3 /* SettingsUserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E01EEA41BFB3FCB00365CF3 /* SettingsUserDefaults.swift */; };
+		0E2CCF7B1CBC7857009AB330 /* TableRowHeaderSpacer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E2CCF791CBC7857009AB330 /* TableRowHeaderSpacer.swift */; };
 		0E3E88841BC3E22900A3BCD2 /* InfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E3E88831BC3E22900A3BCD2 /* InfoViewController.swift */; };
 		0E3F2F831BCD11A000B1E323 /* ContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E3F2F821BCD11A000B1E323 /* ContainerViewController.swift */; };
 		0E6BF30D1B2EE3450005F4E2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E6BF30C1B2EE3450005F4E2 /* AppDelegate.swift */; };
@@ -17,6 +18,8 @@
 		0E6BF32D1B2EE54C0005F4E2 /* ReminderSortViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E6BF32C1B2EE54C0005F4E2 /* ReminderSortViewController.swift */; };
 		0E77741E1BCFAD2E00D6720D /* QuickScrollViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E77741D1BCFAD2E00D6720D /* QuickScrollViewController.swift */; };
 		0E9372421C562B680087ABE2 /* ShoppingListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E9372411C562B680087ABE2 /* ShoppingListItem.swift */; };
+		0ECEAFA41CA1508F00453CF4 /* NSDateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ECEAFA31CA1508F00453CF4 /* NSDateManager.swift */; };
+		0ECEAFA61CA1586A00453CF4 /* Utility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ECEAFA51CA1586A00453CF4 /* Utility.swift */; };
 		0ED638DB1BD1E0B200A7B045 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 0ED638DA1BD1E0B200A7B045 /* Settings.bundle */; };
 		0EDDCADC1BD1DC9900431C3F /* NavigationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EDDCADB1BD1DC9900431C3F /* NavigationViewController.swift */; };
 		0EE5ED351B984E01008A2F26 /* iCloudReminderManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EE5ED341B984E01008A2F26 /* iCloudReminderManager.swift */; };
@@ -36,6 +39,7 @@
 /* Begin PBXFileReference section */
 		0E01EEA21BFB2D5E00365CF3 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		0E01EEA41BFB3FCB00365CF3 /* SettingsUserDefaults.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsUserDefaults.swift; sourceTree = "<group>"; };
+		0E2CCF791CBC7857009AB330 /* TableRowHeaderSpacer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableRowHeaderSpacer.swift; sourceTree = "<group>"; };
 		0E3E88831BC3E22900A3BCD2 /* InfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InfoViewController.swift; sourceTree = "<group>"; };
 		0E3F2F821BCD11A000B1E323 /* ContainerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContainerViewController.swift; sourceTree = "<group>"; };
 		0E6BF3071B2EE3450005F4E2 /* ReminderSorter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ReminderSorter.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -47,6 +51,8 @@
 		0E6BF32C1B2EE54C0005F4E2 /* ReminderSortViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReminderSortViewController.swift; sourceTree = "<group>"; };
 		0E77741D1BCFAD2E00D6720D /* QuickScrollViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QuickScrollViewController.swift; sourceTree = "<group>"; };
 		0E9372411C562B680087ABE2 /* ShoppingListItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShoppingListItem.swift; sourceTree = "<group>"; };
+		0ECEAFA31CA1508F00453CF4 /* NSDateManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSDateManager.swift; sourceTree = "<group>"; };
+		0ECEAFA51CA1586A00453CF4 /* Utility.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utility.swift; sourceTree = "<group>"; };
 		0ED638DA1BD1E0B200A7B045 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		0EDDCADB1BD1DC9900431C3F /* NavigationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationViewController.swift; sourceTree = "<group>"; };
 		0EE5ED341B984E01008A2F26 /* iCloudReminderManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = iCloudReminderManager.swift; sourceTree = "<group>"; };
@@ -71,6 +77,36 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0E4449321CBC6F7000330A37 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				0E3F2F821BCD11A000B1E323 /* ContainerViewController.swift */,
+				0E3E88831BC3E22900A3BCD2 /* InfoViewController.swift */,
+				0E77741D1BCFAD2E00D6720D /* QuickScrollViewController.swift */,
+				0EDDCADB1BD1DC9900431C3F /* NavigationViewController.swift */,
+				0E6BF32C1B2EE54C0005F4E2 /* ReminderSortViewController.swift */,
+			);
+			name = Controllers;
+			sourceTree = "<group>";
+		};
+		0E4449331CBC6FAB00330A37 /* Managers */ = {
+			isa = PBXGroup;
+			children = (
+				0EE5ED341B984E01008A2F26 /* iCloudReminderManager.swift */,
+				0ECEAFA31CA1508F00453CF4 /* NSDateManager.swift */,
+			);
+			name = Managers;
+			sourceTree = "<group>";
+		};
+		0E4449341CBC6FE000330A37 /* TableViews */ = {
+			isa = PBXGroup;
+			children = (
+				0E2CCF791CBC7857009AB330 /* TableRowHeaderSpacer.swift */,
+				0EED9C181B8C4E7E000A98E0 /* ShoppingListItemTableViewCell.swift */,
+			);
+			name = TableViews;
+			sourceTree = "<group>";
+		};
 		0E6BF2FE1B2EE3450005F4E2 = {
 			isa = PBXGroup;
 			children = (
@@ -92,20 +128,17 @@
 		0E6BF3091B2EE3450005F4E2 /* ReminderSorter */ = {
 			isa = PBXGroup;
 			children = (
+				0E4449341CBC6FE000330A37 /* TableViews */,
+				0E4449331CBC6FAB00330A37 /* Managers */,
+				0E4449321CBC6F7000330A37 /* Controllers */,
 				0E6BF30C1B2EE3450005F4E2 /* AppDelegate.swift */,
 				0E6BF3101B2EE3450005F4E2 /* Main.storyboard */,
-				0EED9C181B8C4E7E000A98E0 /* ShoppingListItemTableViewCell.swift */,
 				0E6BF3131B2EE3450005F4E2 /* Images.xcassets */,
 				0E6BF30A1B2EE3450005F4E2 /* Supporting Files */,
-				0E6BF32C1B2EE54C0005F4E2 /* ReminderSortViewController.swift */,
-				0EE5ED341B984E01008A2F26 /* iCloudReminderManager.swift */,
-				0E3E88831BC3E22900A3BCD2 /* InfoViewController.swift */,
-				0E3F2F821BCD11A000B1E323 /* ContainerViewController.swift */,
-				0E77741D1BCFAD2E00D6720D /* QuickScrollViewController.swift */,
-				0EDDCADB1BD1DC9900431C3F /* NavigationViewController.swift */,
 				0E01EEA21BFB2D5E00365CF3 /* Constants.swift */,
 				0E01EEA41BFB3FCB00365CF3 /* SettingsUserDefaults.swift */,
 				0E9372411C562B680087ABE2 /* ShoppingListItem.swift */,
+				0ECEAFA51CA1586A00453CF4 /* Utility.swift */,
 			);
 			path = ReminderSorter;
 			sourceTree = "<group>";
@@ -223,12 +256,15 @@
 			files = (
 				0EDDCADC1BD1DC9900431C3F /* NavigationViewController.swift in Sources */,
 				0E9372421C562B680087ABE2 /* ShoppingListItem.swift in Sources */,
+				0E2CCF7B1CBC7857009AB330 /* TableRowHeaderSpacer.swift in Sources */,
 				0E6BF32D1B2EE54C0005F4E2 /* ReminderSortViewController.swift in Sources */,
 				0EED9C191B8C4E7E000A98E0 /* ShoppingListItemTableViewCell.swift in Sources */,
 				0E6BF30D1B2EE3450005F4E2 /* AppDelegate.swift in Sources */,
 				0EE5ED351B984E01008A2F26 /* iCloudReminderManager.swift in Sources */,
 				0E77741E1BCFAD2E00D6720D /* QuickScrollViewController.swift in Sources */,
+				0ECEAFA61CA1586A00453CF4 /* Utility.swift in Sources */,
 				0E3F2F831BCD11A000B1E323 /* ContainerViewController.swift in Sources */,
+				0ECEAFA41CA1508F00453CF4 /* NSDateManager.swift in Sources */,
 				0E01EEA31BFB2D5E00365CF3 /* Constants.swift in Sources */,
 				0E3E88841BC3E22900A3BCD2 /* InfoViewController.swift in Sources */,
 				0E01EEA51BFB3FCB00365CF3 /* SettingsUserDefaults.swift in Sources */,

@@ -143,10 +143,12 @@ class ReminderSortViewController: UITableViewController {
         
         for shoppingListItem in shoppingList {
             
-            shoppingListItem.notes = nil
-            
-            saveReminder(shoppingListItem)
-            
+            if shoppingListItem.notes != nil {
+                
+                shoppingListItem.notes = nil
+                
+                saveReminder(shoppingListItem)
+            }
         }
         
         getShoppingList(shoppingList)
@@ -307,10 +309,19 @@ class ReminderSortViewController: UITableViewController {
         //Find all items that are NOT completed
         var itemsToGet : [EKReminder] = iCloudShoppingList.filter({(reminder : EKReminder) in !reminder.completed})
         
-        var itemsGot : [EKReminder] = iCloudShoppingList.filter({(reminder : EKReminder) in reminder.notes != nil})
+        //Find all items that are in the shopping cart
+        var itemsGot : [EKReminder] = iCloudShoppingList.filter( {
+            (reminder : EKReminder) in
+            
+            return Utility.itemIsInShoppingCart(reminder)
+        })
         
         //Find all items that ARE completed
-        var completedItems : [EKReminder] = iCloudShoppingList.filter({(reminder : EKReminder) in reminder.completed && reminder.notes == nil})
+        var completedItems : [EKReminder] = iCloudShoppingList.filter( {
+            (reminder : EKReminder) in
+            
+            return reminder.completed && !Utility.itemIsInShoppingCart(reminder)
+        })
         
         //If the setting specify alphabetical sorting of incomplete items
         if SettingsUserDefaults.alphabeticalSortIncomplete {
@@ -448,7 +459,12 @@ class ReminderSortViewController: UITableViewController {
     //We increase it by two for the first blank row and the final "+" (add new item) row
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        return shoppingList.count + 2
+        return shoppingList.count+1
+    }
+    
+    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        
+        return 1
     }
     
     //To populate each cell's text based on the index into the calendars array, with the extra item at the bottom
@@ -469,22 +485,22 @@ class ReminderSortViewController: UITableViewController {
             cell.shoppingListItemTextField.autocapitalizationType = UITextAutocapitalizationType.Sentences
         }
         
-        if indexPath.row == 0{
-            
-            shoppingListItem = reminderManager.getNewReminder()
-            
-            //getNewReminder can return nil if the EventStore isn't ready. This happens when the table is first loaded...
-            if shoppingListItem == nil{
-                
-                return ShoppingListItemTableViewCell()
-            }
-            
-            shoppingListItem!.title = Constants.ShoppingListItemTableViewCell.EmptyCell
-            shoppingListItem!.completed = false
-        }
+//        if indexPath.row == 0{
+//            
+//            shoppingListItem = reminderManager.getNewReminder()
+//            
+//            //getNewReminder can return nil if the EventStore isn't ready. This happens when the table is first loaded...
+//            if shoppingListItem == nil{
+//                
+//                return ShoppingListItemTableViewCell()
+//            }
+//            
+//            shoppingListItem!.title = Constants.ShoppingListItemTableViewCell.EmptyCell
+//            shoppingListItem!.completed = false
+//        }
         
         //Add in the extra item at the bottom
-        else if indexPath.row == shoppingList.count+1{
+        if indexPath.row == shoppingList.count{
             
             shoppingListItem = reminderManager.getNewReminder()
             
@@ -501,7 +517,7 @@ class ReminderSortViewController: UITableViewController {
         //Each actual list item...
         else{
             
-            shoppingListItem = shoppingList[indexPath.row-1]
+            shoppingListItem = shoppingList[indexPath.row]
         }
         
         cell.setShoppingListItem(shoppingListItem!)
@@ -534,7 +550,7 @@ class ReminderSortViewController: UITableViewController {
     override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
         
         //Don't allow delete of the last blank row...
-        if(indexPath.row < shoppingList.count+1){
+        if(indexPath.row < shoppingList.count){
             return true
         }
         
@@ -544,9 +560,9 @@ class ReminderSortViewController: UITableViewController {
     //This method is for the swipe left to delete
     override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
         
-        if(indexPath.row < shoppingList.count+1){
+        if(indexPath.row < shoppingList.count){
 
-            let shoppingListItem : EKReminder = shoppingList[indexPath.row-1]
+            let shoppingListItem : EKReminder = shoppingList[indexPath.row]
             
             guard reminderManager.removeReminder(shoppingListItem, commit: false) else {
                 
@@ -555,20 +571,25 @@ class ReminderSortViewController: UITableViewController {
                 return
             }
             
-            shoppingList.removeAtIndex(indexPath.row-1)
+            shoppingList.removeAtIndex(indexPath.row)
             refresh()
         }
     }
     
-    //This method is to set the row height of the first spacer row...
-    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    override func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         
-        if indexPath.row == 0{
-            
-            return CGFloat(16)
-        }
+        let headerRow = tableView.dequeueReusableCellWithIdentifier("HeaderCell") as! TableRowHeaderSpacer
         
-        return tableView.rowHeight
+        // Set the background color of the header cell
+        headerRow.backgroundColor = UIColor(red:0.95, green:0.95, blue:0.95, alpha:1.0)
+        
+        return headerRow
+    }
+    
+    override func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        
+        // Set's the height of the Header
+        return CGFloat(12)
     }
 }
 

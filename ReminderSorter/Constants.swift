@@ -26,4 +26,6 @@ class Constants{
     static let SaveReminder:String = "SaveReminder"
     
     static let ClearShoppingList : String = "ClearShoppingList"
+    
+    static let ClearShoppingListExpire : String = "ClearShoppingListExpire"
 }

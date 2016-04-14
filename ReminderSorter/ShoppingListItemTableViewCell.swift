@@ -44,7 +44,7 @@ class ShoppingListItemTableViewCell: UITableViewCell, UITextFieldDelegate
             //Extra section for completed items
             setShoppingListItemCompletedText(shoppingListItemReminder)
             
-            self.layer.backgroundColor = shoppingListItemReminder.notes != nil
+            self.layer.backgroundColor = Utility.itemIsInShoppingCart(shoppingListItemReminder)
                 ? UIColor(red:0.00, green:0.50196081400000003, blue:1, alpha:1.0).CGColor
                 : UIColor.whiteColor().CGColor
         }

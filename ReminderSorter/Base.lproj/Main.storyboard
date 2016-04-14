@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9532" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="jGZ-Bv-awX">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="jGZ-Bv-awX">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
@@ -11,12 +11,20 @@
             <objects>
                 <tableViewController id="5Ag-tc-sUf" customClass="ReminderSortViewController" customModule="ReminderSorter" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" keyboardDismissMode="onDrag" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="gn4-vH-fZP">
-                        <rect key="frame" x="0.0" y="0.0" width="570" height="596"/>
+                        <rect key="frame" x="0.0" y="0.0" width="570" height="536"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="ReminderCell" id="9Z4-o8-zaC" customClass="ShoppingListItemTableViewCell" customModule="ReminderSorter" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="HeaderCell" id="dQi-ck-MSx" customClass="TableRowHeaderSpacer" customModule="ReminderSorter" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="22" width="570" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="dQi-ck-MSx" id="XeQ-RU-ReQ">
+                                    <rect key="frame" x="0.0" y="0.0" width="570" height="43"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="ReminderCell" id="9Z4-o8-zaC" customClass="ShoppingListItemTableViewCell" customModule="ReminderSorter" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="66" width="570" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="9Z4-o8-zaC" id="7r9-Qh-qDR">
                                     <rect key="frame" x="0.0" y="0.0" width="570" height="43"/>
@@ -118,23 +126,16 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Shopping Cart Exipry" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0vR-0t-mnH">
-                                <rect key="frame" x="20" y="72" width="179" height="21"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="179" id="EMw-m7-AGB"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
-                                <color key="textColor" red="0.0" green="0.50196081400000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tKa-UI-f1d">
                                 <rect key="frame" x="221" y="288" width="158" height="30"/>
+                                <color key="backgroundColor" red="0.94901960780000005" green="0.94901960780000005" blue="0.94901960780000005" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="Gek-sS-ILd"/>
                                     <constraint firstAttribute="width" constant="158" id="ZyU-pv-l9K"/>
                                 </constraints>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                 <state key="normal" title="Clear Shopping Cart">
-                                    <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleColor" red="0.0" green="0.50196081400000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
                                 <connections>
                                     <action selector="clearShoppingCartButtonTouchUpInside:" destination="VI3-1w-ipy" eventType="touchUpInside" id="SCD-qr-QUw"/>
@@ -150,16 +151,26 @@
                                 </date>
                                 <locale key="locale" localeIdentifier="nl_NL"/>
                             </datePicker>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Shopping Cart Exipry Time" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0vR-0t-mnH">
+                                <rect key="frame" x="20" y="72" width="191" height="21"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="191" id="mdn-An-fmq"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <gestureRecognizers/>
                         <constraints>
+                            <constraint firstItem="0vR-0t-mnH" firstAttribute="top" secondItem="f6b-nj-r9J" secondAttribute="bottom" constant="8" symbolic="YES" id="8Ks-cb-eeX"/>
                             <constraint firstItem="98q-CM-t01" firstAttribute="centerX" secondItem="tKa-UI-f1d" secondAttribute="centerX" id="DRW-SW-fvJ"/>
                             <constraint firstItem="98q-CM-t01" firstAttribute="centerX" secondItem="pz3-9h-JUp" secondAttribute="centerX" id="O11-Lm-DiT"/>
-                            <constraint firstItem="0vR-0t-mnH" firstAttribute="top" secondItem="f6b-nj-r9J" secondAttribute="bottom" constant="8" symbolic="YES" id="Xqt-wp-bGQ"/>
-                            <constraint firstItem="0vR-0t-mnH" firstAttribute="leading" secondItem="pz3-9h-JUp" secondAttribute="leadingMargin" id="abg-iF-jlC"/>
+                            <constraint firstItem="98q-CM-t01" firstAttribute="top" secondItem="0vR-0t-mnH" secondAttribute="bottom" constant="19" id="hVn-lU-qIT"/>
                             <constraint firstItem="98q-CM-t01" firstAttribute="top" secondItem="f6b-nj-r9J" secondAttribute="bottom" constant="48" id="k6A-sJ-Voh"/>
                             <constraint firstItem="jnn-hy-VxU" firstAttribute="top" secondItem="tKa-UI-f1d" secondAttribute="bottom" constant="282" id="t3n-ly-m2S"/>
+                            <constraint firstItem="0vR-0t-mnH" firstAttribute="leading" secondItem="pz3-9h-JUp" secondAttribute="leadingMargin" id="uD6-EV-cGU"/>
                             <constraint firstItem="tKa-UI-f1d" firstAttribute="top" secondItem="98q-CM-t01" secondAttribute="bottom" constant="56" id="x2C-6z-MPh"/>
                         </constraints>
                     </view>
@@ -185,6 +196,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="clearShoppingCartButton" destination="tKa-UI-f1d" id="9e4-q0-V1w"/>
                         <outlet property="closeButton" destination="HHw-QH-cb9" id="Sfz-jj-C5x"/>
                         <outlet property="shoppingCartExipryDatePicker" destination="98q-CM-t01" id="yjK-Yl-0Tb"/>
                     </connections>
@@ -205,12 +217,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gyl-GM-m4T">
-                                <rect key="frame" x="0.0" y="4" width="570" height="596"/>
-                                <connections>
-                                    <segue destination="5Ag-tc-sUf" kind="embed" id="Hl8-yx-S4N"/>
-                                </connections>
-                            </containerView>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="akY-23-ae6">
                                 <rect key="frame" x="570" y="64" width="30" height="536"/>
                                 <constraints>
@@ -218,6 +224,12 @@
                                 </constraints>
                                 <connections>
                                     <segue destination="Vzy-XB-8iC" kind="embed" id="soW-E8-VGD"/>
+                                </connections>
+                            </containerView>
+                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gyl-GM-m4T">
+                                <rect key="frame" x="0.0" y="64" width="570" height="536"/>
+                                <connections>
+                                    <segue destination="5Ag-tc-sUf" kind="embed" id="Hl8-yx-S4N"/>
                                 </connections>
                             </containerView>
                         </subviews>
@@ -232,6 +244,7 @@
                             <constraint firstItem="kum-re-Wa8" firstAttribute="top" secondItem="gyl-GM-m4T" secondAttribute="bottom" id="DbK-ah-zaJ"/>
                             <constraint firstAttribute="trailingMargin" secondItem="akY-23-ae6" secondAttribute="trailing" constant="259" id="Dop-ke-MVu"/>
                             <constraint firstItem="gyl-GM-m4T" firstAttribute="top" secondItem="Cz4-pT-SRo" secondAttribute="bottom" id="EwU-4c-L1u"/>
+                            <constraint firstItem="gyl-GM-m4T" firstAttribute="top" secondItem="akY-23-ae6" secondAttribute="top" id="EzS-92-ZB5"/>
                             <constraint firstItem="gyl-GM-m4T" firstAttribute="top" secondItem="akY-23-ae6" secondAttribute="top" constant="-8" id="Htp-Df-acQ"/>
                             <constraint firstItem="gyl-GM-m4T" firstAttribute="leading" secondItem="ZAt-hv-4hm" secondAttribute="leading" id="S66-b2-LNS"/>
                             <constraint firstItem="gyl-GM-m4T" firstAttribute="bottom" secondItem="kum-re-Wa8" secondAttribute="top" id="Sr2-bh-Sl7"/>
@@ -239,7 +252,6 @@
                             <constraint firstItem="akY-23-ae6" firstAttribute="bottom" secondItem="kum-re-Wa8" secondAttribute="top" id="VTX-3h-Vhj"/>
                             <constraint firstItem="akY-23-ae6" firstAttribute="leading" secondItem="gyl-GM-m4T" secondAttribute="trailing" id="WQN-bp-ykF"/>
                             <constraint firstItem="akY-23-ae6" firstAttribute="top" secondItem="Cz4-pT-SRo" secondAttribute="bottom" id="XCu-IW-kdr"/>
-                            <constraint firstItem="gyl-GM-m4T" firstAttribute="top" secondItem="Cz4-pT-SRo" secondAttribute="bottom" constant="-60" id="YBC-s7-hfA"/>
                             <constraint firstItem="akY-23-ae6" firstAttribute="leading" secondItem="gyl-GM-m4T" secondAttribute="trailing" constant="25" id="YqV-ec-URT"/>
                             <constraint firstAttribute="trailingMargin" secondItem="akY-23-ae6" secondAttribute="trailing" constant="-20" id="c5f-9u-piz"/>
                             <constraint firstItem="gyl-GM-m4T" firstAttribute="top" secondItem="Cz4-pT-SRo" secondAttribute="bottom" id="dRf-Xg-7bM"/>

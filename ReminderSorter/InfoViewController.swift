@@ -14,9 +14,14 @@ class InfoViewController : UIViewController {
     
     @IBOutlet weak var shoppingCartExipryDatePicker: UIDatePicker!
     
-    @IBAction func clearShoppingCartButtonTouchUpInside(sender: AnyObject) {
+    @IBOutlet weak var clearShoppingCartButton: UIButton!
+    
+    var defaults : NSUserDefaults {
         
-        NSNotificationCenter.defaultCenter().postNotificationName(Constants.ClearShoppingList, object: nil)
+        get {
+            
+            return NSUserDefaults.standardUserDefaults()
+        }
     }
     
     override func viewDidLoad() {
@@ -29,6 +34,15 @@ class InfoViewController : UIViewController {
         backString.appendAttributedString(NSMutableAttributedString(string: " Back", attributes: textAttributes))
         
         closeButton.setAttributedTitle(backString, forState: UIControlState.Normal)
+
+        if let shoppingCartExpiryTime : NSDate = defaults.objectForKey(Constants.ClearShoppingListExpire) as? NSDate {
+            
+            shoppingCartExipryDatePicker.date = shoppingCartExpiryTime
+        }
+        
+        clearShoppingCartButton.layer.borderColor = UIColor(red:0.5, green:0.5, blue:0.5, alpha:1.0).CGColor
+        clearShoppingCartButton.layer.borderWidth = 1.0
+        clearShoppingCartButton.layer.cornerRadius = 5
     }
     
     @IBAction func closeButtonTouchUpInside(sender: AnyObject) {
@@ -36,7 +50,16 @@ class InfoViewController : UIViewController {
         closeInformation()
     }
     
+    @IBAction func clearShoppingCartButtonTouchUpInside(sender: AnyObject) {
+        
+        NSNotificationCenter.defaultCenter().postNotificationName(Constants.ClearShoppingList, object: nil)
+        
+        closeInformation()
+    }
+    
     func closeInformation(){
+        
+        defaults.setObject(shoppingCartExipryDatePicker.date, forKey: Constants.ClearShoppingListExpire)
         
         presentingViewController?.dismissViewControllerAnimated(true, completion: nil)
     }
