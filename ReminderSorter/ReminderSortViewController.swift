@@ -116,6 +116,8 @@ class ReminderSortViewController: UITableViewController {
         //Set the font size of the navigation view controller
         self.navigationController?.navigationBar.titleTextAttributes = [NSFontAttributeName: UIFont.boldSystemFontOfSize(18.0)]
         
+        //tableView.registerClass(ShoppingListItemTableViewCell.self, forCellReuseIdentifier: "ReminderCell")
+        
         //Set the refresh controll spinning
         startRefreshControl()
         
@@ -190,9 +192,11 @@ class ReminderSortViewController: UITableViewController {
     func refresh(){
 
         if let shoppingListTable = self.tableView{
-                        
+            
             //Request a reload of the Table
             shoppingListTable.reloadData()
+            
+            //shoppingListTable.reloadSections(NSIndexSet(index: 0), withRowAnimation: .Fade)
         }
     }
     
@@ -475,6 +479,10 @@ class ReminderSortViewController: UITableViewController {
         //Get the cell
         let cell : ShoppingListItemTableViewCell = tableView.dequeueReusableCellWithIdentifier("ReminderCell") as! ShoppingListItemTableViewCell
         
+        if(cell.shoppingListItemTextField != nil){
+            
+        }
+        
         //Based on the settings, set up the auto-capitalisation for the keyboard
         if SettingsUserDefaults.autoCapitalisation{
             
@@ -556,12 +564,17 @@ class ReminderSortViewController: UITableViewController {
         
         return false
     }
+    
+    override func tableView(tableView: UITableView, shouldIndentWhileEditingRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+        
+        return false
+    }
 
     //This method is for the swipe left to delete
     override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
         
         if(indexPath.row < shoppingList.count){
-
+            
             let shoppingListItem : EKReminder = shoppingList[indexPath.row]
             
             guard reminderManager.removeReminder(shoppingListItem, commit: false) else {
@@ -572,18 +585,39 @@ class ReminderSortViewController: UITableViewController {
             }
             
             shoppingList.removeAtIndex(indexPath.row)
-            refresh()
+            
+            //tableView.editing = true
+            
+            //tableView.beginUpdates()
+            
+            tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
+            
+            //commitShoppingList()
+            
+            //tableView.endUpdates()
+            
+            //refresh()
+            
+            //tableView.reloadSections(<#T##sections: NSIndexSet##NSIndexSet#>, withRowAnimation: <#T##UITableViewRowAnimation#>)
+            
+            //tableView.editing = false
         }
     }
     
     override func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         
-        let headerRow = tableView.dequeueReusableCellWithIdentifier("HeaderCell") as! TableRowHeaderSpacer
+//        let headerRow = tableView.dequeueReusableCellWithIdentifier("HeaderCell") as! TableRowHeaderSpacer
+//        
+//        // Set the background color of the header cell
+//        headerRow.backgroundColor = UIColor(red:0.95, green:0.95, blue:0.95, alpha:1.0)
+//        
+//        return headerRow
         
-        // Set the background color of the header cell
-        headerRow.backgroundColor = UIColor(red:0.95, green:0.95, blue:0.95, alpha:1.0)
+        let headerView = ShoppingListItemTableViewCell()
         
-        return headerRow
+        headerView.backgroundColor = UIColor(red:0.95, green:0.95, blue:0.95, alpha:1.0)
+        
+        return headerView
     }
     
     override func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {

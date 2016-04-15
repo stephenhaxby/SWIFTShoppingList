@@ -111,11 +111,6 @@ class iCloudReminderManager{
         }
     }
     
-    func getRemindersTEST(reminders : [EKReminder]?) {
-        
-        
-    }
-    
     func addReminder(title : String, commit : Bool) -> EKReminder? {
         
         let calendar : EKCalendar? = getReminderList()
