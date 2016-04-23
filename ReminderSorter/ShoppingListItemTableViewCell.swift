@@ -35,19 +35,27 @@ class ShoppingListItemTableViewCell: UITableViewCell, UITextFieldDelegate
     
     override func layoutSubviews() {
         
+        super.layoutSubviews();
+        
         if let shoppingListItemReminder = reminder{
-            
-            //Setting the text value based on the auto-capitalisation settings
-            shoppingListItemTextField.attributedText = nil
-            shoppingListItemTextField.text = getAutoCapitalisationTitle(shoppingListItemReminder.title)
-            
-            //Extra section for completed items
-            setShoppingListItemCompletedText(shoppingListItemReminder)
             
             self.layer.backgroundColor = Utility.itemIsInShoppingCart(shoppingListItemReminder)
                 ? UIColor(red:0.00, green:0.50196081400000003, blue:1, alpha:1.0).CGColor
                 : UIColor.whiteColor().CGColor
         }
+    }
+    
+    func setShoppingListItem(reminder: EKReminder) {
+        
+        self.reminder = reminder
+        
+        shoppingListItemTextField.attributedText = nil
+        shoppingListItemTextField.text = getAutoCapitalisationTitle(reminder.title)
+
+        //Extra section for completed items
+        setShoppingListItemCompletedText(reminder)
+        
+        shoppingListItemTextField.delegate = self
     }
     
     @IBAction func addNewTouchUpInside(sender: AnyObject) {
@@ -110,13 +118,13 @@ class ShoppingListItemTableViewCell: UITableViewCell, UITextFieldDelegate
             }
         }
     }
-    
-    func setShoppingListItem(reminder: EKReminder) {
-        
-        self.reminder = reminder
-        
-        shoppingListItemTextField.delegate = self
-    }
+//    
+//    func setShoppingListItem(reminder: EKReminder) {
+//        
+//        self.reminder = reminder
+//        
+//        shoppingListItemTextField.delegate = self
+//    }
     
     //Return the title based on the auto-capitalisation settings
     func getAutoCapitalisationTitle(title : String) -> String {
