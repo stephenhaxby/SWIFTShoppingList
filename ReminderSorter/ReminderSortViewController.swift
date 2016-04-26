@@ -22,6 +22,8 @@ class ReminderSortViewController: UITableViewController {
     
     var storedShoppingList = [ShoppingListItem]()
     
+    var groupedShoppingList = [[EKReminder]]()
+    
     var eventStoreObserver : NSObjectProtocol?
     var settingsObserver : NSObjectProtocol?
     var quickScrollObserver : NSObjectProtocol?
@@ -30,6 +32,10 @@ class ReminderSortViewController: UITableViewController {
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
+        
+        groupedShoppingList.append([EKReminder]())
+        groupedShoppingList.append([EKReminder]())
+        groupedShoppingList.append([EKReminder]())
         
         //Used for when the app goes into the background (as we want to commit any changes...)
         let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
@@ -343,7 +349,11 @@ class ReminderSortViewController: UITableViewController {
 
             completedItems = completedItems.sort(reminderSort)
         }
-        
+    
+        groupedShoppingList[Constants.ShoppingListSection.List.rawValue] = itemsToGet
+        groupedShoppingList[Constants.ShoppingListSection.Cart.rawValue] = itemsGot
+        groupedShoppingList[Constants.ShoppingListSection.History.rawValue] = completedItems
+
         //As we a in another thread, post back to the main thread so we can update the UI
         dispatch_async(dispatch_get_main_queue()) { () -> Void in
 
@@ -413,7 +423,7 @@ class ReminderSortViewController: UITableViewController {
         //If pressing '+' just scroll to the bottom
         if letter == "+" {
             
-            let indexPath = NSIndexPath(forRow: shoppingList.count, inSection: 0)
+            let indexPath = NSIndexPath(forRow: groupedShoppingList[Constants.ShoppingListSection.History.rawValue].count, inSection: Constants.ShoppingListSection.History.rawValue)
 
             remindersTableView.scrollToRowAtIndexPath(indexPath, atScrollPosition: UITableViewScrollPosition.Top, animated: true)
         }
@@ -428,12 +438,12 @@ class ReminderSortViewController: UITableViewController {
     func scrollToNearestLetter(letter: String){
         
         //Find any items begining with the specified letter
-        var itemsBeginingWith : [EKReminder] = shoppingList.filter({(reminder : EKReminder) in reminder.completed && reminder.title.hasPrefix(letter)})
+        var itemsBeginingWith : [EKReminder] = groupedShoppingList[Constants.ShoppingListSection.History.rawValue].filter({(reminder : EKReminder) in reminder.completed && reminder.title.hasPrefix(letter)})
         
         //If one exists, find the item first item in the list with that letter
         if itemsBeginingWith.count > 0 {
             
-            let index = shoppingList.indexOf(itemsBeginingWith[0])
+            let index = groupedShoppingList[Constants.ShoppingListSection.History.rawValue].indexOf(itemsBeginingWith[0])
             
             //+1 is for the blank row at the start
             let indexPath = NSIndexPath(forRow: index!+1, inSection: 0)
@@ -463,12 +473,12 @@ class ReminderSortViewController: UITableViewController {
     //We increase it by two for the first blank row and the final "+" (add new item) row
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        return shoppingList.count+1
+        return section == Constants.ShoppingListSection.History.rawValue ? groupedShoppingList[section].count+1 :  groupedShoppingList[section].count
     }
     
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         
-        return 1
+        return Constants.ShoppingListSections
     }
     
     //To populate each cell's text based on the index into the calendars array, with the extra item at the bottom
@@ -508,7 +518,7 @@ class ReminderSortViewController: UITableViewController {
 //        }
         
         //Add in the extra item at the bottom
-        if indexPath.row == shoppingList.count{
+        if indexPath.row == groupedShoppingList[indexPath.section].count && indexPath.section == Constants.ShoppingListSection.History.rawValue {
             
             shoppingListItem = reminderManager.getNewReminder()
             
@@ -525,7 +535,7 @@ class ReminderSortViewController: UITableViewController {
         //Each actual list item...
         else{
             
-            shoppingListItem = shoppingList[indexPath.row]
+            shoppingListItem = groupedShoppingList[indexPath.section][indexPath.row]
         }
         
         cell.setShoppingListItem(shoppingListItem!)
@@ -558,7 +568,7 @@ class ReminderSortViewController: UITableViewController {
     override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
         
         //Don't allow delete of the last blank row...
-        if(indexPath.row < shoppingList.count){
+        if(indexPath.row < groupedShoppingList[indexPath.section].count){
             return true
         }
         
@@ -573,9 +583,9 @@ class ReminderSortViewController: UITableViewController {
     //This method is for the swipe left to delete
     override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
         
-        if(indexPath.row < shoppingList.count){
+        if(indexPath.row < groupedShoppingList[indexPath.section].count){
             
-            let shoppingListItem : EKReminder = shoppingList[indexPath.row]
+            let shoppingListItem : EKReminder = groupedShoppingList[indexPath.section][indexPath.row]
             
             guard reminderManager.removeReminder(shoppingListItem, commit: false) else {
                 
@@ -584,47 +594,40 @@ class ReminderSortViewController: UITableViewController {
                 return
             }
             
-            shoppingList.removeAtIndex(indexPath.row)
+            groupedShoppingList[indexPath.section].removeAtIndex(indexPath.row)
             
-            //tableView.editing = true
-            
+            //shoppingList.removeAtIndex(indexPath.row)
+
             //tableView.beginUpdates()
             
             tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
-            
-            //commitShoppingList()
-            
+
             //tableView.endUpdates()
-            
-            //refresh()
-            
-            //tableView.reloadSections(<#T##sections: NSIndexSet##NSIndexSet#>, withRowAnimation: <#T##UITableViewRowAnimation#>)
-            
-            //tableView.editing = false
         }
     }
     
     override func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         
-//        let headerRow = tableView.dequeueReusableCellWithIdentifier("HeaderCell") as! TableRowHeaderSpacer
-//        
-//        // Set the background color of the header cell
-//        headerRow.backgroundColor = UIColor(red:0.95, green:0.95, blue:0.95, alpha:1.0)
-//        
-//        return headerRow
+        let headerRow = tableView.dequeueReusableCellWithIdentifier("HeaderCell") as! TableRowHeaderSpacer
         
-        let headerView = ShoppingListItemTableViewCell()
+        // Set the background color of the header cell
+        headerRow.backgroundColor = UIColor(red:0.95, green:0.95, blue:0.95, alpha:1.0)
         
-        headerView.backgroundColor = UIColor(red:0.95, green:0.95, blue:0.95, alpha:1.0)
+        headerRow.titleLabel.text = Constants.ShoppingListSection(rawValue: section)?.description
         
-        return headerView
+        return headerRow
     }
     
     override func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         
         // Set's the height of the Header
-        return CGFloat(12)
+        return CGFloat(20)
     }
+    
+//    override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+//        
+//         return Constants.ShoppingListSection(rawValue: section)?.description
+//    }
 }
 
 

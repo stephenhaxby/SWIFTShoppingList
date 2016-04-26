@@ -17,9 +17,7 @@ class iCloudReminderManager{
     
     //Requests access to reminders. Takes in a function to find if access has been granted or not.
     //We can then perform some action like stop a refresh control...
-    func requestAccessToReminders(accessStatus : Bool -> ()){
-        
-        
+    func requestAccessToReminders(accessStatus : Bool -> ()){       
         
         if(!eventStoreAccessGranted){
             

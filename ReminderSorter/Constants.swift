@@ -28,4 +28,25 @@ class Constants{
     static let ClearShoppingList : String = "ClearShoppingList"
     
     static let ClearShoppingListExpire : String = "ClearShoppingListExpire"
+    
+    static let ShoppingListSections = 3
+    
+    enum ShoppingListSection : Int, CustomStringConvertible {
+        case List
+        case Cart
+        case History
+        
+        var description: String {
+            
+            switch self {
+            
+                case List: return "Shopping List"
+            
+                case Cart: return "Trolley"
+                
+                case History: return "History"
+                
+            }
+        }
+    }
 }
