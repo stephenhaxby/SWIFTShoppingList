@@ -32,10 +32,13 @@ class ReminderSortViewController: UITableViewController {
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
+    
+        //TODO: Use a loop and the constant value
         
-        groupedShoppingList.append([EKReminder]())
-        groupedShoppingList.append([EKReminder]())
-        groupedShoppingList.append([EKReminder]())
+        for _ in 0..<Constants.ShoppingListSections {
+            
+            groupedShoppingList.append([EKReminder]())
+        }
         
         //Used for when the app goes into the background (as we want to commit any changes...)
         let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
