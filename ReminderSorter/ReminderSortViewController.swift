@@ -449,7 +449,7 @@ class ReminderSortViewController: UITableViewController {
             let index = groupedShoppingList[Constants.ShoppingListSection.History.rawValue].indexOf(itemsBeginingWith[0])
             
             //+1 is for the blank row at the start
-            let indexPath = NSIndexPath(forRow: index!+1, inSection: 0)
+            let indexPath = NSIndexPath(forRow: index!, inSection: Constants.ShoppingListSection.History.rawValue)
             
             remindersTableView.scrollToRowAtIndexPath(indexPath, atScrollPosition: UITableViewScrollPosition.Top, animated: true)
         }
@@ -465,7 +465,7 @@ class ReminderSortViewController: UITableViewController {
             else {
                 
                 //If we are at the begining, scroll to the top
-                remindersTableView.scrollToRowAtIndexPath(NSIndexPath(forRow: 0, inSection: 0), atScrollPosition: UITableViewScrollPosition.Top, animated: true)
+                remindersTableView.scrollToRowAtIndexPath(NSIndexPath(forRow: 0, inSection: Constants.ShoppingListSection.History.rawValue), atScrollPosition: UITableViewScrollPosition.Top, animated: true)
             }
         }
     }
