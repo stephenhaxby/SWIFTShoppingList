@@ -99,6 +99,8 @@ class ShoppingListItemTableViewCell: UITableViewCell, UITextFieldDelegate
                     dateformatter.timeStyle = NSDateFormatterStyle.ShortStyle
 
                     editedReminder.notes = dateformatter.stringFromDate(NSDate())
+                    
+                    NSNotificationCenter.defaultCenter().postNotificationName(Constants.SetClearShoppingList, object: self)
                 }
                 else {
                     
@@ -115,6 +117,8 @@ class ShoppingListItemTableViewCell: UITableViewCell, UITextFieldDelegate
                     
                     NSNotificationCenter.defaultCenter().postNotificationName(Constants.SaveReminder, object: editedReminder)
                 }
+                
+                //TODO: Local notifications...
             }
         }
     }

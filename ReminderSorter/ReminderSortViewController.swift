@@ -29,6 +29,17 @@ class ReminderSortViewController: UITableViewController {
     var quickScrollObserver : NSObjectProtocol?
     var saveReminderObserver : NSObjectProtocol?
     var clearShoppingCartObserver : NSObjectProtocol?
+    var clearShopingCartOnOpenObserver : NSObjectProtocol?
+    var setClearShoppingCartObserver : NSObjectProtocol?
+    var clearShoppingListOnOpenObserver : NSObjectProtocol?
+    
+    var defaults : NSUserDefaults {
+        
+        get {
+            
+            return NSUserDefaults.standardUserDefaults()
+        }
+    }
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -84,6 +95,18 @@ class ReminderSortViewController: UITableViewController {
             
             self.clearShoppingCart()
         }
+        
+        setClearShoppingCartObserver = NSNotificationCenter.defaultCenter().addObserverForName(Constants.SetClearShoppingList, object: nil, queue: nil){
+            (notification) -> Void in
+            
+            self.setClearShoppingCart()
+        }
+        
+        clearShoppingListOnOpenObserver = NSNotificationCenter.defaultCenter().addObserverForName(Constants.ClearShoppingListOnOpen, object: nil, queue: nil){
+            (notification) -> Void in
+            
+            self.CearShoppingCartOnOpen()
+        }
     }
     
     deinit{
@@ -111,6 +134,16 @@ class ReminderSortViewController: UITableViewController {
         }
         
         if let observer = clearShoppingCartObserver{
+            
+            NSNotificationCenter.defaultCenter().removeObserver(observer, name: Constants.ClearShoppingList, object: nil)
+        }
+        
+        if let observer = setClearShoppingCartObserver{
+            
+            NSNotificationCenter.defaultCenter().removeObserver(observer, name: Constants.ClearShoppingList, object: nil)
+        }
+        
+        if let observer = clearShoppingListOnOpenObserver{
             
             NSNotificationCenter.defaultCenter().removeObserver(observer, name: Constants.ClearShoppingList, object: nil)
         }
@@ -162,7 +195,66 @@ class ReminderSortViewController: UITableViewController {
             }
         }
         
+        if let clearShoppingListNotification : UILocalNotification = getClearShoppingCartNotification() {
+            
+            UIApplication.sharedApplication().cancelLocalNotification(clearShoppingListNotification) // there should be a maximum of one match on UUID
+        }
+        
         getShoppingList(shoppingList)
+    }
+    
+    func getClearShoppingCartNotification() -> UILocalNotification? {
+        
+        var clearShoppingListNotification : UILocalNotification?
+        
+        for notification in UIApplication.sharedApplication().scheduledLocalNotifications! as [UILocalNotification] { // loop through notifications...
+            
+            if (notification.userInfo!["UUID"] as! String == Constants.SetClearShoppingList) { // ...and cancel the notification that corresponds to this TodoItem instance (matched by UUID)
+                
+                clearShoppingListNotification = notification
+                
+                break
+            }
+        }
+        
+        return clearShoppingListNotification
+    }
+    
+    func setClearShoppingCart() {
+        
+        var clearShoppingListNotification : UILocalNotification? = getClearShoppingCartNotification()
+        
+        if let shoppingCartExpiryTime : NSDate = defaults.objectForKey(Constants.ClearShoppingListExpire) as? NSDate {
+            
+            let dateComponents : NSDateComponents = NSDateManager.getDateComponentsFromDate(shoppingCartExpiryTime)
+            
+            if clearShoppingListNotification == nil {
+                
+                // create a corresponding local notification
+                clearShoppingListNotification = UILocalNotification()
+                //notification.alertBody = "TEST Alert!" // text that will be displayed in the notification
+                //notification.alertAction = "open" // text that is displayed after "slide to..." on the lock screen - defaults to "slide to view"
+                
+                //notification.soundName = UILocalNotificationDefaultSoundName // play default sound
+                clearShoppingListNotification!.userInfo = ["UUID": Constants.SetClearShoppingList] // assign a unique identifier to the notification so that we can retrieve it later
+                //notification.category = "TODO_CATEGORY"
+                UIApplication.sharedApplication().scheduleLocalNotification(clearShoppingListNotification!)
+            }
+            
+            clearShoppingListNotification!.fireDate = NSDateManager.addHoursAndMinutesToDate(NSDate(), hours: dateComponents.hour, Minutes: dateComponents.minute) // todo item due date (when notification will be fired)
+
+        }
+    }
+    
+    func CearShoppingCartOnOpen() {
+        
+        if let notification : UILocalNotification = getClearShoppingCartNotification() {
+            
+            if notification.fireDate != nil && NSDateManager.dateIsAfterDate(notification.fireDate!, date2: NSDate()) {
+                
+                clearShoppingCart()
+            }
+        }
     }
     
     func commitShoppingList() {

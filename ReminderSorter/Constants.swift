@@ -29,6 +29,10 @@ class Constants{
     
     static let ClearShoppingListExpire : String = "ClearShoppingListExpire"
     
+    static let SetClearShoppingList : String = "SetClearShoppingList"
+    
+    static let ClearShoppingListOnOpen : String = "ClearShoppingListOnOpen"
+    
     static let ShoppingListSections = 3
     
     enum ShoppingListSection : Int, CustomStringConvertible {
