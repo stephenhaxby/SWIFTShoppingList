@@ -248,12 +248,18 @@ class ReminderSortViewController: UITableViewController {
     
     func CearShoppingCartOnOpen() {
         
+        //If the notification fires while we are not active it's not in the list anymore so we need to clear it...
+        
         if let notification : UILocalNotification = getClearShoppingCartNotification() {
             
             if notification.fireDate != nil && NSDateManager.dateIsAfterDate(notification.fireDate!, date2: NSDate()) {
                 
                 clearShoppingCart()
             }
+        }
+        else {
+            
+            clearShoppingCart()
         }
     }
     
