@@ -11,18 +11,42 @@ import Foundation
 class SettingsUserDefaults{
     
     static var alphabeticalSortIncomplete: Bool {
+        
+        if NSUserDefaults.standardUserDefaults().dataForKey("alphabeticalSortIncomplete") != nil {
+            
+            return true
+        }
+        
         return NSUserDefaults.standardUserDefaults().boolForKey("alphabeticalSortIncomplete")
     }
     
     static var alphabeticalSortComplete: Bool {
+        
+        if NSUserDefaults.standardUserDefaults().dataForKey("alphabeticalSortComplete") != nil {
+            
+            return true
+        }
+        
         return NSUserDefaults.standardUserDefaults().boolForKey("alphabeticalSortComplete")
     }
     
     static var autoCapitalisation: Bool {
+        
+        if NSUserDefaults.standardUserDefaults().dataForKey("autoCapitalisation") != nil {
+            
+            return true
+        }
+        
         return NSUserDefaults.standardUserDefaults().boolForKey("autoCapitalisation")
     }
     
-    static var dissableScreenLock: Bool {
-        return NSUserDefaults.standardUserDefaults().boolForKey("dissableScreenLock")
+    static var disableScreenLock: Bool {
+        
+        if NSUserDefaults.standardUserDefaults().dataForKey("disableScreenLock") != nil {
+            
+            return true
+        }
+        
+        return NSUserDefaults.standardUserDefaults().boolForKey("disableScreenLock")
     }
 }

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9531" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="jGZ-Bv-awX">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="jGZ-Bv-awX">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
@@ -11,15 +11,34 @@
             <objects>
                 <tableViewController id="5Ag-tc-sUf" customClass="ReminderSortViewController" customModule="ReminderSorter" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" keyboardDismissMode="onDrag" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="gn4-vH-fZP">
-                        <rect key="frame" x="0.0" y="0.0" width="570" height="596"/>
+                        <rect key="frame" x="0.0" y="0.0" width="573" height="536"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="HeaderCell" rowHeight="20" id="dQi-ck-MSx" customClass="TableRowHeaderSpacer" customModule="ReminderSorter" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="22" width="573" height="20"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="dQi-ck-MSx" id="XeQ-RU-ReQ">
+                                    <rect key="frame" x="0.0" y="0.0" width="573" height="19"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="q6L-uR-Xot">
+                                            <rect key="frame" x="8" y="-1" width="536" height="21"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="titleLabel" destination="q6L-uR-Xot" id="wX1-dS-xFi"/>
+                                </connections>
+                            </tableViewCell>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="ReminderCell" id="9Z4-o8-zaC" customClass="ShoppingListItemTableViewCell" customModule="ReminderSorter" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="22" width="570" height="44"/>
+                                <rect key="frame" x="0.0" y="42" width="573" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="9Z4-o8-zaC" id="7r9-Qh-qDR">
-                                    <rect key="frame" x="0.0" y="0.0" width="570" height="43"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="573" height="43"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ReJ-9B-XiB">
@@ -39,10 +58,10 @@
                                             </connections>
                                         </button>
                                         <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Lib-C6-ncm">
-                                            <rect key="frame" x="75" y="8" width="487" height="27"/>
+                                            <rect key="frame" x="75" y="8" width="477" height="27"/>
                                             <gestureRecognizers/>
                                             <constraints>
-                                                <constraint firstAttribute="width" constant="487" id="fPx-cY-UQC"/>
+                                                <constraint firstAttribute="width" constant="477" id="fPx-cY-UQC"/>
                                             </constraints>
                                             <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                             <textInputTraits key="textInputTraits"/>
@@ -118,96 +137,53 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="a8F-KK-weE">
-                                <rect key="frame" x="20" y="72" width="560" height="528"/>
-                                <subviews>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EIG-6C-MiI">
-                                        <rect key="frame" x="0.0" y="0.0" width="560" height="508"/>
-                                        <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Information:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CR0-QT-Gfp">
-                                                <rect key="frame" x="0.0" y="8" width="560" height="22"/>
-                                                <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
-                                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Features:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yUd-MJ-Aje">
-                                                <rect key="frame" x="0.0" y="204" width="560" height="22"/>
-                                                <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
-                                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
-                                            <textView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" delaysContentTouches="NO" canCancelContentTouches="NO" bouncesZoom="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="IBS-NX-3at">
-                                                <rect key="frame" x="0.0" y="234" width="560" height="184"/>
-                                                <string key="text">* Add new item
-* Swipe left to delete
-* Press to edit
-* Mark an item as completed
-* Mark an item as incomplete
-* Sorted completed and incomplete lists (via Settings)
-* Auto word capitalisation (via Settings)
-* Pull down to refresh
-* Auto refresh whenever your Calendar database is refreshed in the background
-* Quick jump links</string>
-                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                                            </textView>
-                                            <textView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" delaysContentTouches="NO" canCancelContentTouches="NO" bouncesZoom="NO" editable="NO" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aFP-nM-11S">
-                                                <rect key="frame" x="0.0" y="38" width="560" height="150"/>
-                                                <string key="text">Shopping taps into your iCloud Reminders to enable you to access your shopping list across all your iDevices (and iCloud on the web).
-
-We will create a new list called 'Shopping' (or attempt to use an existing one if one already exists) so look for this next time you access your built in Reminders app.
-
-You can then share this list with any of your contacts, the same as you would do for any other Reminders list.</string>
-                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                                            </textView>
-                                        </subviews>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        <constraints>
-                                            <constraint firstItem="CR0-QT-Gfp" firstAttribute="trailing" secondItem="aFP-nM-11S" secondAttribute="trailing" id="3yh-HZ-TTv"/>
-                                            <constraint firstAttribute="height" constant="508" id="4oK-iF-q3r"/>
-                                            <constraint firstAttribute="trailing" secondItem="aFP-nM-11S" secondAttribute="trailing" id="5KH-OC-QrL"/>
-                                            <constraint firstItem="CR0-QT-Gfp" firstAttribute="top" secondItem="EIG-6C-MiI" secondAttribute="topMargin" id="756-lT-iHZ"/>
-                                            <constraint firstItem="CR0-QT-Gfp" firstAttribute="trailing" secondItem="IBS-NX-3at" secondAttribute="trailing" id="9Pw-b2-R72"/>
-                                            <constraint firstItem="CR0-QT-Gfp" firstAttribute="leading" secondItem="IBS-NX-3at" secondAttribute="leading" id="ABx-3k-59m"/>
-                                            <constraint firstItem="CR0-QT-Gfp" firstAttribute="trailing" secondItem="yUd-MJ-Aje" secondAttribute="trailing" id="BaE-wK-U9p"/>
-                                            <constraint firstItem="CR0-QT-Gfp" firstAttribute="leading" secondItem="yUd-MJ-Aje" secondAttribute="leading" id="ToK-ce-Avc"/>
-                                            <constraint firstItem="aFP-nM-11S" firstAttribute="leading" secondItem="EIG-6C-MiI" secondAttribute="leading" id="UaO-Mf-5aw"/>
-                                            <constraint firstItem="IBS-NX-3at" firstAttribute="top" secondItem="yUd-MJ-Aje" secondAttribute="bottom" constant="8" symbolic="YES" id="aPp-me-X2o"/>
-                                            <constraint firstItem="yUd-MJ-Aje" firstAttribute="top" secondItem="aFP-nM-11S" secondAttribute="bottom" constant="16" id="spk-ff-06J"/>
-                                            <constraint firstItem="aFP-nM-11S" firstAttribute="top" secondItem="CR0-QT-Gfp" secondAttribute="bottom" constant="8" id="tG4-g6-3fl"/>
-                                            <constraint firstItem="CR0-QT-Gfp" firstAttribute="leading" secondItem="aFP-nM-11S" secondAttribute="leading" id="zrs-Sa-RHW"/>
-                                        </constraints>
-                                    </view>
-                                </subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tKa-UI-f1d">
+                                <rect key="frame" x="221" y="288" width="158" height="30"/>
+                                <color key="backgroundColor" red="0.94901960780000005" green="0.94901960780000005" blue="0.94901960780000005" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="trailing" secondItem="EIG-6C-MiI" secondAttribute="trailing" id="A7N-mc-aoh"/>
-                                    <constraint firstItem="EIG-6C-MiI" firstAttribute="top" secondItem="a8F-KK-weE" secondAttribute="top" id="HPU-Z5-dKj"/>
-                                    <constraint firstAttribute="bottom" secondItem="EIG-6C-MiI" secondAttribute="bottom" constant="40" id="HTi-R8-Ep8"/>
-                                    <constraint firstItem="EIG-6C-MiI" firstAttribute="leading" secondItem="a8F-KK-weE" secondAttribute="leading" id="jXJ-OE-Lus"/>
+                                    <constraint firstAttribute="height" constant="30" id="Gek-sS-ILd"/>
+                                    <constraint firstAttribute="width" constant="158" id="ZyU-pv-l9K"/>
                                 </constraints>
-                            </scrollView>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                <state key="normal" title="Clear Shopping Cart">
+                                    <color key="titleColor" red="0.0" green="0.50196081400000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="clearShoppingCartButtonTouchUpInside:" destination="VI3-1w-ipy" eventType="touchUpInside" id="SCD-qr-QUw"/>
+                                </connections>
+                            </button>
+                            <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="time" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="98q-CM-t01">
+                                <rect key="frame" x="200" y="112" width="200" height="120"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="200" id="EbS-RP-9gl"/>
+                                </constraints>
+                                <date key="date" timeIntervalSinceReferenceDate="478695089.04229301">
+                                    <!--2016-03-03 10:51:29 +0000-->
+                                </date>
+                                <locale key="locale" localeIdentifier="nl_NL"/>
+                            </datePicker>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Shopping Cart Exipry Time" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0vR-0t-mnH">
+                                <rect key="frame" x="20" y="72" width="191" height="21"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="191" id="mdn-An-fmq"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <gestureRecognizers/>
                         <constraints>
-                            <constraint firstItem="a8F-KK-weE" firstAttribute="top" secondItem="f6b-nj-r9J" secondAttribute="bottom" constant="8" id="7Eh-ES-wyq"/>
-                            <constraint firstItem="a8F-KK-weE" firstAttribute="top" secondItem="f6b-nj-r9J" secondAttribute="bottom" constant="8" id="7K7-WG-9hx"/>
-                            <constraint firstAttribute="leadingMargin" secondItem="EIG-6C-MiI" secondAttribute="leading" id="9Vk-yv-HQC"/>
-                            <constraint firstItem="jnn-hy-VxU" firstAttribute="top" secondItem="a8F-KK-weE" secondAttribute="bottom" id="Cdd-pO-fag"/>
-                            <constraint firstAttribute="leadingMargin" secondItem="a8F-KK-weE" secondAttribute="leading" id="ETO-nJ-AL1"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="EIG-6C-MiI" secondAttribute="trailing" id="YV3-Mf-S3L"/>
-                            <constraint firstItem="a8F-KK-weE" firstAttribute="top" secondItem="f6b-nj-r9J" secondAttribute="bottom" constant="8" id="kl5-Le-AMU"/>
-                            <constraint firstItem="a8F-KK-weE" firstAttribute="top" secondItem="f6b-nj-r9J" secondAttribute="bottom" constant="8" symbolic="YES" id="ql5-Na-uAp"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="a8F-KK-weE" secondAttribute="trailing" id="veR-Ny-lVs"/>
+                            <constraint firstItem="0vR-0t-mnH" firstAttribute="top" secondItem="f6b-nj-r9J" secondAttribute="bottom" constant="8" symbolic="YES" id="8Ks-cb-eeX"/>
+                            <constraint firstItem="98q-CM-t01" firstAttribute="centerX" secondItem="tKa-UI-f1d" secondAttribute="centerX" id="DRW-SW-fvJ"/>
+                            <constraint firstItem="98q-CM-t01" firstAttribute="centerX" secondItem="pz3-9h-JUp" secondAttribute="centerX" id="O11-Lm-DiT"/>
+                            <constraint firstItem="98q-CM-t01" firstAttribute="top" secondItem="0vR-0t-mnH" secondAttribute="bottom" constant="19" id="hVn-lU-qIT"/>
+                            <constraint firstItem="98q-CM-t01" firstAttribute="top" secondItem="f6b-nj-r9J" secondAttribute="bottom" constant="48" id="k6A-sJ-Voh"/>
+                            <constraint firstItem="jnn-hy-VxU" firstAttribute="top" secondItem="tKa-UI-f1d" secondAttribute="bottom" constant="282" id="t3n-ly-m2S"/>
+                            <constraint firstItem="0vR-0t-mnH" firstAttribute="leading" secondItem="pz3-9h-JUp" secondAttribute="leadingMargin" id="uD6-EV-cGU"/>
+                            <constraint firstItem="tKa-UI-f1d" firstAttribute="top" secondItem="98q-CM-t01" secondAttribute="bottom" constant="56" id="x2C-6z-MPh"/>
                         </constraints>
-                        <variation key="default">
-                            <mask key="constraints">
-                                <exclude reference="7K7-WG-9hx"/>
-                                <exclude reference="kl5-Le-AMU"/>
-                                <exclude reference="ql5-Na-uAp"/>
-                            </mask>
-                        </variation>
                     </view>
                     <navigationItem key="navigationItem" title="Help" id="Qrk-jS-5dL">
                         <barButtonItem key="leftBarButtonItem" style="done" id="6JR-Id-kR6">
@@ -231,12 +207,14 @@ You can then share this list with any of your contacts, the same as you would do
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="clearShoppingCartButton" destination="tKa-UI-f1d" id="9e4-q0-V1w"/>
                         <outlet property="closeButton" destination="HHw-QH-cb9" id="Sfz-jj-C5x"/>
+                        <outlet property="shoppingCartExipryDatePicker" destination="98q-CM-t01" id="yjK-Yl-0Tb"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ywx-bw-kOe" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2576" y="115"/>
+            <point key="canvasLocation" x="2507" y="115"/>
         </scene>
         <!--iCloud Shopping List-->
         <scene sceneID="raG-mQ-E6b">
@@ -250,12 +228,6 @@ You can then share this list with any of your contacts, the same as you would do
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gyl-GM-m4T">
-                                <rect key="frame" x="0.0" y="4" width="570" height="596"/>
-                                <connections>
-                                    <segue destination="5Ag-tc-sUf" kind="embed" id="Hl8-yx-S4N"/>
-                                </connections>
-                            </containerView>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="akY-23-ae6">
                                 <rect key="frame" x="570" y="64" width="30" height="536"/>
                                 <constraints>
@@ -263,6 +235,12 @@ You can then share this list with any of your contacts, the same as you would do
                                 </constraints>
                                 <connections>
                                     <segue destination="Vzy-XB-8iC" kind="embed" id="soW-E8-VGD"/>
+                                </connections>
+                            </containerView>
+                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gyl-GM-m4T">
+                                <rect key="frame" x="0.0" y="64" width="573" height="536"/>
+                                <connections>
+                                    <segue destination="5Ag-tc-sUf" kind="embed" id="Hl8-yx-S4N"/>
                                 </connections>
                             </containerView>
                         </subviews>
@@ -277,14 +255,14 @@ You can then share this list with any of your contacts, the same as you would do
                             <constraint firstItem="kum-re-Wa8" firstAttribute="top" secondItem="gyl-GM-m4T" secondAttribute="bottom" id="DbK-ah-zaJ"/>
                             <constraint firstAttribute="trailingMargin" secondItem="akY-23-ae6" secondAttribute="trailing" constant="259" id="Dop-ke-MVu"/>
                             <constraint firstItem="gyl-GM-m4T" firstAttribute="top" secondItem="Cz4-pT-SRo" secondAttribute="bottom" id="EwU-4c-L1u"/>
+                            <constraint firstItem="gyl-GM-m4T" firstAttribute="top" secondItem="akY-23-ae6" secondAttribute="top" id="EzS-92-ZB5"/>
                             <constraint firstItem="gyl-GM-m4T" firstAttribute="top" secondItem="akY-23-ae6" secondAttribute="top" constant="-8" id="Htp-Df-acQ"/>
                             <constraint firstItem="gyl-GM-m4T" firstAttribute="leading" secondItem="ZAt-hv-4hm" secondAttribute="leading" id="S66-b2-LNS"/>
                             <constraint firstItem="gyl-GM-m4T" firstAttribute="bottom" secondItem="kum-re-Wa8" secondAttribute="top" id="Sr2-bh-Sl7"/>
                             <constraint firstItem="kum-re-Wa8" firstAttribute="top" secondItem="gyl-GM-m4T" secondAttribute="bottom" constant="-2" id="Tzv-nL-L0s"/>
                             <constraint firstItem="akY-23-ae6" firstAttribute="bottom" secondItem="kum-re-Wa8" secondAttribute="top" id="VTX-3h-Vhj"/>
-                            <constraint firstItem="akY-23-ae6" firstAttribute="leading" secondItem="gyl-GM-m4T" secondAttribute="trailing" id="WQN-bp-ykF"/>
+                            <constraint firstItem="akY-23-ae6" firstAttribute="leading" secondItem="gyl-GM-m4T" secondAttribute="trailing" constant="-3" id="WQN-bp-ykF"/>
                             <constraint firstItem="akY-23-ae6" firstAttribute="top" secondItem="Cz4-pT-SRo" secondAttribute="bottom" id="XCu-IW-kdr"/>
-                            <constraint firstItem="gyl-GM-m4T" firstAttribute="top" secondItem="Cz4-pT-SRo" secondAttribute="bottom" constant="-60" id="YBC-s7-hfA"/>
                             <constraint firstItem="akY-23-ae6" firstAttribute="leading" secondItem="gyl-GM-m4T" secondAttribute="trailing" constant="25" id="YqV-ec-URT"/>
                             <constraint firstAttribute="trailingMargin" secondItem="akY-23-ae6" secondAttribute="trailing" constant="-20" id="c5f-9u-piz"/>
                             <constraint firstItem="gyl-GM-m4T" firstAttribute="top" secondItem="Cz4-pT-SRo" secondAttribute="bottom" id="dRf-Xg-7bM"/>
@@ -508,7 +486,7 @@ You can then share this list with any of your contacts, the same as you would do
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gHR-Vl-pYU">
-                                        <rect key="frame" x="0.0" y="309" width="30" height="25"/>
+                                        <rect key="frame" x="0.0" y="307" width="30" height="25"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                         <state key="normal" title="R"/>
                                         <connections>

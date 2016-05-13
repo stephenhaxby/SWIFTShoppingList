@@ -17,7 +17,7 @@ class iCloudReminderManager{
     
     //Requests access to reminders. Takes in a function to find if access has been granted or not.
     //We can then perform some action like stop a refresh control...
-    func requestAccessToReminders(accessStatus : Bool -> ()){
+    func requestAccessToReminders(accessStatus : Bool -> ()){       
         
         if(!eventStoreAccessGranted){
             
@@ -102,19 +102,13 @@ class iCloudReminderManager{
                         
                         remindersList.append(reminder)
                     }
+                    
+                    returnReminders(remindersList)
                 }
-                
-                returnReminders(remindersList)
             }
         }
     }
-
-    func addReminder(title : String) -> EKReminder? {
-     
-        return addReminder(title, commit: true)
-    }
     
-    //NOTE: Not currently used, but may come in handy...
     func addReminder(title : String, commit : Bool) -> EKReminder? {
         
         let calendar : EKCalendar? = getReminderList()
@@ -140,11 +134,11 @@ class iCloudReminderManager{
         return reminder
     }
     
-    func saveReminder(reminder : EKReminder) -> Bool{
+    func saveReminder(reminder : EKReminder, commit: Bool) -> Bool{
         
         do {
             
-            try eventStore.saveReminder(reminder, commit: true)
+            try eventStore.saveReminder(reminder, commit: commit)
             
         } catch let error as NSError {
             
@@ -158,12 +152,7 @@ class iCloudReminderManager{
         return true
     }
     
-    func removeReminder(reminder : EKReminder) -> Bool {
-     
-        return removeReminder(reminder, commit: true)
-    }
-    
-    func removeReminder(reminder : EKReminder, commit: Bool) -> Bool{
+    func removeReminder(reminder : EKReminder, commit: Bool) -> Bool {
         
         do {
 
@@ -177,7 +166,7 @@ class iCloudReminderManager{
         }
     }
     
-    func getNewReminder() -> EKReminder?{
+    func getNewReminder() -> EKReminder? {
         
         if reminderList != nil
         {
@@ -202,5 +191,24 @@ class iCloudReminderManager{
             
             return false
         }
+    }
+    
+    func saveCalendar() -> Bool {
+        
+        if reminderList != nil {
+            
+            do {
+            
+                try eventStore.saveCalendar(reminderList!, commit: true)
+            
+                return true
+            }
+            catch {
+
+                return false
+            }
+        }
+        
+        return false
     }
 }

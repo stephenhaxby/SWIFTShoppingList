@@ -21,16 +21,41 @@ class ShoppingListItemTableViewCell: UITableViewCell, UITextFieldDelegate
     var reminder: EKReminder? {
         didSet {
             
-            if let shoppingListItemReminder = reminder{
-                
-                //Setting the text value based on the auto-capitalisation settings
-                shoppingListItemTextField.attributedText = nil
-                shoppingListItemTextField.text = getAutoCapitalisationTitle(shoppingListItemReminder.title)
-                
-                //Extra section for completed items
-                setShoppingListItemCompletedText(shoppingListItemReminder)
-            }
+//            if let shoppingListItemReminder = reminder{
+//                
+//                //Setting the text value based on the auto-capitalisation settings
+//                shoppingListItemTextField.attributedText = nil
+//                shoppingListItemTextField.text = getAutoCapitalisationTitle(shoppingListItemReminder.title)
+//                
+//                //Extra section for completed items
+//                setShoppingListItemCompletedText(shoppingListItemReminder)
+//            }
         }
+    }
+    
+    override func layoutSubviews() {
+        
+        super.layoutSubviews();
+        
+        if let shoppingListItemReminder = reminder{
+            
+            self.layer.backgroundColor = Utility.itemIsInShoppingCart(shoppingListItemReminder)
+                ? UIColor(red:0.00, green:0.50196081400000003, blue:1, alpha:1.0).CGColor
+                : UIColor.whiteColor().CGColor
+        }
+    }
+    
+    func setShoppingListItem(reminder: EKReminder) {
+        
+        self.reminder = reminder
+        
+        shoppingListItemTextField.attributedText = nil
+        shoppingListItemTextField.text = getAutoCapitalisationTitle(reminder.title)
+
+        //Extra section for completed items
+        setShoppingListItemCompletedText(reminder)
+        
+        shoppingListItemTextField.delegate = self
     }
     
     @IBAction func addNewTouchUpInside(sender: AnyObject) {
@@ -65,6 +90,23 @@ class ShoppingListItemTableViewCell: UITableViewCell, UITextFieldDelegate
                 
                 editedReminder.completed = !checkSwitch.on
                 
+                if editedReminder.completed {
+                    
+                    //Add the datetime to the reminder as notes (Jan 27, 2010, 1:00 PM)
+                    let dateformatter = NSDateFormatter()
+                    
+                    dateformatter.dateStyle = NSDateFormatterStyle.MediumStyle
+                    dateformatter.timeStyle = NSDateFormatterStyle.ShortStyle
+
+                    editedReminder.notes = dateformatter.stringFromDate(NSDate())
+                    
+                    NSNotificationCenter.defaultCenter().postNotificationName(Constants.SetClearShoppingList, object: self)
+                }
+                else {
+                    
+                    editedReminder.notes = nil
+                }
+                
                 let delayInMilliSeconds = (editedReminder.completed) ? 500.0 : 200.00
                 
                 //The dalay is in nano seconds so we just convert it using the standard NSEC_PER_MSEC value
@@ -75,16 +117,18 @@ class ShoppingListItemTableViewCell: UITableViewCell, UITextFieldDelegate
                     
                     NSNotificationCenter.defaultCenter().postNotificationName(Constants.SaveReminder, object: editedReminder)
                 }
+                
+                //TODO: Local notifications...
             }
         }
     }
-    
-    func setShoppingListItem(reminder: EKReminder) {
-        
-        self.reminder = reminder
-        
-        shoppingListItemTextField.delegate = self
-    }
+//    
+//    func setShoppingListItem(reminder: EKReminder) {
+//        
+//        self.reminder = reminder
+//        
+//        shoppingListItemTextField.delegate = self
+//    }
     
     //Return the title based on the auto-capitalisation settings
     func getAutoCapitalisationTitle(title : String) -> String {
@@ -134,7 +178,7 @@ class ShoppingListItemTableViewCell: UITableViewCell, UITextFieldDelegate
                     addNewButton.hidden = true
             }
             
-            if !checkSwitch.on{
+            if !checkSwitch.on && shoppingListItemReminder.notes == nil {
                 
                 let string = shoppingListItemReminder.title as NSString
                 
