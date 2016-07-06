@@ -10,7 +10,21 @@ import UIKit
 import EventKit
 
 class ShoppingListItemTableViewCell: UITableViewCell, UITextFieldDelegate
-{   
+{
+//    var shoppingListItemTextFieldSize : CGSize?
+//    
+//    var textFieldSize : CGSize {
+//        get {
+//            
+//            if shoppingListItemTextFieldSize == nil {
+//                
+//                shoppingListItemTextFieldSize = shoppingListItemTextField.text!.sizeWithAttributes([NSFontAttributeName : self.shoppingListItemTextField.font!])
+//            }
+//            
+//            return shoppingListItemTextFieldSize!
+//        }
+//    }
+    
     @IBOutlet weak var shoppingListItemTextField: UITextField!
     
     @IBOutlet weak var completedSwitch: UISwitch!
@@ -63,6 +77,36 @@ class ShoppingListItemTableViewCell: UITableViewCell, UITextFieldDelegate
         //When the '+' is clicked we bring up the keyboard for the text field
         shoppingListItemTextField.becomeFirstResponder()
     }
+    
+    
+    
+//    @IBAction func shoppingListItemTextFieldValueChanged(sender: UITextField) {
+//
+//        let size : CGSize = shoppingListItemTextField.text!.sizeWithAttributes([NSFontAttributeName : self.shoppingListItemTextField.font!])
+//
+//        let textWidth = self.shoppingListItemTextField.bounds.size.width
+//
+//        if size.width > textWidth {
+//
+//            //self.
+//            //eturn CGFloat(88)
+//        }
+//        
+//        
+//        
+////        if let cell : ShoppingListItemTableViewCell = tableView.visibleCells[indexPath.row] as? ShoppingListItemTableViewCell,
+////            let textField = cell.shoppingListItemTextField {
+////            
+////            let size : CGSize = textField.text!.sizeWithAttributes([NSFontAttributeName : cell.shoppingListItemTextField.font!])
+////            
+////            let textWidth = cell.shoppingListItemTextField.bounds.size.width
+////            
+////            if size.width > textWidth {
+////                
+////                return CGFloat(88)
+////            }
+////        }
+//    }
     
     //When editing has finished on the text field, save the reminder
     @IBAction func shoppingListItemTextFieldEditingDidEnd(sender: UITextField) {

@@ -158,6 +158,9 @@ class ReminderSortViewController: UITableViewController {
         //Set the font size of the navigation view controller
         self.navigationController?.navigationBar.titleTextAttributes = [NSFontAttributeName: UIFont.boldSystemFontOfSize(18.0)]
         
+        tableView.rowHeight = UITableViewAutomaticDimension
+        tableView.estimatedRowHeight = 44
+        
         //tableView.registerClass(ShoppingListItemTableViewCell.self, forCellReuseIdentifier: "ReminderCell")
         
         //Set the refresh controll spinning
@@ -729,6 +732,49 @@ class ReminderSortViewController: UITableViewController {
 //        
 //         return Constants.ShoppingListSection(rawValue: section)?.description
 //    }
+    
+//    override func tableView(tableView: UITableView, estimatedHeightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+//        
+//        return UITableViewAutomaticDimension
+//    }
+    
+    //override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+
+//        let cell : ShoppingListItemTableViewCell = tableView.dequeueReusableCellWithIdentifier("ReminderCell") as! ShoppingListItemTableViewCell
+//        
+//        let size : CGSize = cell.contentView.systemLayoutSizeFittingSize(UILayoutFittingCompressedSize)
+//        
+//        return size.height
+        
+//        if let cell : ShoppingListItemTableViewCell = remindersTableView.cellForRowAtIndexPath(indexPath) as? ShoppingListItemTableViewCell {
+//            
+//            let size : CGSize = cell.contentView.systemLayoutSizeFittingSize(UILayoutFittingCompressedSize)
+//            
+//            return size.height
+//        }
+        
+//        if tableView.visibleCells.count > indexPath.row {
+//            
+//            if let cell : ShoppingListItemTableViewCell = tableView.visibleCells[indexPath.row] as? ShoppingListItemTableViewCell,
+//                let textField = cell.shoppingListItemTextField {
+//                
+//                let size : CGSize = cell.contentView.systemLayoutSizeFittingSize(UILayoutFittingCompressedSize)
+//
+//                return size.height
+//                
+//                let size : CGSize = textField.text!.sizeWithAttributes([NSFontAttributeName : cell.shoppingListItemTextField.font!])
+//                
+//                let textWidth = cell.shoppingListItemTextField.bounds.size.width
+//                
+//                if size.width > textWidth {
+//                    
+//                    return CGFloat(88)
+//                }
+//            }
+//        }
+    
+        //return CGFloat(44)
+    //}
 }
 
 

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="jGZ-Bv-awX">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="jGZ-Bv-awX">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -34,7 +34,7 @@
                                     <outlet property="titleLabel" destination="q6L-uR-Xot" id="wX1-dS-xFi"/>
                                 </connections>
                             </tableViewCell>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="ReminderCell" id="9Z4-o8-zaC" customClass="ShoppingListItemTableViewCell" customModule="ReminderSorter" customModuleProvider="target">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="ReminderCell" rowHeight="44" id="9Z4-o8-zaC" customClass="ShoppingListItemTableViewCell" customModule="ReminderSorter" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="42" width="573" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="9Z4-o8-zaC" id="7r9-Qh-qDR">
@@ -43,11 +43,15 @@
                                     <subviews>
                                         <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ReJ-9B-XiB">
                                             <rect key="frame" x="8" y="4" width="51" height="31"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="31" id="6iy-6K-dv8"/>
+                                                <constraint firstAttribute="width" constant="49" id="cBp-mH-vcg"/>
+                                            </constraints>
                                             <connections>
                                                 <action selector="completedSwitchValueChanged:" destination="9Z4-o8-zaC" eventType="valueChanged" id="T3g-xp-Yw4"/>
                                             </connections>
                                         </switch>
-                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uyh-4K-TeC">
+                                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uyh-4K-TeC">
                                             <rect key="frame" x="8" y="-2" width="30" height="37"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="48"/>
                                             <state key="normal" title="+">
@@ -57,46 +61,26 @@
                                                 <action selector="addNewTouchUpInside:" destination="9Z4-o8-zaC" eventType="touchUpInside" id="Y9a-sg-SR2"/>
                                             </connections>
                                         </button>
-                                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Lib-C6-ncm">
+                                        <textField opaque="NO" clipsSubviews="YES" contentMode="left" contentHorizontalAlignment="left" contentVerticalAlignment="center" adjustsFontSizeToFit="NO" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Lib-C6-ncm">
                                             <rect key="frame" x="75" y="8" width="477" height="27"/>
                                             <gestureRecognizers/>
-                                            <constraints>
-                                                <constraint firstAttribute="width" constant="477" id="fPx-cY-UQC"/>
-                                            </constraints>
                                             <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                             <textInputTraits key="textInputTraits"/>
                                             <connections>
                                                 <action selector="shoppingListItemTextFieldEditingDidEnd:" destination="9Z4-o8-zaC" eventType="editingDidEnd" id="7BV-wL-9sg"/>
+                                                <action selector="shoppingListItemTextFieldValueChanged:" destination="9Z4-o8-zaC" eventType="valueChanged" id="kAj-hq-sA5"/>
                                             </connections>
                                         </textField>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstItem="Lib-C6-ncm" firstAttribute="bottom" secondItem="uyh-4K-TeC" secondAttribute="bottom" id="BaH-Um-8um"/>
-                                        <constraint firstItem="uyh-4K-TeC" firstAttribute="bottom" secondItem="ReJ-9B-XiB" secondAttribute="bottom" id="D8p-f3-W2u"/>
-                                        <constraint firstItem="uyh-4K-TeC" firstAttribute="top" secondItem="7r9-Qh-qDR" secondAttribute="topMargin" constant="-10" id="IhG-hr-qTo"/>
-                                        <constraint firstItem="ReJ-9B-XiB" firstAttribute="top" secondItem="7r9-Qh-qDR" secondAttribute="topMargin" constant="-4" id="N9Q-lp-5wR"/>
-                                        <constraint firstItem="Lib-C6-ncm" firstAttribute="top" secondItem="7r9-Qh-qDR" secondAttribute="topMargin" id="VNu-pu-Srv"/>
-                                        <constraint firstItem="uyh-4K-TeC" firstAttribute="leading" secondItem="ReJ-9B-XiB" secondAttribute="leading" id="Xkv-YG-bsf"/>
-                                        <constraint firstItem="Lib-C6-ncm" firstAttribute="top" secondItem="7r9-Qh-qDR" secondAttribute="topMargin" id="cXh-av-LIg"/>
-                                        <constraint firstItem="Lib-C6-ncm" firstAttribute="leading" secondItem="ReJ-9B-XiB" secondAttribute="trailing" constant="20" id="cxA-bX-p7O"/>
-                                        <constraint firstItem="ReJ-9B-XiB" firstAttribute="leading" secondItem="7r9-Qh-qDR" secondAttribute="leadingMargin" id="f4E-Yg-lUn"/>
-                                        <constraint firstItem="Lib-C6-ncm" firstAttribute="leading" secondItem="uyh-4K-TeC" secondAttribute="trailing" constant="23" id="gcf-RY-V6U"/>
-                                        <constraint firstItem="Lib-C6-ncm" firstAttribute="leading" secondItem="7r9-Qh-qDR" secondAttribute="leadingMargin" id="m4d-Xs-1II"/>
-                                        <constraint firstItem="Lib-C6-ncm" firstAttribute="bottom" secondItem="ReJ-9B-XiB" secondAttribute="bottom" id="noS-Vo-UWC"/>
-                                        <constraint firstItem="ReJ-9B-XiB" firstAttribute="bottom" secondItem="7r9-Qh-qDR" secondAttribute="bottomMargin" priority="750" id="oJ6-8B-nUA"/>
-                                        <constraint firstItem="Lib-C6-ncm" firstAttribute="leading" secondItem="ReJ-9B-XiB" secondAttribute="trailing" constant="18" id="p93-3M-ixF"/>
-                                        <constraint firstAttribute="trailingMargin" secondItem="Lib-C6-ncm" secondAttribute="trailing" constant="64" id="vA5-pk-MP2"/>
+                                        <constraint firstItem="ReJ-9B-XiB" firstAttribute="leading" secondItem="7r9-Qh-qDR" secondAttribute="leadingMargin" id="3aO-FO-Bl5"/>
+                                        <constraint firstItem="ReJ-9B-XiB" firstAttribute="top" secondItem="7r9-Qh-qDR" secondAttribute="topMargin" constant="-4" id="4PA-Re-I5w"/>
+                                        <constraint firstAttribute="topMargin" secondItem="Lib-C6-ncm" secondAttribute="top" id="BP7-b8-mdV"/>
+                                        <constraint firstItem="ReJ-9B-XiB" firstAttribute="bottom" secondItem="7r9-Qh-qDR" secondAttribute="bottomMargin" id="Jt3-BH-HW9"/>
+                                        <constraint firstAttribute="bottomMargin" secondItem="Lib-C6-ncm" secondAttribute="bottom" id="Qdl-Dm-mIO"/>
+                                        <constraint firstAttribute="trailingMargin" secondItem="Lib-C6-ncm" secondAttribute="trailing" constant="13" id="SbP-4X-9WP"/>
+                                        <constraint firstItem="Lib-C6-ncm" firstAttribute="leading" secondItem="ReJ-9B-XiB" secondAttribute="trailing" constant="18" id="jOJ-1D-BKt"/>
                                     </constraints>
-                                    <variation key="default">
-                                        <mask key="constraints">
-                                            <exclude reference="cXh-av-LIg"/>
-                                            <exclude reference="cxA-bX-p7O"/>
-                                            <exclude reference="gcf-RY-V6U"/>
-                                            <exclude reference="m4d-Xs-1II"/>
-                                            <exclude reference="noS-Vo-UWC"/>
-                                            <exclude reference="vA5-pk-MP2"/>
-                                        </mask>
-                                    </variation>
                                 </tableViewCellContentView>
                                 <connections>
                                     <outlet property="addNewButton" destination="uyh-4K-TeC" id="Y3h-AD-kMR"/>
