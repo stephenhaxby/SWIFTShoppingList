@@ -34,7 +34,7 @@
                                     <outlet property="titleLabel" destination="q6L-uR-Xot" id="wX1-dS-xFi"/>
                                 </connections>
                             </tableViewCell>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="ReminderCell" rowHeight="44" id="9Z4-o8-zaC" customClass="ShoppingListItemTableViewCell" customModule="ReminderSorter" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="ReminderCell" rowHeight="44" id="9Z4-o8-zaC" customClass="ShoppingListItemTableViewCell" customModule="ReminderSorter" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="42" width="573" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="9Z4-o8-zaC" id="7r9-Qh-qDR">
@@ -61,31 +61,28 @@
                                                 <action selector="addNewTouchUpInside:" destination="9Z4-o8-zaC" eventType="touchUpInside" id="Y9a-sg-SR2"/>
                                             </connections>
                                         </button>
-                                        <textField opaque="NO" clipsSubviews="YES" contentMode="left" contentHorizontalAlignment="left" contentVerticalAlignment="center" adjustsFontSizeToFit="NO" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Lib-C6-ncm">
-                                            <rect key="frame" x="75" y="8" width="477" height="27"/>
-                                            <gestureRecognizers/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                                            <textInputTraits key="textInputTraits"/>
-                                            <connections>
-                                                <action selector="shoppingListItemTextFieldEditingDidEnd:" destination="9Z4-o8-zaC" eventType="editingDidEnd" id="7BV-wL-9sg"/>
-                                                <action selector="shoppingListItemTextFieldValueChanged:" destination="9Z4-o8-zaC" eventType="valueChanged" id="kAj-hq-sA5"/>
-                                            </connections>
-                                        </textField>
+                                        <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" verticalCompressionResistancePriority="1000" directionalLockEnabled="YES" scrollEnabled="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="Jdo-wX-8WJ">
+                                            <rect key="frame" x="65" y="-2" width="500" height="45"/>
+                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
+                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                            <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                        </textView>
                                     </subviews>
                                     <constraints>
                                         <constraint firstItem="ReJ-9B-XiB" firstAttribute="leading" secondItem="7r9-Qh-qDR" secondAttribute="leadingMargin" id="3aO-FO-Bl5"/>
                                         <constraint firstItem="ReJ-9B-XiB" firstAttribute="top" secondItem="7r9-Qh-qDR" secondAttribute="topMargin" constant="-4" id="4PA-Re-I5w"/>
-                                        <constraint firstAttribute="topMargin" secondItem="Lib-C6-ncm" secondAttribute="top" id="BP7-b8-mdV"/>
+                                        <constraint firstAttribute="bottomMargin" secondItem="Jdo-wX-8WJ" secondAttribute="bottom" constant="-8" id="F41-3q-Fjw"/>
                                         <constraint firstItem="ReJ-9B-XiB" firstAttribute="bottom" secondItem="7r9-Qh-qDR" secondAttribute="bottomMargin" id="Jt3-BH-HW9"/>
-                                        <constraint firstAttribute="bottomMargin" secondItem="Lib-C6-ncm" secondAttribute="bottom" id="Qdl-Dm-mIO"/>
-                                        <constraint firstAttribute="trailingMargin" secondItem="Lib-C6-ncm" secondAttribute="trailing" constant="13" id="SbP-4X-9WP"/>
-                                        <constraint firstItem="Lib-C6-ncm" firstAttribute="leading" secondItem="ReJ-9B-XiB" secondAttribute="trailing" constant="18" id="jOJ-1D-BKt"/>
+                                        <constraint firstItem="Jdo-wX-8WJ" firstAttribute="leading" secondItem="ReJ-9B-XiB" secondAttribute="trailing" constant="8" id="d4q-c7-vZp"/>
+                                        <constraint firstItem="Jdo-wX-8WJ" firstAttribute="top" secondItem="7r9-Qh-qDR" secondAttribute="topMargin" constant="-10" id="mYo-iQ-LTo"/>
+                                        <constraint firstItem="Jdo-wX-8WJ" firstAttribute="trailing" secondItem="7r9-Qh-qDR" secondAttribute="trailingMargin" id="tKN-hN-XMi"/>
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>
                                     <outlet property="addNewButton" destination="uyh-4K-TeC" id="Y3h-AD-kMR"/>
                                     <outlet property="completedSwitch" destination="ReJ-9B-XiB" id="JS0-Dj-ab2"/>
-                                    <outlet property="shoppingListItemTextField" destination="Lib-C6-ncm" id="syT-Kp-nAD"/>
+                                    <outlet property="shoppingListItemTextView" destination="Jdo-wX-8WJ" id="CGU-r8-S50"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -107,7 +104,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="WHI-qa-sdU" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1068" y="1582"/>
+            <point key="canvasLocation" x="1067.5" y="1582"/>
         </scene>
         <!--Help-->
         <scene sceneID="RxP-ya-XXD">

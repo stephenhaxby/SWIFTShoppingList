@@ -9,7 +9,7 @@
 import UIKit
 import EventKit
 
-class ShoppingListItemTableViewCell: UITableViewCell, UITextFieldDelegate
+class ShoppingListItemTableViewCell: UITableViewCell
 {
 //    var shoppingListItemTextFieldSize : CGSize?
 //    
@@ -25,7 +25,9 @@ class ShoppingListItemTableViewCell: UITableViewCell, UITextFieldDelegate
 //        }
 //    }
     
-    @IBOutlet weak var shoppingListItemTextField: UITextField!
+//    @IBOutlet weak var shoppingListItemTextField: UITextField!
+    
+    @IBOutlet weak var shoppingListItemTextView: UITextView!
     
     @IBOutlet weak var completedSwitch: UISwitch!
     
@@ -63,19 +65,19 @@ class ShoppingListItemTableViewCell: UITableViewCell, UITextFieldDelegate
         
         self.reminder = reminder
         
-        shoppingListItemTextField.attributedText = nil
-        shoppingListItemTextField.text = getAutoCapitalisationTitle(reminder.title)
+        shoppingListItemTextView.attributedText = nil
+        shoppingListItemTextView.text = getAutoCapitalisationTitle(reminder.title)
 
         //Extra section for completed items
         setShoppingListItemCompletedText(reminder)
         
-        shoppingListItemTextField.delegate = self
+        //shoppingListItemTextView.delegate = self
     }
     
     @IBAction func addNewTouchUpInside(sender: AnyObject) {
         
         //When the '+' is clicked we bring up the keyboard for the text field
-        shoppingListItemTextField.becomeFirstResponder()
+        shoppingListItemTextView.becomeFirstResponder()
     }
     
     
@@ -166,7 +168,7 @@ class ShoppingListItemTableViewCell: UITableViewCell, UITextFieldDelegate
             }
         }
     }
-//    
+//
 //    func setShoppingListItem(reminder: EKReminder) {
 //        
 //        self.reminder = reminder
@@ -212,11 +214,11 @@ class ShoppingListItemTableViewCell: UITableViewCell, UITextFieldDelegate
                 case Constants.ShoppingListItemTableViewCell.EmptyCell:
                     checkSwitch.hidden = true
                     addNewButton.hidden = true
-                    shoppingListItemTextField.text = ""
+                    shoppingListItemTextView.text = ""
                 case Constants.ShoppingListItemTableViewCell.NewItemCell:
                     checkSwitch.hidden = true
                     addNewButton.hidden = false
-                    shoppingListItemTextField.text = ""
+                    shoppingListItemTextView.text = ""
                 default:
                     checkSwitch.hidden = false
                     addNewButton.hidden = true
@@ -231,7 +233,7 @@ class ShoppingListItemTableViewCell: UITableViewCell, UITextFieldDelegate
                 
                 attributedString.addAttributes(attributes, range: string.rangeOfString(string as String))
                 
-                shoppingListItemTextField.attributedText = attributedString
+                shoppingListItemTextView.attributedText = attributedString
             }
         }
     }

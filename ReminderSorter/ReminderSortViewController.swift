@@ -9,7 +9,7 @@
 import UIKit
 import EventKit
 
-class ReminderSortViewController: UITableViewController {
+class ReminderSortViewController: UITableViewController, UITextViewDelegate {
     
     //Outlet for the Table View so we can access it in code
     @IBOutlet var remindersTableView: UITableView!
@@ -159,7 +159,7 @@ class ReminderSortViewController: UITableViewController {
         self.navigationController?.navigationBar.titleTextAttributes = [NSFontAttributeName: UIFont.boldSystemFontOfSize(18.0)]
         
         tableView.rowHeight = UITableViewAutomaticDimension
-        tableView.estimatedRowHeight = 44
+        tableView.estimatedRowHeight = 70
         
         //tableView.registerClass(ShoppingListItemTableViewCell.self, forCellReuseIdentifier: "ReminderCell")
         
@@ -593,18 +593,19 @@ class ReminderSortViewController: UITableViewController {
         //Get the cell
         let cell : ShoppingListItemTableViewCell = tableView.dequeueReusableCellWithIdentifier("ReminderCell") as! ShoppingListItemTableViewCell
         
-        if(cell.shoppingListItemTextField != nil){
+        if(cell.shoppingListItemTextView != nil){
             
+            cell.shoppingListItemTextView.delegate = self
         }
         
         //Based on the settings, set up the auto-capitalisation for the keyboard
         if SettingsUserDefaults.autoCapitalisation{
             
-            cell.shoppingListItemTextField.autocapitalizationType = UITextAutocapitalizationType.Words
+            cell.shoppingListItemTextView.autocapitalizationType = UITextAutocapitalizationType.Words
         }
         else{
             
-            cell.shoppingListItemTextField.autocapitalizationType = UITextAutocapitalizationType.Sentences
+            cell.shoppingListItemTextView.autocapitalizationType = UITextAutocapitalizationType.Sentences
         }
         
 //        if indexPath.row == 0{
@@ -726,6 +727,17 @@ class ReminderSortViewController: UITableViewController {
         
         // Set's the height of the Header
         return CGFloat(20)
+    }
+    
+    //Delegate method for text changing on the cells UITextView
+    func textViewDidChange(textView: UITextView) {
+        
+        let currentOffset = tableView.contentOffset
+        UIView.setAnimationsEnabled(false)
+        tableView.beginUpdates()
+        tableView.endUpdates()
+        UIView.setAnimationsEnabled(true)
+        tableView.setContentOffset(currentOffset, animated: false)
     }
     
 //    override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
