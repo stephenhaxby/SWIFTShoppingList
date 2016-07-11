@@ -9,7 +9,7 @@
 import UIKit
 import EventKit
 
-class ReminderSortViewController: UITableViewController, UITextViewDelegate {
+class ReminderSortViewController: UITableViewController {
     
     //Outlet for the Table View so we can access it in code
     @IBOutlet var remindersTableView: UITableView!
@@ -43,7 +43,7 @@ class ReminderSortViewController: UITableViewController, UITextViewDelegate {
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-    
+        
         //TODO: Use a loop and the constant value
         
         for _ in 0..<Constants.ShoppingListSections {
@@ -571,6 +571,14 @@ class ReminderSortViewController: UITableViewController, UITextViewDelegate {
         }
     }
     
+    func setupRightBarButtons(editing : Bool) {
+        
+        if let containerViewController : ContainerViewController = self.parentViewController as? ContainerViewController {
+            
+            containerViewController.setupRightBarButtons(editing)
+        }
+    }
+    
     // MARK: - UITableViewDataSource
     
     //To return the number of items that the table view needs to show.
@@ -595,7 +603,8 @@ class ReminderSortViewController: UITableViewController, UITextViewDelegate {
         
         if(cell.shoppingListItemTextView != nil){
             
-            cell.shoppingListItemTextView.delegate = self
+            //Keep hold of the table view for each cell so we can do the multi-line refresh
+            cell.reminderSortViewController = self
         }
         
         //Based on the settings, set up the auto-capitalisation for the keyboard
@@ -729,17 +738,6 @@ class ReminderSortViewController: UITableViewController, UITextViewDelegate {
         return CGFloat(20)
     }
     
-    //Delegate method for text changing on the cells UITextView
-    func textViewDidChange(textView: UITextView) {
-        
-        let currentOffset = tableView.contentOffset
-        UIView.setAnimationsEnabled(false)
-        tableView.beginUpdates()
-        tableView.endUpdates()
-        UIView.setAnimationsEnabled(true)
-        tableView.setContentOffset(currentOffset, animated: false)
-    }
-    
 //    override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
 //        
 //         return Constants.ShoppingListSection(rawValue: section)?.description
@@ -787,6 +785,9 @@ class ReminderSortViewController: UITableViewController, UITextViewDelegate {
     
         //return CGFloat(44)
     //}
+    
+    
+    
 }
 
 

@@ -333,20 +333,36 @@
                                 </connections>
                             </button>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" style="done" id="nYY-hh-BRn">
-                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" hasAttributedTitle="YES" id="P2a-Vy-cd3">
-                                <rect key="frame" x="550" y="7" width="30" height="30"/>
+                        <barButtonItem key="rightBarButtonItem" style="plain" id="Jsr-Je-DTw">
+                            <view key="customView" contentMode="scaleToFill" id="4M3-K8-2Eb">
+                                <rect key="frame" x="530" y="5" width="50" height="33"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal">
-                                    <attributedString key="attributedTitle"/>
-                                </state>
-                                <connections>
-                                    <segue destination="AbJ-wd-3qi" kind="presentation" id="0FU-YZ-cin"/>
-                                </connections>
-                            </button>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="1PZ-bV-3gX">
+                                        <rect key="frame" x="0.0" y="0.0" width="50" height="30"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="16"/>
+                                        <state key="normal" title="Done"/>
+                                        <connections>
+                                            <action selector="doneButtonTouchUpInside:" destination="wXl-h5-U25" eventType="touchUpInside" id="eP1-Eu-lq0"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" hasAttributedTitle="YES" id="P2a-Vy-cd3">
+                                        <rect key="frame" x="10" y="0.0" width="30" height="30"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <state key="normal">
+                                            <attributedString key="attributedTitle"/>
+                                        </state>
+                                        <connections>
+                                            <segue destination="AbJ-wd-3qi" kind="presentation" id="0FU-YZ-cin"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                            </view>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="doneButton" destination="1PZ-bV-3gX" id="API-pn-pRp"/>
                         <outlet property="infoButton" destination="P2a-Vy-cd3" id="kDT-xv-nrh"/>
                         <outlet property="settingsButton" destination="kmd-5C-nsS" id="Rds-Mq-peL"/>
                     </connections>

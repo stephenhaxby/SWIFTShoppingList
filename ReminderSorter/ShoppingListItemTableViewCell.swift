@@ -9,7 +9,7 @@
 import UIKit
 import EventKit
 
-class ShoppingListItemTableViewCell: UITableViewCell
+class ShoppingListItemTableViewCell: UITableViewCell, UITextViewDelegate
 {
 //    var shoppingListItemTextFieldSize : CGSize?
 //    
@@ -32,6 +32,8 @@ class ShoppingListItemTableViewCell: UITableViewCell
     @IBOutlet weak var completedSwitch: UISwitch!
     
     @IBOutlet weak var addNewButton: UIButton!
+    
+    weak var reminderSortViewController : ReminderSortViewController!
     
     //Setter for the cells reminder
     var reminder: EKReminder? {
@@ -71,6 +73,8 @@ class ShoppingListItemTableViewCell: UITableViewCell
         //Extra section for completed items
         setShoppingListItemCompletedText(reminder)
         
+        shoppingListItemTextView.delegate = self
+        
         //shoppingListItemTextView.delegate = self
     }
     
@@ -80,51 +84,21 @@ class ShoppingListItemTableViewCell: UITableViewCell
         shoppingListItemTextView.becomeFirstResponder()
     }
     
-    
-    
-//    @IBAction func shoppingListItemTextFieldValueChanged(sender: UITextField) {
-//
-//        let size : CGSize = shoppingListItemTextField.text!.sizeWithAttributes([NSFontAttributeName : self.shoppingListItemTextField.font!])
-//
-//        let textWidth = self.shoppingListItemTextField.bounds.size.width
-//
-//        if size.width > textWidth {
-//
-//            //self.
-//            //eturn CGFloat(88)
+//    //When editing has finished on the text field, save the reminder
+//    @IBAction func shoppingListItemTextFieldEditingDidEnd(sender: UITextField) {
+//        
+//        sender.resignFirstResponder()
+//        
+//        if let editedReminder = reminder{
+//            
+//            if sender.text != "" {
+//                
+//                editedReminder.title = sender.text!
+//                
+//                NSNotificationCenter.defaultCenter().postNotificationName(Constants.SaveReminder, object: editedReminder)
+//            }
 //        }
-//        
-//        
-//        
-////        if let cell : ShoppingListItemTableViewCell = tableView.visibleCells[indexPath.row] as? ShoppingListItemTableViewCell,
-////            let textField = cell.shoppingListItemTextField {
-////            
-////            let size : CGSize = textField.text!.sizeWithAttributes([NSFontAttributeName : cell.shoppingListItemTextField.font!])
-////            
-////            let textWidth = cell.shoppingListItemTextField.bounds.size.width
-////            
-////            if size.width > textWidth {
-////                
-////                return CGFloat(88)
-////            }
-////        }
 //    }
-    
-    //When editing has finished on the text field, save the reminder
-    @IBAction func shoppingListItemTextFieldEditingDidEnd(sender: UITextField) {
-        
-        sender.resignFirstResponder()
-        
-        if let editedReminder = reminder{
-            
-            if sender.text != "" {
-                
-                editedReminder.title = sender.text!
-                
-                NSNotificationCenter.defaultCenter().postNotificationName(Constants.SaveReminder, object: editedReminder)
-            }
-        }
-    }
     
     //When an item is marked as complete or in-complete.
     //Add a small delay for useability so the item doesn't go off the list straight away
@@ -238,10 +212,42 @@ class ShoppingListItemTableViewCell: UITableViewCell
         }
     }
     
-    //delegate method for when the return button is pressed
-    func textFieldShouldReturn(textField: UITextField) -> Bool {
+//    //delegate method for when the return button is pressed
+//    func textFieldShouldReturn(textField: UITextField) -> Bool {
+//        
+//        textField.resignFirstResponder()
+//        return true
+//    }
+    
+    //Delegate method for text changing on the cells UITextView
+    func textViewDidChange(textView: UITextView) {
         
-        textField.resignFirstResponder()
-        return true
+        if let tableView = reminderSortViewController.tableView {
+            
+            let currentOffset = tableView.contentOffset
+            UIView.setAnimationsEnabled(false)
+            tableView.beginUpdates()
+            tableView.endUpdates()
+            UIView.setAnimationsEnabled(true)
+            tableView.setContentOffset(currentOffset, animated: false)
+        }
+    }
+    
+    func textViewDidBeginEditing(textView: UITextView) {
+        
+        reminderSortViewController.setupRightBarButtons(true)
+    }
+    
+    func textViewDidEndEditing(textView: UITextView) {
+        
+        if let editedReminder = reminder{
+
+            if textView.text != "" {
+
+                editedReminder.title = textView.text!
+
+                NSNotificationCenter.defaultCenter().postNotificationName(Constants.SaveReminder, object: editedReminder)
+            }
+        }
     }
 }
