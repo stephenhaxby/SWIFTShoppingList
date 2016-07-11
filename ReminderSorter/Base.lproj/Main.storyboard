@@ -41,16 +41,6 @@
                                     <rect key="frame" x="0.0" y="0.0" width="573" height="43"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ReJ-9B-XiB">
-                                            <rect key="frame" x="8" y="4" width="51" height="31"/>
-                                            <constraints>
-                                                <constraint firstAttribute="height" constant="31" id="6iy-6K-dv8"/>
-                                                <constraint firstAttribute="width" constant="49" id="cBp-mH-vcg"/>
-                                            </constraints>
-                                            <connections>
-                                                <action selector="completedSwitchValueChanged:" destination="9Z4-o8-zaC" eventType="valueChanged" id="T3g-xp-Yw4"/>
-                                            </connections>
-                                        </switch>
                                         <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uyh-4K-TeC">
                                             <rect key="frame" x="8" y="-2" width="30" height="37"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="48"/>
@@ -64,20 +54,56 @@
                                         <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" verticalCompressionResistancePriority="1000" directionalLockEnabled="YES" scrollEnabled="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="Jdo-wX-8WJ">
                                             <rect key="frame" x="65" y="-2" width="500" height="45"/>
                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="70" id="zr4-NP-TrG"/>
+                                            </constraints>
                                             <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                             <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                            <variation key="default">
+                                                <mask key="constraints">
+                                                    <exclude reference="zr4-NP-TrG"/>
+                                                </mask>
+                                            </variation>
                                         </textView>
+                                        <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ReJ-9B-XiB">
+                                            <rect key="frame" x="8" y="4" width="51" height="31"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="31" id="6iy-6K-dv8"/>
+                                                <constraint firstAttribute="width" constant="49" id="cBp-mH-vcg"/>
+                                            </constraints>
+                                            <variation key="default">
+                                                <mask key="constraints">
+                                                    <exclude reference="6iy-6K-dv8"/>
+                                                    <exclude reference="cBp-mH-vcg"/>
+                                                </mask>
+                                            </variation>
+                                            <connections>
+                                                <action selector="completedSwitchValueChanged:" destination="9Z4-o8-zaC" eventType="valueChanged" id="T3g-xp-Yw4"/>
+                                            </connections>
+                                        </switch>
                                     </subviews>
                                     <constraints>
                                         <constraint firstItem="ReJ-9B-XiB" firstAttribute="leading" secondItem="7r9-Qh-qDR" secondAttribute="leadingMargin" id="3aO-FO-Bl5"/>
+                                        <constraint firstAttribute="bottomMargin" secondItem="ReJ-9B-XiB" secondAttribute="bottom" id="4Ej-VK-l4x"/>
                                         <constraint firstItem="ReJ-9B-XiB" firstAttribute="top" secondItem="7r9-Qh-qDR" secondAttribute="topMargin" constant="-4" id="4PA-Re-I5w"/>
                                         <constraint firstAttribute="bottomMargin" secondItem="Jdo-wX-8WJ" secondAttribute="bottom" constant="-8" id="F41-3q-Fjw"/>
                                         <constraint firstItem="ReJ-9B-XiB" firstAttribute="bottom" secondItem="7r9-Qh-qDR" secondAttribute="bottomMargin" id="Jt3-BH-HW9"/>
+                                        <constraint firstAttribute="leadingMargin" secondItem="ReJ-9B-XiB" secondAttribute="leading" id="L1f-fr-WaJ"/>
+                                        <constraint firstItem="Jdo-wX-8WJ" firstAttribute="leading" secondItem="ReJ-9B-XiB" secondAttribute="trailing" constant="8" id="MHP-id-Lmo"/>
                                         <constraint firstItem="Jdo-wX-8WJ" firstAttribute="leading" secondItem="ReJ-9B-XiB" secondAttribute="trailing" constant="8" id="d4q-c7-vZp"/>
+                                        <constraint firstItem="ReJ-9B-XiB" firstAttribute="top" secondItem="7r9-Qh-qDR" secondAttribute="topMargin" constant="-4" id="ex4-Mi-f8u"/>
                                         <constraint firstItem="Jdo-wX-8WJ" firstAttribute="top" secondItem="7r9-Qh-qDR" secondAttribute="topMargin" constant="-10" id="mYo-iQ-LTo"/>
                                         <constraint firstItem="Jdo-wX-8WJ" firstAttribute="trailing" secondItem="7r9-Qh-qDR" secondAttribute="trailingMargin" id="tKN-hN-XMi"/>
                                     </constraints>
+                                    <variation key="default">
+                                        <mask key="constraints">
+                                            <exclude reference="3aO-FO-Bl5"/>
+                                            <exclude reference="4PA-Re-I5w"/>
+                                            <exclude reference="Jt3-BH-HW9"/>
+                                            <exclude reference="d4q-c7-vZp"/>
+                                        </mask>
+                                    </variation>
                                 </tableViewCellContentView>
                                 <connections>
                                     <outlet property="addNewButton" destination="uyh-4K-TeC" id="Y3h-AD-kMR"/>
