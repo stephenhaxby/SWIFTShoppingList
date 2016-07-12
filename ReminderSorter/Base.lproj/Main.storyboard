@@ -11,15 +11,15 @@
             <objects>
                 <tableViewController id="5Ag-tc-sUf" customClass="ReminderSortViewController" customModule="ReminderSorter" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" keyboardDismissMode="onDrag" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="gn4-vH-fZP">
-                        <rect key="frame" x="0.0" y="0.0" width="573" height="536"/>
+                        <rect key="frame" x="0.0" y="0.0" width="570" height="536"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="HeaderCell" rowHeight="20" id="dQi-ck-MSx" customClass="TableRowHeaderSpacer" customModule="ReminderSorter" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="22" width="573" height="20"/>
+                                <rect key="frame" x="0.0" y="22" width="570" height="20"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="dQi-ck-MSx" id="XeQ-RU-ReQ">
-                                    <rect key="frame" x="0.0" y="0.0" width="573" height="19"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="570" height="19"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="q6L-uR-Xot">
@@ -35,10 +35,10 @@
                                 </connections>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="ReminderCell" rowHeight="44" id="9Z4-o8-zaC" customClass="ShoppingListItemTableViewCell" customModule="ReminderSorter" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="42" width="573" height="44"/>
+                                <rect key="frame" x="0.0" y="42" width="570" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="9Z4-o8-zaC" id="7r9-Qh-qDR">
-                                    <rect key="frame" x="0.0" y="0.0" width="573" height="43"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="570" height="43"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uyh-4K-TeC">
@@ -52,7 +52,7 @@
                                             </connections>
                                         </button>
                                         <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" verticalCompressionResistancePriority="1000" directionalLockEnabled="YES" scrollEnabled="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="Jdo-wX-8WJ">
-                                            <rect key="frame" x="65" y="3" width="500" height="40"/>
+                                            <rect key="frame" x="65" y="3" width="497" height="40"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="70" id="zr4-NP-TrG"/>
                                             </constraints>
@@ -244,7 +244,7 @@
                                 </connections>
                             </containerView>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gyl-GM-m4T">
-                                <rect key="frame" x="0.0" y="64" width="573" height="536"/>
+                                <rect key="frame" x="0.0" y="64" width="570" height="536"/>
                                 <connections>
                                     <segue destination="5Ag-tc-sUf" kind="embed" id="Hl8-yx-S4N"/>
                                 </connections>
@@ -267,7 +267,7 @@
                             <constraint firstItem="gyl-GM-m4T" firstAttribute="bottom" secondItem="kum-re-Wa8" secondAttribute="top" id="Sr2-bh-Sl7"/>
                             <constraint firstItem="kum-re-Wa8" firstAttribute="top" secondItem="gyl-GM-m4T" secondAttribute="bottom" constant="-2" id="Tzv-nL-L0s"/>
                             <constraint firstItem="akY-23-ae6" firstAttribute="bottom" secondItem="kum-re-Wa8" secondAttribute="top" id="VTX-3h-Vhj"/>
-                            <constraint firstItem="akY-23-ae6" firstAttribute="leading" secondItem="gyl-GM-m4T" secondAttribute="trailing" constant="-3" id="WQN-bp-ykF"/>
+                            <constraint firstItem="akY-23-ae6" firstAttribute="leading" secondItem="gyl-GM-m4T" secondAttribute="trailing" id="WQN-bp-ykF"/>
                             <constraint firstItem="akY-23-ae6" firstAttribute="top" secondItem="Cz4-pT-SRo" secondAttribute="bottom" id="XCu-IW-kdr"/>
                             <constraint firstItem="akY-23-ae6" firstAttribute="leading" secondItem="gyl-GM-m4T" secondAttribute="trailing" constant="25" id="YqV-ec-URT"/>
                             <constraint firstAttribute="trailingMargin" secondItem="akY-23-ae6" secondAttribute="trailing" constant="-20" id="c5f-9u-piz"/>
