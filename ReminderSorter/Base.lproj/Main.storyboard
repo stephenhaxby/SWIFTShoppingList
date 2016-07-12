@@ -401,7 +401,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cNf-j8-fbg">
-                                <rect key="frame" x="0.0" y="20" width="30" height="495"/>
+                                <rect key="frame" x="-2" y="20" width="30" height="495"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="o2o-IO-QLi">
                                         <rect key="frame" x="0.0" y="0.0" width="30" height="25"/>
@@ -628,7 +628,7 @@
                         </subviews>
                         <constraints>
                             <constraint firstItem="cNf-j8-fbg" firstAttribute="centerY" secondItem="7bZ-Bj-n9q" secondAttribute="centerY" id="26P-08-TC8"/>
-                            <constraint firstItem="cNf-j8-fbg" firstAttribute="centerX" secondItem="7bZ-Bj-n9q" secondAttribute="centerX" id="hL0-sW-z9h"/>
+                            <constraint firstItem="cNf-j8-fbg" firstAttribute="centerX" secondItem="7bZ-Bj-n9q" secondAttribute="centerX" constant="-2" id="hL0-sW-z9h"/>
                         </constraints>
                     </view>
                     <toolbarItems/>
