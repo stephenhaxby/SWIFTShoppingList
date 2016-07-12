@@ -173,6 +173,12 @@ class ReminderSortViewController: UITableViewController {
         reminderManager.requestAccessToReminders(requestedAccessToReminders)
     }
     
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+     
+        tableView.backgroundColor = .clearColor()
+    }
+    
     //Event for pull down to refresh
     @IBAction private func refresh(sender: UIRefreshControl?) {
         
@@ -725,7 +731,7 @@ class ReminderSortViewController: UITableViewController {
         let headerRow = tableView.dequeueReusableCellWithIdentifier("HeaderCell") as! TableRowHeaderSpacer
         
         // Set the background color of the header cell
-        headerRow.backgroundColor = UIColor(red:0.95, green:0.95, blue:0.95, alpha:1.0)
+        headerRow.backgroundColor = UIColor(red:0.95, green:0.95, blue:0.95, alpha:0.8)
         
         headerRow.titleLabel.text = Constants.ShoppingListSection(rawValue: section)?.description
         

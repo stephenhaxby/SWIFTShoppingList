@@ -11,22 +11,6 @@ import EventKit
 
 class ShoppingListItemTableViewCell: UITableViewCell, UITextViewDelegate
 {
-//    var shoppingListItemTextFieldSize : CGSize?
-//    
-//    var textFieldSize : CGSize {
-//        get {
-//            
-//            if shoppingListItemTextFieldSize == nil {
-//                
-//                shoppingListItemTextFieldSize = shoppingListItemTextField.text!.sizeWithAttributes([NSFontAttributeName : self.shoppingListItemTextField.font!])
-//            }
-//            
-//            return shoppingListItemTextFieldSize!
-//        }
-//    }
-    
-//    @IBOutlet weak var shoppingListItemTextField: UITextField!
-    
     @IBOutlet weak var shoppingListItemTextView: UITextView!
     
     @IBOutlet weak var completedSwitch: UISwitch!
@@ -58,8 +42,8 @@ class ShoppingListItemTableViewCell: UITableViewCell, UITextViewDelegate
         if let shoppingListItemReminder = reminder{
             
             self.layer.backgroundColor = Utility.itemIsInShoppingCart(shoppingListItemReminder)
-                ? UIColor(red:0.00, green:0.50196081400000003, blue:1, alpha:1.0).CGColor
-                : UIColor.whiteColor().CGColor
+                ? UIColor(red:0.00, green:0.50196081400000003, blue:1, alpha:0.5).CGColor
+                : UIColor.clearColor().CGColor
         }
     }
     
@@ -83,22 +67,6 @@ class ShoppingListItemTableViewCell: UITableViewCell, UITextViewDelegate
         //When the '+' is clicked we bring up the keyboard for the text field
         shoppingListItemTextView.becomeFirstResponder()
     }
-    
-//    //When editing has finished on the text field, save the reminder
-//    @IBAction func shoppingListItemTextFieldEditingDidEnd(sender: UITextField) {
-//        
-//        sender.resignFirstResponder()
-//        
-//        if let editedReminder = reminder{
-//            
-//            if sender.text != "" {
-//                
-//                editedReminder.title = sender.text!
-//                
-//                NSNotificationCenter.defaultCenter().postNotificationName(Constants.SaveReminder, object: editedReminder)
-//            }
-//        }
-//    }
     
     //When an item is marked as complete or in-complete.
     //Add a small delay for useability so the item doesn't go off the list straight away
@@ -137,18 +105,9 @@ class ShoppingListItemTableViewCell: UITableViewCell, UITextViewDelegate
                     
                     NSNotificationCenter.defaultCenter().postNotificationName(Constants.SaveReminder, object: editedReminder)
                 }
-                
-                //TODO: Local notifications...
             }
         }
     }
-//
-//    func setShoppingListItem(reminder: EKReminder) {
-//        
-//        self.reminder = reminder
-//        
-//        shoppingListItemTextField.delegate = self
-//    }
     
     //Return the title based on the auto-capitalisation settings
     func getAutoCapitalisationTitle(title : String) -> String {
@@ -161,7 +120,7 @@ class ShoppingListItemTableViewCell: UITableViewCell, UITextViewDelegate
         listItem = words[0]
         
         //Loop through each word in the string and make it lower case or first letter upper-case
-        for var i = 1; i < words.count; ++i {
+        for i in 1 ..< words.count {
             
             if SettingsUserDefaults.autoCapitalisation {
                 
@@ -211,13 +170,6 @@ class ShoppingListItemTableViewCell: UITableViewCell, UITextViewDelegate
             }
         }
     }
-    
-//    //delegate method for when the return button is pressed
-//    func textFieldShouldReturn(textField: UITextField) -> Bool {
-//        
-//        textField.resignFirstResponder()
-//        return true
-//    }
     
     //Delegate method for text changing on the cells UITextView
     func textViewDidChange(textView: UITextView) {

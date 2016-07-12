@@ -37,7 +37,7 @@
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="ReminderCell" rowHeight="44" id="9Z4-o8-zaC" customClass="ShoppingListItemTableViewCell" customModule="ReminderSorter" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="42" width="573" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="9Z4-o8-zaC" id="7r9-Qh-qDR">
+                                <tableViewCellContentView key="contentView" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="9Z4-o8-zaC" id="7r9-Qh-qDR">
                                     <rect key="frame" x="0.0" y="0.0" width="573" height="43"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
@@ -52,8 +52,7 @@
                                             </connections>
                                         </button>
                                         <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" verticalCompressionResistancePriority="1000" directionalLockEnabled="YES" scrollEnabled="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="Jdo-wX-8WJ">
-                                            <rect key="frame" x="65" y="-2" width="500" height="45"/>
-                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <rect key="frame" x="65" y="3" width="500" height="40"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="70" id="zr4-NP-TrG"/>
                                             </constraints>
@@ -93,7 +92,7 @@
                                         <constraint firstItem="Jdo-wX-8WJ" firstAttribute="leading" secondItem="ReJ-9B-XiB" secondAttribute="trailing" constant="8" id="MHP-id-Lmo"/>
                                         <constraint firstItem="Jdo-wX-8WJ" firstAttribute="leading" secondItem="ReJ-9B-XiB" secondAttribute="trailing" constant="8" id="d4q-c7-vZp"/>
                                         <constraint firstItem="ReJ-9B-XiB" firstAttribute="top" secondItem="7r9-Qh-qDR" secondAttribute="topMargin" constant="-4" id="ex4-Mi-f8u"/>
-                                        <constraint firstItem="Jdo-wX-8WJ" firstAttribute="top" secondItem="7r9-Qh-qDR" secondAttribute="topMargin" constant="-10" id="mYo-iQ-LTo"/>
+                                        <constraint firstItem="Jdo-wX-8WJ" firstAttribute="top" secondItem="7r9-Qh-qDR" secondAttribute="topMargin" constant="-5" id="mYo-iQ-LTo"/>
                                         <constraint firstItem="Jdo-wX-8WJ" firstAttribute="trailing" secondItem="7r9-Qh-qDR" secondAttribute="trailingMargin" id="tKN-hN-XMi"/>
                                     </constraints>
                                     <variation key="default">
@@ -627,7 +626,6 @@
                                 </constraints>
                             </view>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="cNf-j8-fbg" firstAttribute="centerY" secondItem="7bZ-Bj-n9q" secondAttribute="centerY" id="26P-08-TC8"/>
                             <constraint firstItem="cNf-j8-fbg" firstAttribute="centerX" secondItem="7bZ-Bj-n9q" secondAttribute="centerX" id="hL0-sW-z9h"/>

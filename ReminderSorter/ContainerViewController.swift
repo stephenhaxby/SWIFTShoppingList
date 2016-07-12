@@ -16,6 +16,8 @@ class ContainerViewController : UIViewController {
     
     @IBOutlet weak var doneButton: UIButton!
     
+    var saveReminderObserver : NSObjectProtocol?
+    
     //When the settings butto is pressed, open the settings page at the settings for our app
     @IBAction func settingsButtonTouchUpInside(sender: AnyObject) {
         
@@ -27,6 +29,7 @@ class ContainerViewController : UIViewController {
     
     @IBAction func doneButtonTouchUpInside(sender: AnyObject) {
         
+        //Find the active / editing Text View and set it to no longer editing
         for controller in self.childViewControllers {
             
             if let reminderSortViewController = controller as? ReminderSortViewController {
@@ -45,6 +48,36 @@ class ContainerViewController : UIViewController {
         }
         
         setupRightBarButtons(false)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+
+        //Custom observer for when an cell / reminder needs to be saved
+        saveReminderObserver = NSNotificationCenter.defaultCenter().addObserverForName(Constants.SaveReminder, object: nil, queue: nil){
+            (notification) -> Void in
+            
+            self.setupRightBarButtons(false)
+        }
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        
+//        let backgroundImage = UIImage(named: "old-white-background")
+//        self.view.backgroundColor = UIColor(patternImage: backgroundImage!)
+
+        let background = UIImage(named: "old-white-background")
+        
+        var imageView : UIImageView!
+        imageView = UIImageView(frame: view.bounds)
+        imageView.contentMode =  UIViewContentMode.ScaleAspectFill
+        imageView.clipsToBounds = true
+        imageView.image = background
+        imageView.center = view.center
+        view.addSubview(imageView)
+        self.view.sendSubviewToBack(imageView)
+        
     }
     
     override func viewDidLoad() {

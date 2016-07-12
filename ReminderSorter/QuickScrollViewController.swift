@@ -15,6 +15,12 @@ class QuickScrollViewController : UIViewController {
         
     }
     
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+     
+        view.backgroundColor = UIColor(red:0.95, green:0.95, blue:0.95, alpha:0.4)
+    }
+    
     @IBAction func touchUpInside(sender: UIButton) {
         
         //When any of the alphabet buttons are clicked, post the notification along with the button that was pressed
