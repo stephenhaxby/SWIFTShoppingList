@@ -184,9 +184,6 @@ class ReminderSortViewController: UITableViewController {
         
         //Delay for 300 milliseconds then run the refresh / commit
         delay(0.3){
-           
-            //Stop the refresh controll spinner if its running
-            self.endRefreshControl(sender)
         
             self.commitShoppingList()
         }
@@ -302,6 +299,7 @@ class ReminderSortViewController: UITableViewController {
     func conditionalLoadShoppingList() {
     
         reminderManager.getReminders(conditionalLoadShoppingList)
+        endRefreshControl()
     }
     
     //Called by the table view cell when deleting an item
@@ -309,8 +307,11 @@ class ReminderSortViewController: UITableViewController {
 
         if let shoppingListTable = self.tableView{
             
-            //Request a reload of the Table
-            shoppingListTable.reloadData()
+            dispatch_async(dispatch_get_main_queue()) { () -> Void in
+            
+                //Request a reload of the Table
+                shoppingListTable.reloadData()
+            }
             
             //shoppingListTable.reloadSections(NSIndexSet(index: 0), withRowAnimation: .Fade)
         }
@@ -342,7 +343,7 @@ class ReminderSortViewController: UITableViewController {
         else {
 
             //Loop for all items in our local list
-            for var i = 0; i < storedShoppingList.count; i++ {
+            for i in 0 ..< storedShoppingList.count {
 
                 //Get the local item
                 let currentItem : ShoppingListItem = storedShoppingList[i]
@@ -623,20 +624,6 @@ class ReminderSortViewController: UITableViewController {
             cell.shoppingListItemTextView.autocapitalizationType = UITextAutocapitalizationType.Sentences
         }
         
-//        if indexPath.row == 0{
-//            
-//            shoppingListItem = reminderManager.getNewReminder()
-//            
-//            //getNewReminder can return nil if the EventStore isn't ready. This happens when the table is first loaded...
-//            if shoppingListItem == nil{
-//                
-//                return ShoppingListItemTableViewCell()
-//            }
-//            
-//            shoppingListItem!.title = Constants.ShoppingListItemTableViewCell.EmptyCell
-//            shoppingListItem!.completed = false
-//        }
-        
         //Add in the extra item at the bottom
         if indexPath.row == groupedShoppingList[indexPath.section].count && indexPath.section == Constants.ShoppingListSection.History.rawValue {
             
@@ -716,26 +703,16 @@ class ReminderSortViewController: UITableViewController {
             
             groupedShoppingList[indexPath.section].removeAtIndex(indexPath.row)
             
-            //shoppingList.removeAtIndex(indexPath.row)
-
-            //tableView.beginUpdates()
-            
             tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
-
-            //tableView.endUpdates()
         }
     }
     
-    override func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+    override func tableView(tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
         
-        let headerRow = tableView.dequeueReusableCellWithIdentifier("HeaderCell") as! TableRowHeaderSpacer
-        
-        // Set the background color of the header cell
-        headerRow.backgroundColor = UIColor(red:0.95, green:0.95, blue:0.95, alpha:0.8)
-        
-        headerRow.titleLabel.text = Constants.ShoppingListSection(rawValue: section)?.description
-        
-        return headerRow
+        if let headerView : UITableViewHeaderFooterView = view as? UITableViewHeaderFooterView {
+            
+            headerView.textLabel?.font = UIFont.systemFontOfSize(12)
+        }
     }
     
     override func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
@@ -744,56 +721,10 @@ class ReminderSortViewController: UITableViewController {
         return CGFloat(20)
     }
     
-//    override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-//        
-//         return Constants.ShoppingListSection(rawValue: section)?.description
-//    }
-    
-//    override func tableView(tableView: UITableView, estimatedHeightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-//        
-//        return UITableViewAutomaticDimension
-//    }
-    
-    //override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-
-//        let cell : ShoppingListItemTableViewCell = tableView.dequeueReusableCellWithIdentifier("ReminderCell") as! ShoppingListItemTableViewCell
-//        
-//        let size : CGSize = cell.contentView.systemLayoutSizeFittingSize(UILayoutFittingCompressedSize)
-//        
-//        return size.height
+    override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         
-//        if let cell : ShoppingListItemTableViewCell = remindersTableView.cellForRowAtIndexPath(indexPath) as? ShoppingListItemTableViewCell {
-//            
-//            let size : CGSize = cell.contentView.systemLayoutSizeFittingSize(UILayoutFittingCompressedSize)
-//            
-//            return size.height
-//        }
-        
-//        if tableView.visibleCells.count > indexPath.row {
-//            
-//            if let cell : ShoppingListItemTableViewCell = tableView.visibleCells[indexPath.row] as? ShoppingListItemTableViewCell,
-//                let textField = cell.shoppingListItemTextField {
-//                
-//                let size : CGSize = cell.contentView.systemLayoutSizeFittingSize(UILayoutFittingCompressedSize)
-//
-//                return size.height
-//                
-//                let size : CGSize = textField.text!.sizeWithAttributes([NSFontAttributeName : cell.shoppingListItemTextField.font!])
-//                
-//                let textWidth = cell.shoppingListItemTextField.bounds.size.width
-//                
-//                if size.width > textWidth {
-//                    
-//                    return CGFloat(88)
-//                }
-//            }
-//        }
-    
-        //return CGFloat(44)
-    //}
-    
-    
-    
+         return Constants.ShoppingListSection(rawValue: section)?.description
+    }
 }
 
 

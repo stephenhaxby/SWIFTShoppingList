@@ -20,20 +20,7 @@ class ShoppingListItemTableViewCell: UITableViewCell, UITextViewDelegate
     weak var reminderSortViewController : ReminderSortViewController!
     
     //Setter for the cells reminder
-    var reminder: EKReminder? {
-        didSet {
-            
-//            if let shoppingListItemReminder = reminder{
-//                
-//                //Setting the text value based on the auto-capitalisation settings
-//                shoppingListItemTextField.attributedText = nil
-//                shoppingListItemTextField.text = getAutoCapitalisationTitle(shoppingListItemReminder.title)
-//                
-//                //Extra section for completed items
-//                setShoppingListItemCompletedText(shoppingListItemReminder)
-//            }
-        }
-    }
+    var reminder: EKReminder?
     
     override func layoutSubviews() {
         
@@ -157,17 +144,17 @@ class ShoppingListItemTableViewCell: UITableViewCell, UITextViewDelegate
                     addNewButton.hidden = true
             }
             
-            if !checkSwitch.on && shoppingListItemReminder.notes == nil {
-                
-                let string = shoppingListItemReminder.title as NSString
-                
-                let attributedString = NSMutableAttributedString(string: string as String)
-                let attributes = [NSStrikethroughStyleAttributeName: 1]
-                
-                attributedString.addAttributes(attributes, range: string.rangeOfString(string as String))
-                
-                shoppingListItemTextView.attributedText = attributedString
-            }
+//            if !checkSwitch.on && shoppingListItemReminder.notes == nil {
+//                
+//                let string = shoppingListItemReminder.title as NSString
+//                
+//                let attributedString = NSMutableAttributedString(string: string as String)
+//                let attributes = [NSStrikethroughStyleAttributeName: 1]
+//                
+//                attributedString.addAttributes(attributes, range: string.rangeOfString(string as String))
+//                
+//                shoppingListItemTextView.attributedText = attributedString
+//            }
         }
     }
     
