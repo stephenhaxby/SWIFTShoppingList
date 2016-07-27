@@ -59,6 +59,8 @@ class ReminderSortViewController: UITableViewController {
         eventStoreObserver = NSNotificationCenter.defaultCenter().addObserverForName(EKEventStoreChangedNotification, object: nil, queue: nil){
             (notification) -> Void in
             
+            self.refreshLock.lock()
+            
             //Reload the grid only if there are new items from iCloud that we don't have
             self.conditionalLoadShoppingList()
         }
@@ -299,6 +301,7 @@ class ReminderSortViewController: UITableViewController {
     func conditionalLoadShoppingList() {
     
         reminderManager.getReminders(conditionalLoadShoppingList)
+        refreshLock.unlock()
         endRefreshControl()
     }
     
@@ -528,6 +531,11 @@ class ReminderSortViewController: UITableViewController {
         self.presentViewController(errorAlert, animated: true, completion: nil)
     }
     
+    override func scrollViewDidScrollToTop(scrollView: UIScrollView) {
+    
+        //TODO: When hit sthe status bar...
+    }
+    
     //Called when we receive the notification from the buttons on the quick sort view
     func scrollToLetter(letter: String) {
         
@@ -554,9 +562,10 @@ class ReminderSortViewController: UITableViewController {
         //If one exists, find the item first item in the list with that letter
         if itemsBeginingWith.count > 0 {
             
-            let index = groupedShoppingList[Constants.ShoppingListSection.History.rawValue].indexOf(itemsBeginingWith[0])
+            var index = groupedShoppingList[Constants.ShoppingListSection.History.rawValue].indexOf(itemsBeginingWith[0])
             
-            //+1 is for the blank row at the start
+            index = (index! == 0) ? 0 : index!-1
+            
             let indexPath = NSIndexPath(forRow: index!, inSection: Constants.ShoppingListSection.History.rawValue)
             
             remindersTableView.scrollToRowAtIndexPath(indexPath, atScrollPosition: UITableViewScrollPosition.Top, animated: true)

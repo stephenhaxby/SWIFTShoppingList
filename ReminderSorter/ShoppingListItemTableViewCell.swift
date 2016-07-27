@@ -38,15 +38,13 @@ class ShoppingListItemTableViewCell: UITableViewCell, UITextViewDelegate
         
         self.reminder = reminder
         
-        shoppingListItemTextView.attributedText = nil
-        shoppingListItemTextView.text = getAutoCapitalisationTitle(reminder.title)
+        let attributes = [ NSFontAttributeName: Constants.ShoppingListItemFont ]
+        shoppingListItemTextView.attributedText = NSMutableAttributedString(string: getAutoCapitalisationTitle(reminder.title), attributes: attributes)
 
         //Extra section for completed items
         setShoppingListItemCompletedText(reminder)
         
         shoppingListItemTextView.delegate = self
-        
-        //shoppingListItemTextView.delegate = self
     }
     
     @IBAction func addNewTouchUpInside(sender: AnyObject) {
@@ -144,17 +142,18 @@ class ShoppingListItemTableViewCell: UITableViewCell, UITextViewDelegate
                     addNewButton.hidden = true
             }
             
-//            if !checkSwitch.on && shoppingListItemReminder.notes == nil {
-//                
-//                let string = shoppingListItemReminder.title as NSString
-//                
-//                let attributedString = NSMutableAttributedString(string: string as String)
-//                let attributes = [NSStrikethroughStyleAttributeName: 1]
-//                
-//                attributedString.addAttributes(attributes, range: string.rangeOfString(string as String))
-//                
-//                shoppingListItemTextView.attributedText = attributedString
-//            }
+            if !checkSwitch.on && shoppingListItemReminder.notes == nil {
+                
+                let string = shoppingListItemReminder.title as NSString
+                
+                let attributedString = NSMutableAttributedString(string: string as String)
+                
+                let attributes = [NSStrikethroughStyleAttributeName: 1, NSFontAttributeName: Constants.ShoppingListItemFont]
+                
+                attributedString.addAttributes(attributes, range: string.rangeOfString(string as String))
+                
+                shoppingListItemTextView.attributedText = attributedString
+            }
         }
     }
     
@@ -163,13 +162,20 @@ class ShoppingListItemTableViewCell: UITableViewCell, UITextViewDelegate
         
         if let tableView = reminderSortViewController.tableView {
             
-            let currentOffset = tableView.contentOffset
+//            let currentOffset = tableView.contentOffset
             UIView.setAnimationsEnabled(false)
             tableView.beginUpdates()
             tableView.endUpdates()
             UIView.setAnimationsEnabled(true)
-            tableView.setContentOffset(currentOffset, animated: false)
+//            tableView.setContentOffset(currentOffset, animated: false)
         }
+    }
+    
+    func textViewShouldBeginEditing(textView: UITextView) -> Bool {
+        
+        reminderSortViewController.refreshLock.lock()
+        
+        return true
     }
     
     func textViewDidBeginEditing(textView: UITextView) {
@@ -179,7 +185,7 @@ class ShoppingListItemTableViewCell: UITableViewCell, UITextViewDelegate
     
     func textViewDidEndEditing(textView: UITextView) {
         
-        if let editedReminder = reminder{
+        if let editedReminder = reminder {
 
             if textView.text != "" {
 
@@ -188,5 +194,7 @@ class ShoppingListItemTableViewCell: UITableViewCell, UITextViewDelegate
                 NSNotificationCenter.defaultCenter().postNotificationName(Constants.SaveReminder, object: editedReminder)
             }
         }
+        
+        reminderSortViewController.refreshLock.unlock()
     }
 }

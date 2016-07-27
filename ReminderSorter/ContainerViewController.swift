@@ -67,7 +67,7 @@ class ContainerViewController : UIViewController {
 //        let backgroundImage = UIImage(named: "old-white-background")
 //        self.view.backgroundColor = UIColor(patternImage: backgroundImage!)
 
-        let background = UIImage(named: "old-white-background")
+        let background = UIImage(named: "crumpled-white-paper")
         
         var imageView : UIImageView!
         imageView = UIImageView(frame: view.bounds)
@@ -78,6 +78,9 @@ class ContainerViewController : UIViewController {
         view.addSubview(imageView)
         self.view.sendSubviewToBack(imageView)
         
+        self.navigationController?.navigationBar.titleTextAttributes =
+            [NSForegroundColorAttributeName: UIColor.init(red: 0.0, green: 0.5, blue: 1, alpha: 1),
+             NSFontAttributeName: Constants.ShoppingListItemFont]
     }
     
     override func viewDidLoad() {

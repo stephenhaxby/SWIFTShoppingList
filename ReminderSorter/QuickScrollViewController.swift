@@ -10,8 +10,12 @@ import UIKit
 
 class QuickScrollViewController : UIViewController {
 
+    @IBOutlet weak var JumpListItemA: UIButton!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        setQuickLinkButtonFont(self.view.subviews)
         
     }
     
@@ -25,5 +29,18 @@ class QuickScrollViewController : UIViewController {
         
         //When any of the alphabet buttons are clicked, post the notification along with the button that was pressed
         NSNotificationCenter.defaultCenter().postNotificationName(Constants.QuickScrollButtonPressed, object: sender)
+    }
+    
+    func setQuickLinkButtonFont(views: [UIView]) {
+        
+        for subview in views as [UIView] {
+            
+            setQuickLinkButtonFont(subview.subviews)
+            
+            if let button = subview as? UIButton {
+                
+                button.titleLabel?.font = Constants.QuickJumpListItemFont
+            }
+        }
     }
 }
