@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 class Constants{
 
@@ -34,6 +35,10 @@ class Constants{
     static let ClearShoppingListOnOpen : String = "ClearShoppingListOnOpen"
     
     static let ShoppingListSections = 3
+    
+    static let ShoppingListItemFont = UIFont(name: "American Typewriter", size: 21.0)!
+    
+    static let QuickJumpListItemFont = UIFont(name: "American Typewriter", size: 14.0)!
     
     enum ShoppingListSection : Int, CustomStringConvertible {
         case List

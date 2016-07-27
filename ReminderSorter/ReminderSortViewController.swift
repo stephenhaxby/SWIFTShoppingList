@@ -43,7 +43,7 @@ class ReminderSortViewController: UITableViewController {
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-    
+        
         //TODO: Use a loop and the constant value
         
         for _ in 0..<Constants.ShoppingListSections {
@@ -58,6 +58,8 @@ class ReminderSortViewController: UITableViewController {
         //Observer for the app for when the event store is changed in the background (or when our app isn't running)
         eventStoreObserver = NSNotificationCenter.defaultCenter().addObserverForName(EKEventStoreChangedNotification, object: nil, queue: nil){
             (notification) -> Void in
+            
+            self.refreshLock.lock()
             
             //Reload the grid only if there are new items from iCloud that we don't have
             self.conditionalLoadShoppingList()
@@ -158,6 +160,9 @@ class ReminderSortViewController: UITableViewController {
         //Set the font size of the navigation view controller
         self.navigationController?.navigationBar.titleTextAttributes = [NSFontAttributeName: UIFont.boldSystemFontOfSize(18.0)]
         
+        tableView.rowHeight = UITableViewAutomaticDimension
+        tableView.estimatedRowHeight = 70
+        
         //tableView.registerClass(ShoppingListItemTableViewCell.self, forCellReuseIdentifier: "ReminderCell")
         
         //Set the refresh controll spinning
@@ -170,14 +175,17 @@ class ReminderSortViewController: UITableViewController {
         reminderManager.requestAccessToReminders(requestedAccessToReminders)
     }
     
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+     
+        tableView.backgroundColor = .clearColor()
+    }
+    
     //Event for pull down to refresh
     @IBAction private func refresh(sender: UIRefreshControl?) {
         
         //Delay for 300 milliseconds then run the refresh / commit
         delay(0.3){
-           
-            //Stop the refresh controll spinner if its running
-            self.endRefreshControl(sender)
         
             self.commitShoppingList()
         }
@@ -293,6 +301,8 @@ class ReminderSortViewController: UITableViewController {
     func conditionalLoadShoppingList() {
     
         reminderManager.getReminders(conditionalLoadShoppingList)
+        refreshLock.unlock()
+        endRefreshControl()
     }
     
     //Called by the table view cell when deleting an item
@@ -300,8 +310,11 @@ class ReminderSortViewController: UITableViewController {
 
         if let shoppingListTable = self.tableView{
             
-            //Request a reload of the Table
-            shoppingListTable.reloadData()
+            dispatch_async(dispatch_get_main_queue()) { () -> Void in
+            
+                //Request a reload of the Table
+                shoppingListTable.reloadData()
+            }
             
             //shoppingListTable.reloadSections(NSIndexSet(index: 0), withRowAnimation: .Fade)
         }
@@ -333,7 +346,7 @@ class ReminderSortViewController: UITableViewController {
         else {
 
             //Loop for all items in our local list
-            for var i = 0; i < storedShoppingList.count; i++ {
+            for i in 0 ..< storedShoppingList.count {
 
                 //Get the local item
                 let currentItem : ShoppingListItem = storedShoppingList[i]
@@ -518,6 +531,11 @@ class ReminderSortViewController: UITableViewController {
         self.presentViewController(errorAlert, animated: true, completion: nil)
     }
     
+    override func scrollViewDidScrollToTop(scrollView: UIScrollView) {
+    
+        //TODO: When hit sthe status bar...
+    }
+    
     //Called when we receive the notification from the buttons on the quick sort view
     func scrollToLetter(letter: String) {
         
@@ -544,9 +562,10 @@ class ReminderSortViewController: UITableViewController {
         //If one exists, find the item first item in the list with that letter
         if itemsBeginingWith.count > 0 {
             
-            let index = groupedShoppingList[Constants.ShoppingListSection.History.rawValue].indexOf(itemsBeginingWith[0])
+            var index = groupedShoppingList[Constants.ShoppingListSection.History.rawValue].indexOf(itemsBeginingWith[0])
             
-            //+1 is for the blank row at the start
+            index = (index! == 0) ? 0 : index!-1
+            
             let indexPath = NSIndexPath(forRow: index!, inSection: Constants.ShoppingListSection.History.rawValue)
             
             remindersTableView.scrollToRowAtIndexPath(indexPath, atScrollPosition: UITableViewScrollPosition.Top, animated: true)
@@ -565,6 +584,14 @@ class ReminderSortViewController: UITableViewController {
                 //If we are at the begining, scroll to the top
                 remindersTableView.scrollToRowAtIndexPath(NSIndexPath(forRow: 0, inSection: Constants.ShoppingListSection.History.rawValue), atScrollPosition: UITableViewScrollPosition.Top, animated: true)
             }
+        }
+    }
+    
+    func setupRightBarButtons(editing : Bool) {
+        
+        if let containerViewController : ContainerViewController = self.parentViewController as? ContainerViewController {
+            
+            containerViewController.setupRightBarButtons(editing)
         }
     }
     
@@ -590,33 +617,21 @@ class ReminderSortViewController: UITableViewController {
         //Get the cell
         let cell : ShoppingListItemTableViewCell = tableView.dequeueReusableCellWithIdentifier("ReminderCell") as! ShoppingListItemTableViewCell
         
-        if(cell.shoppingListItemTextField != nil){
+        if(cell.shoppingListItemTextView != nil){
             
+            //Keep hold of the table view for each cell so we can do the multi-line refresh
+            cell.reminderSortViewController = self
         }
         
         //Based on the settings, set up the auto-capitalisation for the keyboard
         if SettingsUserDefaults.autoCapitalisation{
             
-            cell.shoppingListItemTextField.autocapitalizationType = UITextAutocapitalizationType.Words
+            cell.shoppingListItemTextView.autocapitalizationType = UITextAutocapitalizationType.Words
         }
         else{
             
-            cell.shoppingListItemTextField.autocapitalizationType = UITextAutocapitalizationType.Sentences
+            cell.shoppingListItemTextView.autocapitalizationType = UITextAutocapitalizationType.Sentences
         }
-        
-//        if indexPath.row == 0{
-//            
-//            shoppingListItem = reminderManager.getNewReminder()
-//            
-//            //getNewReminder can return nil if the EventStore isn't ready. This happens when the table is first loaded...
-//            if shoppingListItem == nil{
-//                
-//                return ShoppingListItemTableViewCell()
-//            }
-//            
-//            shoppingListItem!.title = Constants.ShoppingListItemTableViewCell.EmptyCell
-//            shoppingListItem!.completed = false
-//        }
         
         //Add in the extra item at the bottom
         if indexPath.row == groupedShoppingList[indexPath.section].count && indexPath.section == Constants.ShoppingListSection.History.rawValue {
@@ -697,26 +712,16 @@ class ReminderSortViewController: UITableViewController {
             
             groupedShoppingList[indexPath.section].removeAtIndex(indexPath.row)
             
-            //shoppingList.removeAtIndex(indexPath.row)
-
-            //tableView.beginUpdates()
-            
             tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
-
-            //tableView.endUpdates()
         }
     }
     
-    override func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+    override func tableView(tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
         
-        let headerRow = tableView.dequeueReusableCellWithIdentifier("HeaderCell") as! TableRowHeaderSpacer
-        
-        // Set the background color of the header cell
-        headerRow.backgroundColor = UIColor(red:0.95, green:0.95, blue:0.95, alpha:1.0)
-        
-        headerRow.titleLabel.text = Constants.ShoppingListSection(rawValue: section)?.description
-        
-        return headerRow
+        if let headerView : UITableViewHeaderFooterView = view as? UITableViewHeaderFooterView {
+            
+            headerView.textLabel?.font = UIFont.systemFontOfSize(12)
+        }
     }
     
     override func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
@@ -725,10 +730,10 @@ class ReminderSortViewController: UITableViewController {
         return CGFloat(20)
     }
     
-//    override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-//        
-//         return Constants.ShoppingListSection(rawValue: section)?.description
-//    }
+    override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        
+         return Constants.ShoppingListSection(rawValue: section)?.description
+    }
 }
 
 

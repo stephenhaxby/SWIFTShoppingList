@@ -8,7 +8,7 @@
 
 import UIKit
 
-class TableRowHeaderSpacer : UITableViewCell {
+class TableRowHeaderSpacer : UIView {
     
     @IBOutlet weak var titleLabel: UILabel!
 }

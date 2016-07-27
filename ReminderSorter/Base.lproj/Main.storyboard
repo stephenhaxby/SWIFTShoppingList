@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="jGZ-Bv-awX">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="jGZ-Bv-awX">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -11,43 +11,26 @@
             <objects>
                 <tableViewController id="5Ag-tc-sUf" customClass="ReminderSortViewController" customModule="ReminderSorter" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" keyboardDismissMode="onDrag" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="gn4-vH-fZP">
-                        <rect key="frame" x="0.0" y="0.0" width="573" height="536"/>
+                        <rect key="frame" x="0.0" y="0.0" width="570" height="536"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="HeaderCell" rowHeight="20" id="dQi-ck-MSx" customClass="TableRowHeaderSpacer" customModule="ReminderSorter" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="22" width="573" height="20"/>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="HeaderCell" rowHeight="20" id="dQi-ck-MSx">
+                                <rect key="frame" x="0.0" y="22" width="570" height="20"/>
                                 <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="dQi-ck-MSx" id="XeQ-RU-ReQ">
-                                    <rect key="frame" x="0.0" y="0.0" width="573" height="19"/>
+                                <tableViewCellContentView key="contentView" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="dQi-ck-MSx" id="XeQ-RU-ReQ">
+                                    <rect key="frame" x="0.0" y="0.0" width="570" height="19"/>
                                     <autoresizingMask key="autoresizingMask"/>
-                                    <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="q6L-uR-Xot">
-                                            <rect key="frame" x="8" y="-1" width="536" height="21"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="11"/>
-                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                    </subviews>
                                 </tableViewCellContentView>
-                                <connections>
-                                    <outlet property="titleLabel" destination="q6L-uR-Xot" id="wX1-dS-xFi"/>
-                                </connections>
                             </tableViewCell>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="ReminderCell" id="9Z4-o8-zaC" customClass="ShoppingListItemTableViewCell" customModule="ReminderSorter" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="42" width="573" height="44"/>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="ReminderCell" rowHeight="44" id="9Z4-o8-zaC" customClass="ShoppingListItemTableViewCell" customModule="ReminderSorter" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="42" width="570" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="9Z4-o8-zaC" id="7r9-Qh-qDR">
-                                    <rect key="frame" x="0.0" y="0.0" width="573" height="43"/>
+                                <tableViewCellContentView key="contentView" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="9Z4-o8-zaC" id="7r9-Qh-qDR">
+                                    <rect key="frame" x="0.0" y="0.0" width="570" height="43"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ReJ-9B-XiB">
-                                            <rect key="frame" x="8" y="4" width="51" height="31"/>
-                                            <connections>
-                                                <action selector="completedSwitchValueChanged:" destination="9Z4-o8-zaC" eventType="valueChanged" id="T3g-xp-Yw4"/>
-                                            </connections>
-                                        </switch>
-                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uyh-4K-TeC">
+                                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uyh-4K-TeC">
                                             <rect key="frame" x="8" y="-2" width="30" height="37"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="48"/>
                                             <state key="normal" title="+">
@@ -57,51 +40,63 @@
                                                 <action selector="addNewTouchUpInside:" destination="9Z4-o8-zaC" eventType="touchUpInside" id="Y9a-sg-SR2"/>
                                             </connections>
                                         </button>
-                                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Lib-C6-ncm">
-                                            <rect key="frame" x="75" y="8" width="477" height="27"/>
-                                            <gestureRecognizers/>
+                                        <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" verticalCompressionResistancePriority="1000" directionalLockEnabled="YES" scrollEnabled="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="Jdo-wX-8WJ">
+                                            <rect key="frame" x="65" y="3" width="497" height="40"/>
                                             <constraints>
-                                                <constraint firstAttribute="width" constant="477" id="fPx-cY-UQC"/>
+                                                <constraint firstAttribute="height" constant="70" id="zr4-NP-TrG"/>
                                             </constraints>
-                                            <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                                            <textInputTraits key="textInputTraits"/>
+                                            <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
+                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                            <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                            <variation key="default">
+                                                <mask key="constraints">
+                                                    <exclude reference="zr4-NP-TrG"/>
+                                                </mask>
+                                            </variation>
+                                        </textView>
+                                        <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ReJ-9B-XiB">
+                                            <rect key="frame" x="8" y="7" width="51" height="31"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="31" id="6iy-6K-dv8"/>
+                                                <constraint firstAttribute="width" constant="49" id="cBp-mH-vcg"/>
+                                            </constraints>
+                                            <variation key="default">
+                                                <mask key="constraints">
+                                                    <exclude reference="6iy-6K-dv8"/>
+                                                    <exclude reference="cBp-mH-vcg"/>
+                                                </mask>
+                                            </variation>
                                             <connections>
-                                                <action selector="shoppingListItemTextFieldEditingDidEnd:" destination="9Z4-o8-zaC" eventType="editingDidEnd" id="7BV-wL-9sg"/>
+                                                <action selector="completedSwitchValueChanged:" destination="9Z4-o8-zaC" eventType="valueChanged" id="T3g-xp-Yw4"/>
                                             </connections>
-                                        </textField>
+                                        </switch>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstItem="Lib-C6-ncm" firstAttribute="bottom" secondItem="uyh-4K-TeC" secondAttribute="bottom" id="BaH-Um-8um"/>
-                                        <constraint firstItem="uyh-4K-TeC" firstAttribute="bottom" secondItem="ReJ-9B-XiB" secondAttribute="bottom" id="D8p-f3-W2u"/>
-                                        <constraint firstItem="uyh-4K-TeC" firstAttribute="top" secondItem="7r9-Qh-qDR" secondAttribute="topMargin" constant="-10" id="IhG-hr-qTo"/>
-                                        <constraint firstItem="ReJ-9B-XiB" firstAttribute="top" secondItem="7r9-Qh-qDR" secondAttribute="topMargin" constant="-4" id="N9Q-lp-5wR"/>
-                                        <constraint firstItem="Lib-C6-ncm" firstAttribute="top" secondItem="7r9-Qh-qDR" secondAttribute="topMargin" id="VNu-pu-Srv"/>
-                                        <constraint firstItem="uyh-4K-TeC" firstAttribute="leading" secondItem="ReJ-9B-XiB" secondAttribute="leading" id="Xkv-YG-bsf"/>
-                                        <constraint firstItem="Lib-C6-ncm" firstAttribute="top" secondItem="7r9-Qh-qDR" secondAttribute="topMargin" id="cXh-av-LIg"/>
-                                        <constraint firstItem="Lib-C6-ncm" firstAttribute="leading" secondItem="ReJ-9B-XiB" secondAttribute="trailing" constant="20" id="cxA-bX-p7O"/>
-                                        <constraint firstItem="ReJ-9B-XiB" firstAttribute="leading" secondItem="7r9-Qh-qDR" secondAttribute="leadingMargin" id="f4E-Yg-lUn"/>
-                                        <constraint firstItem="Lib-C6-ncm" firstAttribute="leading" secondItem="uyh-4K-TeC" secondAttribute="trailing" constant="23" id="gcf-RY-V6U"/>
-                                        <constraint firstItem="Lib-C6-ncm" firstAttribute="leading" secondItem="7r9-Qh-qDR" secondAttribute="leadingMargin" id="m4d-Xs-1II"/>
-                                        <constraint firstItem="Lib-C6-ncm" firstAttribute="bottom" secondItem="ReJ-9B-XiB" secondAttribute="bottom" id="noS-Vo-UWC"/>
-                                        <constraint firstItem="ReJ-9B-XiB" firstAttribute="bottom" secondItem="7r9-Qh-qDR" secondAttribute="bottomMargin" priority="750" id="oJ6-8B-nUA"/>
-                                        <constraint firstItem="Lib-C6-ncm" firstAttribute="leading" secondItem="ReJ-9B-XiB" secondAttribute="trailing" constant="18" id="p93-3M-ixF"/>
-                                        <constraint firstAttribute="trailingMargin" secondItem="Lib-C6-ncm" secondAttribute="trailing" constant="64" id="vA5-pk-MP2"/>
+                                        <constraint firstItem="ReJ-9B-XiB" firstAttribute="leading" secondItem="7r9-Qh-qDR" secondAttribute="leadingMargin" id="3aO-FO-Bl5"/>
+                                        <constraint firstAttribute="bottomMargin" secondItem="ReJ-9B-XiB" secondAttribute="bottom" constant="-3" id="4Ej-VK-l4x"/>
+                                        <constraint firstItem="ReJ-9B-XiB" firstAttribute="top" secondItem="7r9-Qh-qDR" secondAttribute="topMargin" constant="-4" id="4PA-Re-I5w"/>
+                                        <constraint firstAttribute="bottomMargin" secondItem="Jdo-wX-8WJ" secondAttribute="bottom" constant="-8" id="F41-3q-Fjw"/>
+                                        <constraint firstItem="ReJ-9B-XiB" firstAttribute="bottom" secondItem="7r9-Qh-qDR" secondAttribute="bottomMargin" id="Jt3-BH-HW9"/>
+                                        <constraint firstAttribute="leadingMargin" secondItem="ReJ-9B-XiB" secondAttribute="leading" id="L1f-fr-WaJ"/>
+                                        <constraint firstItem="Jdo-wX-8WJ" firstAttribute="leading" secondItem="ReJ-9B-XiB" secondAttribute="trailing" constant="8" id="MHP-id-Lmo"/>
+                                        <constraint firstItem="Jdo-wX-8WJ" firstAttribute="leading" secondItem="ReJ-9B-XiB" secondAttribute="trailing" constant="8" id="d4q-c7-vZp"/>
+                                        <constraint firstItem="ReJ-9B-XiB" firstAttribute="top" secondItem="7r9-Qh-qDR" secondAttribute="topMargin" constant="-1" id="ex4-Mi-f8u"/>
+                                        <constraint firstItem="Jdo-wX-8WJ" firstAttribute="top" secondItem="7r9-Qh-qDR" secondAttribute="topMargin" constant="-5" id="mYo-iQ-LTo"/>
+                                        <constraint firstItem="Jdo-wX-8WJ" firstAttribute="trailing" secondItem="7r9-Qh-qDR" secondAttribute="trailingMargin" id="tKN-hN-XMi"/>
                                     </constraints>
                                     <variation key="default">
                                         <mask key="constraints">
-                                            <exclude reference="cXh-av-LIg"/>
-                                            <exclude reference="cxA-bX-p7O"/>
-                                            <exclude reference="gcf-RY-V6U"/>
-                                            <exclude reference="m4d-Xs-1II"/>
-                                            <exclude reference="noS-Vo-UWC"/>
-                                            <exclude reference="vA5-pk-MP2"/>
+                                            <exclude reference="3aO-FO-Bl5"/>
+                                            <exclude reference="4PA-Re-I5w"/>
+                                            <exclude reference="Jt3-BH-HW9"/>
+                                            <exclude reference="d4q-c7-vZp"/>
                                         </mask>
                                     </variation>
                                 </tableViewCellContentView>
                                 <connections>
                                     <outlet property="addNewButton" destination="uyh-4K-TeC" id="Y3h-AD-kMR"/>
                                     <outlet property="completedSwitch" destination="ReJ-9B-XiB" id="JS0-Dj-ab2"/>
-                                    <outlet property="shoppingListItemTextField" destination="Lib-C6-ncm" id="syT-Kp-nAD"/>
+                                    <outlet property="shoppingListItemTextView" destination="Jdo-wX-8WJ" id="CGU-r8-S50"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -123,9 +118,9 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="WHI-qa-sdU" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1068" y="1582"/>
+            <point key="canvasLocation" x="1067.5" y="1582"/>
         </scene>
-        <!--Help-->
+        <!--Information-->
         <scene sceneID="RxP-ya-XXD">
             <objects>
                 <viewController automaticallyAdjustsScrollViewInsets="NO" id="VI3-1w-ipy" customClass="InfoViewController" customModule="ReminderSorter" customModuleProvider="target" sceneMemberID="viewController">
@@ -138,7 +133,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tKa-UI-f1d">
-                                <rect key="frame" x="221" y="288" width="158" height="30"/>
+                                <rect key="frame" x="221" y="298" width="158" height="30"/>
                                 <color key="backgroundColor" red="0.94901960780000005" green="0.94901960780000005" blue="0.94901960780000005" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="Gek-sS-ILd"/>
@@ -153,7 +148,7 @@
                                 </connections>
                             </button>
                             <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="time" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="98q-CM-t01">
-                                <rect key="frame" x="200" y="112" width="200" height="120"/>
+                                <rect key="frame" x="200" y="122" width="200" height="120"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="200" id="EbS-RP-9gl"/>
                                 </constraints>
@@ -162,10 +157,10 @@
                                 </date>
                                 <locale key="locale" localeIdentifier="nl_NL"/>
                             </datePicker>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Shopping Cart Exipry Time" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0vR-0t-mnH">
-                                <rect key="frame" x="20" y="72" width="191" height="21"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Clear Shopping Cart after (hours minutes):" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0vR-0t-mnH">
+                                <rect key="frame" x="20" y="82" width="301" height="21"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="191" id="mdn-An-fmq"/>
+                                    <constraint firstAttribute="width" constant="301" id="mdn-An-fmq"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -175,17 +170,17 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <gestureRecognizers/>
                         <constraints>
-                            <constraint firstItem="0vR-0t-mnH" firstAttribute="top" secondItem="f6b-nj-r9J" secondAttribute="bottom" constant="8" symbolic="YES" id="8Ks-cb-eeX"/>
+                            <constraint firstItem="0vR-0t-mnH" firstAttribute="top" secondItem="f6b-nj-r9J" secondAttribute="bottom" constant="18" id="8Ks-cb-eeX"/>
                             <constraint firstItem="98q-CM-t01" firstAttribute="centerX" secondItem="tKa-UI-f1d" secondAttribute="centerX" id="DRW-SW-fvJ"/>
                             <constraint firstItem="98q-CM-t01" firstAttribute="centerX" secondItem="pz3-9h-JUp" secondAttribute="centerX" id="O11-Lm-DiT"/>
                             <constraint firstItem="98q-CM-t01" firstAttribute="top" secondItem="0vR-0t-mnH" secondAttribute="bottom" constant="19" id="hVn-lU-qIT"/>
-                            <constraint firstItem="98q-CM-t01" firstAttribute="top" secondItem="f6b-nj-r9J" secondAttribute="bottom" constant="48" id="k6A-sJ-Voh"/>
-                            <constraint firstItem="jnn-hy-VxU" firstAttribute="top" secondItem="tKa-UI-f1d" secondAttribute="bottom" constant="282" id="t3n-ly-m2S"/>
+                            <constraint firstItem="98q-CM-t01" firstAttribute="top" secondItem="f6b-nj-r9J" secondAttribute="bottom" constant="58" id="k6A-sJ-Voh"/>
+                            <constraint firstItem="jnn-hy-VxU" firstAttribute="top" secondItem="tKa-UI-f1d" secondAttribute="bottom" constant="272" id="t3n-ly-m2S"/>
                             <constraint firstItem="0vR-0t-mnH" firstAttribute="leading" secondItem="pz3-9h-JUp" secondAttribute="leadingMargin" id="uD6-EV-cGU"/>
                             <constraint firstItem="tKa-UI-f1d" firstAttribute="top" secondItem="98q-CM-t01" secondAttribute="bottom" constant="56" id="x2C-6z-MPh"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="Help" id="Qrk-jS-5dL">
+                    <navigationItem key="navigationItem" title="Information" id="Qrk-jS-5dL">
                         <barButtonItem key="leftBarButtonItem" style="done" id="6JR-Id-kR6">
                             <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" hasAttributedTitle="YES" id="HHw-QH-cb9">
                                 <rect key="frame" x="20" y="7" width="60" height="30"/>
@@ -216,7 +211,7 @@
             </objects>
             <point key="canvasLocation" x="2507" y="115"/>
         </scene>
-        <!--iCloud Shopping List-->
+        <!--Shopping List-->
         <scene sceneID="raG-mQ-E6b">
             <objects>
                 <viewController id="wXl-h5-U25" customClass="ContainerViewController" customModule="ReminderSorter" customModuleProvider="target" sceneMemberID="viewController">
@@ -238,7 +233,7 @@
                                 </connections>
                             </containerView>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gyl-GM-m4T">
-                                <rect key="frame" x="0.0" y="64" width="573" height="536"/>
+                                <rect key="frame" x="0.0" y="64" width="570" height="536"/>
                                 <connections>
                                     <segue destination="5Ag-tc-sUf" kind="embed" id="Hl8-yx-S4N"/>
                                 </connections>
@@ -261,7 +256,7 @@
                             <constraint firstItem="gyl-GM-m4T" firstAttribute="bottom" secondItem="kum-re-Wa8" secondAttribute="top" id="Sr2-bh-Sl7"/>
                             <constraint firstItem="kum-re-Wa8" firstAttribute="top" secondItem="gyl-GM-m4T" secondAttribute="bottom" constant="-2" id="Tzv-nL-L0s"/>
                             <constraint firstItem="akY-23-ae6" firstAttribute="bottom" secondItem="kum-re-Wa8" secondAttribute="top" id="VTX-3h-Vhj"/>
-                            <constraint firstItem="akY-23-ae6" firstAttribute="leading" secondItem="gyl-GM-m4T" secondAttribute="trailing" constant="-3" id="WQN-bp-ykF"/>
+                            <constraint firstItem="akY-23-ae6" firstAttribute="leading" secondItem="gyl-GM-m4T" secondAttribute="trailing" id="WQN-bp-ykF"/>
                             <constraint firstItem="akY-23-ae6" firstAttribute="top" secondItem="Cz4-pT-SRo" secondAttribute="bottom" id="XCu-IW-kdr"/>
                             <constraint firstItem="akY-23-ae6" firstAttribute="leading" secondItem="gyl-GM-m4T" secondAttribute="trailing" constant="25" id="YqV-ec-URT"/>
                             <constraint firstAttribute="trailingMargin" secondItem="akY-23-ae6" secondAttribute="trailing" constant="-20" id="c5f-9u-piz"/>
@@ -313,7 +308,7 @@
                             </mask>
                         </variation>
                     </view>
-                    <navigationItem key="navigationItem" title="iCloud Shopping List" id="sah-Ac-zZQ">
+                    <navigationItem key="navigationItem" title="Shopping List" id="sah-Ac-zZQ">
                         <barButtonItem key="leftBarButtonItem" style="done" id="gIf-nR-bgG">
                             <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" hasAttributedTitle="YES" id="kmd-5C-nsS">
                                 <rect key="frame" x="20" y="7" width="30" height="30"/>
@@ -326,20 +321,36 @@
                                 </connections>
                             </button>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" style="done" id="nYY-hh-BRn">
-                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" hasAttributedTitle="YES" id="P2a-Vy-cd3">
-                                <rect key="frame" x="550" y="7" width="30" height="30"/>
+                        <barButtonItem key="rightBarButtonItem" style="plain" id="Jsr-Je-DTw">
+                            <view key="customView" contentMode="scaleToFill" id="4M3-K8-2Eb">
+                                <rect key="frame" x="530" y="5" width="50" height="33"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal">
-                                    <attributedString key="attributedTitle"/>
-                                </state>
-                                <connections>
-                                    <segue destination="AbJ-wd-3qi" kind="presentation" id="0FU-YZ-cin"/>
-                                </connections>
-                            </button>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="1PZ-bV-3gX">
+                                        <rect key="frame" x="0.0" y="0.0" width="50" height="30"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="16"/>
+                                        <state key="normal" title="Done"/>
+                                        <connections>
+                                            <action selector="doneButtonTouchUpInside:" destination="wXl-h5-U25" eventType="touchUpInside" id="eP1-Eu-lq0"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" hasAttributedTitle="YES" id="P2a-Vy-cd3">
+                                        <rect key="frame" x="10" y="0.0" width="30" height="30"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <state key="normal">
+                                            <attributedString key="attributedTitle"/>
+                                        </state>
+                                        <connections>
+                                            <segue destination="AbJ-wd-3qi" kind="presentation" id="0FU-YZ-cin"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                            </view>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="doneButton" destination="1PZ-bV-3gX" id="API-pn-pRp"/>
                         <outlet property="infoButton" destination="P2a-Vy-cd3" id="kDT-xv-nrh"/>
                         <outlet property="settingsButton" destination="kmd-5C-nsS" id="Rds-Mq-peL"/>
                     </connections>
@@ -379,11 +390,11 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cNf-j8-fbg">
-                                <rect key="frame" x="0.0" y="20" width="30" height="495"/>
+                                <rect key="frame" x="-2" y="20" width="30" height="495"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="o2o-IO-QLi">
                                         <rect key="frame" x="0.0" y="0.0" width="30" height="25"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                        <fontDescription key="fontDescription" name="Chalkboard SE" family="Bradley Hand" pointSize="14"/>
                                         <state key="normal" title="A"/>
                                         <connections>
                                             <action selector="touchUpInside:" destination="Vzy-XB-8iC" eventType="touchUpInside" id="Uyv-4C-Qxs"/>
@@ -391,7 +402,7 @@
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KIr-Mt-Rmm">
                                         <rect key="frame" x="0.0" y="18" width="30" height="25"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                        <fontDescription key="fontDescription" name="Chalkboard SE" family="Bradley Hand" pointSize="14"/>
                                         <state key="normal" title="B"/>
                                         <connections>
                                             <action selector="touchUpInside:" destination="Vzy-XB-8iC" eventType="touchUpInside" id="b9y-od-ttl"/>
@@ -399,7 +410,7 @@
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kgo-gI-4hc">
                                         <rect key="frame" x="0.0" y="36" width="30" height="25"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                        <fontDescription key="fontDescription" name="Chalkboard SE" family="Bradley Hand" pointSize="14"/>
                                         <state key="normal" title="C"/>
                                         <connections>
                                             <action selector="touchUpInside:" destination="Vzy-XB-8iC" eventType="touchUpInside" id="24N-XE-SwY"/>
@@ -407,7 +418,7 @@
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zNy-dP-jmM">
                                         <rect key="frame" x="0.0" y="54" width="30" height="25"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                        <fontDescription key="fontDescription" name="Chalkboard SE" family="Bradley Hand" pointSize="14"/>
                                         <state key="normal" title="D"/>
                                         <connections>
                                             <action selector="touchUpInside:" destination="Vzy-XB-8iC" eventType="touchUpInside" id="cTg-AM-2b7"/>
@@ -415,7 +426,7 @@
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GQF-vZ-gIC">
                                         <rect key="frame" x="0.0" y="90" width="30" height="25"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                        <fontDescription key="fontDescription" name="Chalkboard SE" family="Bradley Hand" pointSize="14"/>
                                         <state key="normal" title="F"/>
                                         <connections>
                                             <action selector="touchUpInside:" destination="Vzy-XB-8iC" eventType="touchUpInside" id="QVh-A2-73L"/>
@@ -423,7 +434,7 @@
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Y49-6A-3YB">
                                         <rect key="frame" x="0.0" y="126" width="30" height="25"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                        <fontDescription key="fontDescription" name="Chalkboard SE" family="Bradley Hand" pointSize="14"/>
                                         <state key="normal" title="H"/>
                                         <connections>
                                             <action selector="touchUpInside:" destination="Vzy-XB-8iC" eventType="touchUpInside" id="Tad-vG-jSg"/>
@@ -431,7 +442,7 @@
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GEM-G0-6mx">
                                         <rect key="frame" x="0.0" y="108" width="30" height="25"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                        <fontDescription key="fontDescription" name="Chalkboard SE" family="Bradley Hand" pointSize="14"/>
                                         <state key="normal" title="G"/>
                                         <connections>
                                             <action selector="touchUpInside:" destination="Vzy-XB-8iC" eventType="touchUpInside" id="cnL-Zs-sJJ"/>
@@ -439,7 +450,7 @@
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5gr-TX-2Yk">
                                         <rect key="frame" x="0.0" y="162" width="30" height="25"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                        <fontDescription key="fontDescription" name="Chalkboard SE" family="Bradley Hand" pointSize="14"/>
                                         <state key="normal" title="J"/>
                                         <connections>
                                             <action selector="touchUpInside:" destination="Vzy-XB-8iC" eventType="touchUpInside" id="8ln-s3-gMF"/>
@@ -447,7 +458,7 @@
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LrU-bm-Z0i">
                                         <rect key="frame" x="0.0" y="144" width="30" height="25"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                        <fontDescription key="fontDescription" name="Chalkboard SE" family="Bradley Hand" pointSize="14"/>
                                         <state key="normal" title="I"/>
                                         <connections>
                                             <action selector="touchUpInside:" destination="Vzy-XB-8iC" eventType="touchUpInside" id="Fu6-cB-6td"/>
@@ -455,7 +466,7 @@
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9X4-PV-kO6">
                                         <rect key="frame" x="0.0" y="198" width="30" height="25"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                        <fontDescription key="fontDescription" name="Chalkboard SE" family="Bradley Hand" pointSize="14"/>
                                         <state key="normal" title="L"/>
                                         <connections>
                                             <action selector="touchUpInside:" destination="Vzy-XB-8iC" eventType="touchUpInside" id="8hU-Ge-8TF"/>
@@ -463,7 +474,7 @@
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dnG-tV-Nw5">
                                         <rect key="frame" x="0.0" y="252" width="30" height="25"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                        <fontDescription key="fontDescription" name="Chalkboard SE" family="Bradley Hand" pointSize="14"/>
                                         <state key="normal" title="O"/>
                                         <connections>
                                             <action selector="touchUpInside:" destination="Vzy-XB-8iC" eventType="touchUpInside" id="8Jw-Fg-v5W"/>
@@ -471,7 +482,7 @@
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2rw-Po-BNl">
                                         <rect key="frame" x="0.0" y="234" width="30" height="25"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                        <fontDescription key="fontDescription" name="Chalkboard SE" family="Bradley Hand" pointSize="14"/>
                                         <state key="normal" title="N"/>
                                         <connections>
                                             <action selector="touchUpInside:" destination="Vzy-XB-8iC" eventType="touchUpInside" id="B3i-jZ-cHb"/>
@@ -479,7 +490,7 @@
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xm6-aA-cYi">
                                         <rect key="frame" x="0.0" y="216" width="30" height="25"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                        <fontDescription key="fontDescription" name="Chalkboard SE" family="Bradley Hand" pointSize="14"/>
                                         <state key="normal" title="M"/>
                                         <connections>
                                             <action selector="touchUpInside:" destination="Vzy-XB-8iC" eventType="touchUpInside" id="MyR-x0-FdL"/>
@@ -487,7 +498,7 @@
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gHR-Vl-pYU">
                                         <rect key="frame" x="0.0" y="307" width="30" height="25"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                        <fontDescription key="fontDescription" name="Chalkboard SE" family="Bradley Hand" pointSize="14"/>
                                         <state key="normal" title="R"/>
                                         <connections>
                                             <action selector="touchUpInside:" destination="Vzy-XB-8iC" eventType="touchUpInside" id="GoT-V9-Bb6"/>
@@ -495,7 +506,7 @@
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="q3L-Jl-cRS">
                                         <rect key="frame" x="0.0" y="288" width="30" height="25"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                        <fontDescription key="fontDescription" name="Chalkboard SE" family="Bradley Hand" pointSize="14"/>
                                         <state key="normal" title="Q"/>
                                         <connections>
                                             <action selector="touchUpInside:" destination="Vzy-XB-8iC" eventType="touchUpInside" id="hb5-ow-vpB"/>
@@ -503,7 +514,7 @@
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lNt-wZ-vK3">
                                         <rect key="frame" x="0.0" y="270" width="30" height="25"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                        <fontDescription key="fontDescription" name="Chalkboard SE" family="Bradley Hand" pointSize="14"/>
                                         <state key="normal" title="P"/>
                                         <connections>
                                             <action selector="touchUpInside:" destination="Vzy-XB-8iC" eventType="touchUpInside" id="bSd-bB-ZMN"/>
@@ -511,7 +522,7 @@
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bKJ-mm-eCL">
                                         <rect key="frame" x="0.0" y="360" width="30" height="25"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                        <fontDescription key="fontDescription" name="Chalkboard SE" family="Bradley Hand" pointSize="14"/>
                                         <state key="normal" title="U"/>
                                         <connections>
                                             <action selector="touchUpInside:" destination="Vzy-XB-8iC" eventType="touchUpInside" id="AOv-BB-h05"/>
@@ -519,7 +530,7 @@
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="W6H-1p-QEY">
                                         <rect key="frame" x="0.0" y="342" width="30" height="25"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                        <fontDescription key="fontDescription" name="Chalkboard SE" family="Bradley Hand" pointSize="14"/>
                                         <state key="normal" title="T"/>
                                         <connections>
                                             <action selector="touchUpInside:" destination="Vzy-XB-8iC" eventType="touchUpInside" id="786-Dl-8wW"/>
@@ -527,7 +538,7 @@
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pE3-GU-aOJ">
                                         <rect key="frame" x="0.0" y="324" width="30" height="25"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                        <fontDescription key="fontDescription" name="Chalkboard SE" family="Bradley Hand" pointSize="14"/>
                                         <state key="normal" title="S"/>
                                         <connections>
                                             <action selector="touchUpInside:" destination="Vzy-XB-8iC" eventType="touchUpInside" id="834-CF-dMO"/>
@@ -535,7 +546,7 @@
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AUU-kK-LTo">
                                         <rect key="frame" x="0.0" y="396" width="30" height="25"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                        <fontDescription key="fontDescription" name="Chalkboard SE" family="Bradley Hand" pointSize="14"/>
                                         <state key="normal" title="W"/>
                                         <connections>
                                             <action selector="touchUpInside:" destination="Vzy-XB-8iC" eventType="touchUpInside" id="VaG-cR-hfs"/>
@@ -543,7 +554,7 @@
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZXw-ar-cVf">
                                         <rect key="frame" x="0.0" y="378" width="30" height="25"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                        <fontDescription key="fontDescription" name="Chalkboard SE" family="Bradley Hand" pointSize="14"/>
                                         <state key="normal" title="V"/>
                                         <connections>
                                             <action selector="touchUpInside:" destination="Vzy-XB-8iC" eventType="touchUpInside" id="lPb-bZ-mUT"/>
@@ -551,7 +562,7 @@
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dVQ-oF-KD0">
                                         <rect key="frame" x="0.0" y="432" width="30" height="25"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                        <fontDescription key="fontDescription" name="Chalkboard SE" family="Bradley Hand" pointSize="14"/>
                                         <state key="normal" title="Y"/>
                                         <connections>
                                             <action selector="touchUpInside:" destination="Vzy-XB-8iC" eventType="touchUpInside" id="mka-jC-Y9c"/>
@@ -559,7 +570,7 @@
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gC5-Jd-osY">
                                         <rect key="frame" x="0.0" y="414" width="30" height="25"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                        <fontDescription key="fontDescription" name="Chalkboard SE" family="Bradley Hand" pointSize="14"/>
                                         <state key="normal" title="X"/>
                                         <connections>
                                             <action selector="touchUpInside:" destination="Vzy-XB-8iC" eventType="touchUpInside" id="E2b-Bp-RMZ"/>
@@ -567,7 +578,7 @@
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FXj-XI-HEM">
                                         <rect key="frame" x="0.0" y="180" width="30" height="25"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                        <fontDescription key="fontDescription" name="Chalkboard SE" family="Bradley Hand" pointSize="14"/>
                                         <state key="normal" title="K"/>
                                         <connections>
                                             <action selector="touchUpInside:" destination="Vzy-XB-8iC" eventType="touchUpInside" id="Fwn-m5-cKf"/>
@@ -575,7 +586,7 @@
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uT8-QA-WcC">
                                         <rect key="frame" x="0.0" y="450" width="30" height="25"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                        <fontDescription key="fontDescription" name="Chalkboard SE" family="Bradley Hand" pointSize="14"/>
                                         <state key="normal" title="Z"/>
                                         <connections>
                                             <action selector="touchUpInside:" destination="Vzy-XB-8iC" eventType="touchUpInside" id="ucp-pv-mxZ"/>
@@ -583,7 +594,7 @@
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IaD-l5-qf8">
                                         <rect key="frame" x="0.0" y="468" width="30" height="25"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                        <fontDescription key="fontDescription" name="Chalkboard SE" family="Bradley Hand" pointSize="14"/>
                                         <state key="normal" title="+"/>
                                         <connections>
                                             <action selector="touchUpInside:" destination="Vzy-XB-8iC" eventType="touchUpInside" id="Xuh-0A-vi9"/>
@@ -591,7 +602,7 @@
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5Y7-M2-IcN">
                                         <rect key="frame" x="0.0" y="72" width="30" height="25"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                        <fontDescription key="fontDescription" name="Chalkboard SE" family="Bradley Hand" pointSize="14"/>
                                         <state key="normal" title="E"/>
                                         <connections>
                                             <action selector="touchUpInside:" destination="Vzy-XB-8iC" eventType="touchUpInside" id="ois-zL-6Lj"/>
@@ -604,10 +615,9 @@
                                 </constraints>
                             </view>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="cNf-j8-fbg" firstAttribute="centerY" secondItem="7bZ-Bj-n9q" secondAttribute="centerY" id="26P-08-TC8"/>
-                            <constraint firstItem="cNf-j8-fbg" firstAttribute="centerX" secondItem="7bZ-Bj-n9q" secondAttribute="centerX" id="hL0-sW-z9h"/>
+                            <constraint firstItem="cNf-j8-fbg" firstAttribute="centerX" secondItem="7bZ-Bj-n9q" secondAttribute="centerX" constant="-2" id="hL0-sW-z9h"/>
                         </constraints>
                     </view>
                     <toolbarItems/>
