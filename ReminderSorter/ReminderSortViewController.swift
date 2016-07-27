@@ -32,6 +32,9 @@ class ReminderSortViewController: UITableViewController {
     var clearShopingCartOnOpenObserver : NSObjectProtocol?
     var setClearShoppingCartObserver : NSObjectProtocol?
     var clearShoppingListOnOpenObserver : NSObjectProtocol?
+    var searchBarTextDidChangeObserver : NSObjectProtocol?
+    var searchBarCancelObserver : NSObjectProtocol?
+    var setRefreshLock : NSObjectProtocol?
     
     var defaults : NSUserDefaults {
         
@@ -109,6 +112,46 @@ class ReminderSortViewController: UITableViewController {
             
             self.CearShoppingCartOnOpen()
         }
+        
+        searchBarTextDidChangeObserver = NSNotificationCenter.defaultCenter().addObserverForName(Constants.SearchBarTextDidChange, object: nil, queue: nil){
+            (notification) -> Void in
+            
+            if let searchText = notification.object as? String {
+                
+                self.getSearchShoppingList(searchText)
+            }
+            
+            //TODO: Hide all but the history table
+            //TODO: Filter the history based on the searchbar text
+            //TODO: Use the lock so that we don't refresh while we are in search mode
+        }
+        
+        searchBarCancelObserver = NSNotificationCenter.defaultCenter().addObserverForName(Constants.SearchBarCancel, object: nil, queue: nil){
+            (notification) -> Void in
+            
+            //TODO: Check about threading - if we need to dispatch to main
+            
+            self.startRefreshControl()
+            self.reminderManager.getReminders(self.conditionalLoadShoppingList)
+            self.endRefreshControl()
+        }
+        
+        setRefreshLock = NSNotificationCenter.defaultCenter().addObserverForName(Constants.SetRefreshLock, object: nil, queue: nil){
+            (notification) -> Void in
+            
+            if let lock = notification.object as? Bool {
+                
+                if lock {
+                    
+                    self.refreshLock.lock()
+                }
+                else {
+                
+                    self.refreshLock.unlock()
+                }
+            }
+        }
+
     }
     
     deinit{
@@ -148,6 +191,16 @@ class ReminderSortViewController: UITableViewController {
         if let observer = clearShoppingListOnOpenObserver{
             
             NSNotificationCenter.defaultCenter().removeObserver(observer, name: Constants.ClearShoppingList, object: nil)
+        }
+        
+        if let observer = searchBarTextDidChangeObserver{
+            
+            NSNotificationCenter.defaultCenter().removeObserver(observer, name: Constants.SearchBarTextDidChange, object: nil)
+        }
+        
+        if let observer = searchBarCancelObserver{
+            
+            NSNotificationCenter.defaultCenter().removeObserver(observer, name: Constants.SearchBarCancel, object: nil)
         }
     }
     
@@ -495,6 +548,39 @@ class ReminderSortViewController: UITableViewController {
         }
     }
 
+    func getSearchShoppingList(searchText : String){
+        
+   
+//        var shoppingList = [EKReminder]() // All reminders from the store
+//        
+//        var storedShoppingList = [ShoppingListItem]() // BACKUP
+//        
+//        var groupedShoppingList = [[EKReminder]]() // Datasource
+   
+        
+        let completedItems : [EKReminder] = shoppingList.filter( {
+            (reminder : EKReminder) in
+            
+            return reminder.completed && !Utility.itemIsInShoppingCart(reminder)
+        })
+        
+        let filteredShoppingList : [EKReminder] = completedItems.filter({(reminder : EKReminder) in reminder.title.lowercaseString.containsString(searchText.lowercaseString)})
+        
+        groupedShoppingList[Constants.ShoppingListSection.List.rawValue] = [EKReminder]()
+        groupedShoppingList[Constants.ShoppingListSection.Cart.rawValue] = [EKReminder]()
+        groupedShoppingList[Constants.ShoppingListSection.History.rawValue] = filteredShoppingList
+        
+        //As we a in another thread, post back to the main thread so we can update the UI
+        dispatch_async(dispatch_get_main_queue()) { () -> Void in
+            
+            if let shoppingListTable = self.tableView{
+                
+                //Request a reload of the Table
+                shoppingListTable.reloadData()
+            }
+        }
+    }
+    
     //Save a reminder to the users reminders list
     func saveReminder(reminder : EKReminder){
         

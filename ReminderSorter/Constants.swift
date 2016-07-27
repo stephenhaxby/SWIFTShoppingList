@@ -34,6 +34,12 @@ class Constants{
     
     static let ClearShoppingListOnOpen : String = "ClearShoppingListOnOpen"
     
+    static let SearchBarTextDidChange : String = "SearchBarTextDidChange"
+    
+    static let SearchBarCancel : String = "SearchBarCancel"
+    
+    static let SetRefreshLock : String = "SetRefreshLock"
+    
     static let ShoppingListSections = 3
     
     static let ShoppingListItemFont = UIFont(name: "American Typewriter", size: 21.0)!

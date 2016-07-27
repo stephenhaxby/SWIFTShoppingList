@@ -8,13 +8,15 @@
 
 import UIKit
 
-class ContainerViewController : UIViewController {
+class ContainerViewController : UIViewController, UISearchBarDelegate {
 
     @IBOutlet weak var settingsButton: UIButton!
     
     @IBOutlet weak var infoButton: UIButton!
     
     @IBOutlet weak var doneButton: UIButton!
+    
+    @IBOutlet weak var searchBar: UISearchBar!
     
     var saveReminderObserver : NSObjectProtocol?
     
@@ -63,6 +65,8 @@ class ContainerViewController : UIViewController {
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
+
+        searchBar.delegate = self
         
 //        let backgroundImage = UIImage(named: "old-white-background")
 //        self.view.backgroundColor = UIColor(patternImage: backgroundImage!)
@@ -101,5 +105,29 @@ class ContainerViewController : UIViewController {
         
         infoButton.hidden = editing
         doneButton.hidden = !editing
+    }
+    
+    //UISearchBar Delegate methods
+    func searchBarCancelButtonClicked(searchBar: UISearchBar) {
+        
+        NSNotificationCenter.defaultCenter().postNotificationName(Constants.SearchBarCancel, object: false)
+        
+        searchBar.resignFirstResponder()
+        searchBar.text = String()
+    }
+    
+    func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
+        
+        NSNotificationCenter.defaultCenter().postNotificationName(Constants.SearchBarTextDidChange, object: searchBar.text)
+    }
+    
+    func searchBarTextDidBeginEditing(searchBar: UISearchBar) {
+        
+        NSNotificationCenter.defaultCenter().postNotificationName(Constants.SetRefreshLock, object: true)
+    }
+    
+    func searchBarSearchButtonClicked(searchBar: UISearchBar) {
+        
+        searchBar.resignFirstResponder()
     }
 }
