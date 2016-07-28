@@ -132,7 +132,7 @@ class ReminderSortViewController: UITableViewController {
             //TODO: Check about threading - if we need to dispatch to main
             
             self.startRefreshControl()
-            self.reminderManager.getReminders(self.conditionalLoadShoppingList)
+            self.getSearchShoppingList(String())
             self.endRefreshControl()
         }
         
@@ -477,6 +477,38 @@ class ReminderSortViewController: UITableViewController {
     //Once the reminders have been loaded from iCloud
     func getShoppingList(iCloudShoppingList : [EKReminder]){
         
+        createGroupedShoppingList(iCloudShoppingList)
+        
+        //As we a in another thread, post back to the main thread so we can update the UI
+        dispatch_async(dispatch_get_main_queue()) { () -> Void in
+
+            if let shoppingListTable = self.tableView{
+                
+                for shoppingListItem in self.shoppingList {
+                    
+                    let storedShoppingListItem : ShoppingListItem = ShoppingListItem()
+                    storedShoppingListItem.calendarItemExternalIdentifier = shoppingListItem.calendarItemExternalIdentifier
+                    storedShoppingListItem.title = shoppingListItem.title
+                    storedShoppingListItem.completed = shoppingListItem.completed
+                    storedShoppingListItem.notes = shoppingListItem.notes
+                    
+                    self.storedShoppingList.append(storedShoppingListItem)
+                }
+                
+                //Request a reload of the Table
+                shoppingListTable.reloadData()
+            }
+        }
+    }
+
+    func createGroupedShoppingList(iCloudShoppingList : [EKReminder]) {
+        
+        //var shoppingList = [EKReminder]() // All reminders from the store
+        
+        //var storedShoppingList = [ShoppingListItem]() // BACKUP
+        
+        //var groupedShoppingList = [[EKReminder]]() // Datasource
+        
         //Small function for sorting reminders
         func reminderSort(reminder1: EKReminder, reminder2: EKReminder) -> Bool {
             
@@ -507,68 +539,46 @@ class ReminderSortViewController: UITableViewController {
         }
         
         if SettingsUserDefaults.alphabeticalSortIncomplete {
-
+            
             itemsGot = itemsGot.sort(reminderSort)
         }
         
         //If the settings specify alphabetical sorting of complete items
         if SettingsUserDefaults.alphabeticalSortComplete {
-
+            
             completedItems = completedItems.sort(reminderSort)
         }
-    
+        
         groupedShoppingList[Constants.ShoppingListSection.List.rawValue] = itemsToGet
         groupedShoppingList[Constants.ShoppingListSection.Cart.rawValue] = itemsGot
         groupedShoppingList[Constants.ShoppingListSection.History.rawValue] = completedItems
-
-        //As we a in another thread, post back to the main thread so we can update the UI
-        dispatch_async(dispatch_get_main_queue()) { () -> Void in
-
-            if let shoppingListTable = self.tableView{
-
-                //Join the two lists from above
-                self.shoppingList = itemsToGet + itemsGot + completedItems
-                
-                //NOTE: We need to do this as the bloody shoppingList get's updated in the background somehow...
-                //Each item must be held by ref, so when the cal updates in the background, shoppingList actually gets updated...???
-                for shoppingListItem in self.shoppingList {
-                    
-                    let storedShoppingListItem : ShoppingListItem = ShoppingListItem()
-                    storedShoppingListItem.calendarItemExternalIdentifier = shoppingListItem.calendarItemExternalIdentifier
-                    storedShoppingListItem.title = shoppingListItem.title
-                    storedShoppingListItem.completed = shoppingListItem.completed
-                    storedShoppingListItem.notes = shoppingListItem.notes
-                    
-                    self.storedShoppingList.append(storedShoppingListItem)
-                }
-                
-                //Request a reload of the Table
-                shoppingListTable.reloadData()
-            }
-        }
+        
+        //Join the two lists from above
+        shoppingList = itemsToGet + itemsGot + completedItems
     }
-
+    
     func getSearchShoppingList(searchText : String){
+
+        createGroupedShoppingList(shoppingList)
         
-   
-//        var shoppingList = [EKReminder]() // All reminders from the store
-//        
-//        var storedShoppingList = [ShoppingListItem]() // BACKUP
-//        
-//        var groupedShoppingList = [[EKReminder]]() // Datasource
-   
-        
-        let completedItems : [EKReminder] = shoppingList.filter( {
-            (reminder : EKReminder) in
+        if searchText != String() {
             
-            return reminder.completed && !Utility.itemIsInShoppingCart(reminder)
-        })
-        
-        let filteredShoppingList : [EKReminder] = completedItems.filter({(reminder : EKReminder) in reminder.title.lowercaseString.containsString(searchText.lowercaseString)})
-        
-        groupedShoppingList[Constants.ShoppingListSection.List.rawValue] = [EKReminder]()
-        groupedShoppingList[Constants.ShoppingListSection.Cart.rawValue] = [EKReminder]()
-        groupedShoppingList[Constants.ShoppingListSection.History.rawValue] = filteredShoppingList
+            func reminderTitleContains(reminder : EKReminder, searchText : String) -> Bool {
+                
+                return reminder.title.lowercaseString.containsString(searchText.lowercaseString)
+            }
+
+            let filteredShoppingList : [EKReminder] = groupedShoppingList[Constants.ShoppingListSection.List.rawValue].filter{reminder in reminderTitleContains(reminder, searchText : searchText)}
+            
+            let filteredShoppingCart : [EKReminder] = groupedShoppingList[Constants.ShoppingListSection.Cart.rawValue].filter{reminder in reminderTitleContains(reminder, searchText : searchText)}
+            
+            let filteredShoppingHistory : [EKReminder] = groupedShoppingList[Constants.ShoppingListSection.History.rawValue].filter{reminder in reminderTitleContains(reminder, searchText : searchText)}
+            
+            groupedShoppingList[Constants.ShoppingListSection.List.rawValue] = filteredShoppingList
+            groupedShoppingList[Constants.ShoppingListSection.Cart.rawValue] = filteredShoppingCart
+            groupedShoppingList[Constants.ShoppingListSection.History.rawValue] = filteredShoppingHistory
+            
+        }
         
         //As we a in another thread, post back to the main thread so we can update the UI
         dispatch_async(dispatch_get_main_queue()) { () -> Void in
