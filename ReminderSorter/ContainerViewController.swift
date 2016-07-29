@@ -110,6 +110,8 @@ class ContainerViewController : UIViewController, UISearchBarDelegate {
     //UISearchBar Delegate methods
     func searchBarCancelButtonClicked(searchBar: UISearchBar) {
         
+        NSNotificationCenter.defaultCenter().postNotificationName(Constants.SetRefreshLock, object: false)
+        
         NSNotificationCenter.defaultCenter().postNotificationName(Constants.SearchBarCancel, object: false)
         
         searchBar.resignFirstResponder()

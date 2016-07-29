@@ -14,7 +14,7 @@ class ReminderSortViewController: UITableViewController {
     //Outlet for the Table View so we can access it in code
     @IBOutlet var remindersTableView: UITableView!
     
-    var refreshLock : NSRecursiveLock = NSRecursiveLock()
+    var refreshLock : NSLock = NSLock()
     
     let reminderManager : iCloudReminderManager = iCloudReminderManager()
     
@@ -62,10 +62,15 @@ class ReminderSortViewController: UITableViewController {
         eventStoreObserver = NSNotificationCenter.defaultCenter().addObserverForName(EKEventStoreChangedNotification, object: nil, queue: nil){
             (notification) -> Void in
             
-            self.refreshLock.lock()
+            //<NSRecursiveLock: 0x79e264d0>{locked = YES, thread = 0x2dcf000, recursion count = 2, name = nil}
             
-            //Reload the grid only if there are new items from iCloud that we don't have
-            self.conditionalLoadShoppingList()
+            if self.refreshLock.tryLock() {
+            
+                //Reload the grid only if there are new items from iCloud that we don't have
+                self.conditionalLoadShoppingList()
+                
+                self.refreshLock.unlock()
+            }
         }
         
         //Observer for when our settings change
@@ -354,7 +359,6 @@ class ReminderSortViewController: UITableViewController {
     func conditionalLoadShoppingList() {
     
         reminderManager.getReminders(conditionalLoadShoppingList)
-        refreshLock.unlock()
         endRefreshControl()
     }
     
