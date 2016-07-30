@@ -112,7 +112,7 @@ class ContainerViewController : UIViewController, UISearchBarDelegate {
         
         NSNotificationCenter.defaultCenter().postNotificationName(Constants.SetRefreshLock, object: false)
         
-        NSNotificationCenter.defaultCenter().postNotificationName(Constants.SearchBarCancel, object: false)
+        NSNotificationCenter.defaultCenter().postNotificationName(Constants.SearchBarCancel, object: nil)
         
         searchBar.resignFirstResponder()
         searchBar.text = String()
@@ -126,6 +126,11 @@ class ContainerViewController : UIViewController, UISearchBarDelegate {
     func searchBarTextDidBeginEditing(searchBar: UISearchBar) {
         
         NSNotificationCenter.defaultCenter().postNotificationName(Constants.SetRefreshLock, object: true)
+    }
+    
+    func searchBarTextDidEndEditing(searchBar: UISearchBar) {
+        
+        NSNotificationCenter.defaultCenter().postNotificationName(Constants.SetRefreshLock, object: false)
     }
     
     func searchBarSearchButtonClicked(searchBar: UISearchBar) {
