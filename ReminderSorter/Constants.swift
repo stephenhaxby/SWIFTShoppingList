@@ -46,6 +46,16 @@ class Constants{
     
     static let QuickJumpListItemFont = UIFont(name: "American Typewriter", size: 14.0)!
     
+    static let SettingUserDefaultAlphabeticalSortIncomplete = "alphabeticalSortIncomplete"
+    
+    static let SettingUserDefaultAlphabeticalSortComplete = "alphabeticalSortComplete"
+    
+    static let SettingUserDefaultAutoCapitalisation = "autoCapitalisation"
+    
+    static let SettingUserDefaultDisableScreenLock = "disableScreenLock"
+    
+    static let SettingUserDefaultSearchBeginsWith = "searchBeginsWith"
+    
     enum ShoppingListSection : Int, CustomStringConvertible {
         case List
         case Cart

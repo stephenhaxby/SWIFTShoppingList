@@ -12,21 +12,41 @@ class SettingsUserDefaults{
     
     static var alphabeticalSortIncomplete: Bool {
         
-        return NSUserDefaults.standardUserDefaults().boolForKey("alphabeticalSortIncomplete")
+        return hasDefaultValue(Constants.SettingUserDefaultAlphabeticalSortIncomplete)
+            ? NSUserDefaults.standardUserDefaults().boolForKey(Constants.SettingUserDefaultAlphabeticalSortIncomplete)
+            : true
     }
     
     static var alphabeticalSortComplete: Bool {
         
-        return NSUserDefaults.standardUserDefaults().boolForKey("alphabeticalSortComplete")
+        return hasDefaultValue(Constants.SettingUserDefaultAlphabeticalSortComplete)
+            ? NSUserDefaults.standardUserDefaults().boolForKey(Constants.SettingUserDefaultAlphabeticalSortComplete)
+            : true
     }
     
     static var autoCapitalisation: Bool {
         
-        return NSUserDefaults.standardUserDefaults().boolForKey("autoCapitalisation")
+        return hasDefaultValue(Constants.SettingUserDefaultAutoCapitalisation)
+            ? NSUserDefaults.standardUserDefaults().boolForKey(Constants.SettingUserDefaultAutoCapitalisation)
+            : true
     }
     
     static var disableScreenLock: Bool {
         
-        return NSUserDefaults.standardUserDefaults().boolForKey("disableScreenLock")
+        return hasDefaultValue(Constants.SettingUserDefaultDisableScreenLock)
+            ? NSUserDefaults.standardUserDefaults().boolForKey(Constants.SettingUserDefaultDisableScreenLock)
+            : true
+    }
+    
+    static var searchBeginsWith: Bool {
+        
+        return hasDefaultValue(Constants.SettingUserDefaultSearchBeginsWith)
+            ? NSUserDefaults.standardUserDefaults().boolForKey(Constants.SettingUserDefaultSearchBeginsWith)
+            : true
+    }
+    
+    static func hasDefaultValue(key: String) -> Bool {
+        
+        return NSUserDefaults.standardUserDefaults().valueForKey(key) != nil
     }
 }

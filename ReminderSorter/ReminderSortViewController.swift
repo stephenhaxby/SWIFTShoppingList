@@ -569,7 +569,14 @@ class ReminderSortViewController: UITableViewController {
             
             func reminderTitleContains(reminder : EKReminder, searchText : String) -> Bool {
                 
-                return reminder.title.lowercaseString.containsString(searchText.lowercaseString)
+                if SettingsUserDefaults.searchBeginsWith {
+                
+                    return reminder.title.lowercaseString.hasPrefix(searchText.lowercaseString)
+                }
+                else {
+                    
+                    return reminder.title.lowercaseString.containsString(searchText.lowercaseString)
+                }
             }
 
             let filteredShoppingList : [EKReminder] = groupedShoppingList[Constants.ShoppingListSection.List.rawValue].filter{reminder in reminderTitleContains(reminder, searchText : searchText)}
