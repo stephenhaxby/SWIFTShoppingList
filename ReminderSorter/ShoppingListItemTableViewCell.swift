@@ -162,12 +162,10 @@ class ShoppingListItemTableViewCell: UITableViewCell, UITextViewDelegate
         
         if let tableView = reminderSortViewController.tableView {
             
-//            let currentOffset = tableView.contentOffset
             UIView.setAnimationsEnabled(false)
             tableView.beginUpdates()
             tableView.endUpdates()
             UIView.setAnimationsEnabled(true)
-//            tableView.setContentOffset(currentOffset, animated: false)
         }
     }
     

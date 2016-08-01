@@ -367,10 +367,10 @@
             </objects>
             <point key="canvasLocation" x="1843" y="904"/>
         </scene>
-        <!--Navigation Controller-->
+        <!--Navigation View Controller-->
         <scene sceneID="NbQ-wT-gTz">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="AbJ-wd-3qi" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="AbJ-wd-3qi" customClass="NavigationViewController" customModule="ReminderSorter" customModuleProvider="target" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="mbX-8l-jRY">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>

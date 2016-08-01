@@ -24,6 +24,8 @@ class ReminderSortViewController: UITableViewController {
     
     var groupedShoppingList = [[EKReminder]]()
     
+    var searchText : String = String()
+
     var eventStoreObserver : NSObjectProtocol?
     var settingsObserver : NSObjectProtocol?
     var quickScrollObserver : NSObjectProtocol?
@@ -123,21 +125,20 @@ class ReminderSortViewController: UITableViewController {
             
             if let searchText = notification.object as? String {
                 
-                self.getSearchShoppingList(searchText)
+                self.searchText = searchText
+
+                self.getShoppingList(self.shoppingList)
             }
-            
-            //TODO: Hide all but the history table
-            //TODO: Filter the history based on the searchbar text
-            //TODO: Use the lock so that we don't refresh while we are in search mode
         }
         
         searchBarCancelObserver = NSNotificationCenter.defaultCenter().addObserverForName(Constants.SearchBarCancel, object: nil, queue: nil){
             (notification) -> Void in
             
-            //TODO: Check about threading - if we need to dispatch to main
-            
             self.startRefreshControl()
-            self.getSearchShoppingList(String())
+            
+            self.searchText = String()
+            self.getShoppingList(self.shoppingList)
+            
             self.endRefreshControl()
         }
         
@@ -483,22 +484,27 @@ class ReminderSortViewController: UITableViewController {
         
         createGroupedShoppingList(iCloudShoppingList)
         
+        storedShoppingList = [ShoppingListItem]()
+        
+        //Create backup for conditional loading
+        for shoppingListItem in self.shoppingList {
+                    
+            let storedShoppingListItem : ShoppingListItem = ShoppingListItem()
+            storedShoppingListItem.calendarItemExternalIdentifier = shoppingListItem.calendarItemExternalIdentifier
+            storedShoppingListItem.title = shoppingListItem.title
+            storedShoppingListItem.completed = shoppingListItem.completed
+            storedShoppingListItem.notes = shoppingListItem.notes
+            
+            self.storedShoppingList.append(storedShoppingListItem)
+        }
+
+        filterGroupedShoppingList()
+
         //As we a in another thread, post back to the main thread so we can update the UI
         dispatch_async(dispatch_get_main_queue()) { () -> Void in
 
-            if let shoppingListTable = self.tableView{
-                
-                for shoppingListItem in self.shoppingList {
-                    
-                    let storedShoppingListItem : ShoppingListItem = ShoppingListItem()
-                    storedShoppingListItem.calendarItemExternalIdentifier = shoppingListItem.calendarItemExternalIdentifier
-                    storedShoppingListItem.title = shoppingListItem.title
-                    storedShoppingListItem.completed = shoppingListItem.completed
-                    storedShoppingListItem.notes = shoppingListItem.notes
-                    
-                    self.storedShoppingList.append(storedShoppingListItem)
-                }
-                
+            if let shoppingListTable = self.tableView {
+
                 //Request a reload of the Table
                 shoppingListTable.reloadData()
             }
@@ -561,24 +567,22 @@ class ReminderSortViewController: UITableViewController {
         shoppingList = itemsToGet + itemsGot + completedItems
     }
     
-    func getSearchShoppingList(searchText : String){
+    func filterGroupedShoppingList() {
 
-        createGroupedShoppingList(shoppingList)
-        
-        if searchText != String() {
+        func reminderTitleContains(reminder : EKReminder, searchText : String) -> Bool {
+   
+            if SettingsUserDefaults.searchBeginsWith {
             
-            func reminderTitleContains(reminder : EKReminder, searchText : String) -> Bool {
-                
-                if SettingsUserDefaults.searchBeginsWith {
-                
-                    return reminder.title.lowercaseString.hasPrefix(searchText.lowercaseString)
-                }
-                else {
-                    
-                    return reminder.title.lowercaseString.containsString(searchText.lowercaseString)
-                }
+                return reminder.title.lowercaseString.hasPrefix(searchText.lowercaseString)
             }
+            else {
+                
+                return reminder.title.lowercaseString.containsString(searchText.lowercaseString)
+            }
+        }
 
+        if searchText != String() {
+        
             let filteredShoppingList : [EKReminder] = groupedShoppingList[Constants.ShoppingListSection.List.rawValue].filter{reminder in reminderTitleContains(reminder, searchText : searchText)}
             
             let filteredShoppingCart : [EKReminder] = groupedShoppingList[Constants.ShoppingListSection.Cart.rawValue].filter{reminder in reminderTitleContains(reminder, searchText : searchText)}
@@ -588,17 +592,6 @@ class ReminderSortViewController: UITableViewController {
             groupedShoppingList[Constants.ShoppingListSection.List.rawValue] = filteredShoppingList
             groupedShoppingList[Constants.ShoppingListSection.Cart.rawValue] = filteredShoppingCart
             groupedShoppingList[Constants.ShoppingListSection.History.rawValue] = filteredShoppingHistory
-            
-        }
-        
-        //As we a in another thread, post back to the main thread so we can update the UI
-        dispatch_async(dispatch_get_main_queue()) { () -> Void in
-            
-            if let shoppingListTable = self.tableView{
-                
-                //Request a reload of the Table
-                shoppingListTable.reloadData()
-            }
         }
     }
     
@@ -708,7 +701,15 @@ class ReminderSortViewController: UITableViewController {
     //We increase it by two for the first blank row and the final "+" (add new item) row
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        return section == Constants.ShoppingListSection.History.rawValue ? groupedShoppingList[section].count+1 :  groupedShoppingList[section].count
+        var sectionCount = groupedShoppingList[section].count
+        
+        if section == Constants.ShoppingListSection.History.rawValue
+            && searchText == String() {
+            
+            sectionCount += 1
+        }
+        
+        return sectionCount
     }
     
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
