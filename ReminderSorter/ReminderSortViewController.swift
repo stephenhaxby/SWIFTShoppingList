@@ -631,9 +631,31 @@ class ReminderSortViewController: UITableViewController {
         self.presentViewController(errorAlert, animated: true, completion: nil)
     }
     
-    override func scrollViewDidScrollToTop(scrollView: UIScrollView) {
-    
-        //TODO: When hit sthe status bar...
+    override func scrollViewShouldScrollToTop(scrollView: UIScrollView) -> Bool {
+        
+        if shoppingList.count > 0 {
+            
+            var shoppingListSection : Int = Constants.ShoppingListSection.History.rawValue
+            
+            let firstItemShoppingListItem : EKReminder = shoppingList[0]
+            
+            if !firstItemShoppingListItem.completed {
+                
+                shoppingListSection = Constants.ShoppingListSection.List.rawValue
+            }
+            else if Utility.itemIsInShoppingCart(firstItemShoppingListItem) {
+                
+                shoppingListSection = Constants.ShoppingListSection.Cart.rawValue
+            }
+            
+            let indexPath = NSIndexPath(forRow: 0, inSection: shoppingListSection)
+            
+            remindersTableView.scrollToRowAtIndexPath(indexPath, atScrollPosition: UITableViewScrollPosition.Top, animated: true)
+            
+            return false
+        }
+        
+        return true
     }
     
     //Called when we receive the notification from the buttons on the quick sort view
