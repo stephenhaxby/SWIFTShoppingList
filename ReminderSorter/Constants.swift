@@ -24,7 +24,7 @@ class Constants{
     
     static let alphabet = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"]
     
-    static let SaveReminder:String = "SaveReminder"
+    static let SaveReminder : String = "SaveReminder"
     
     static let ClearShoppingList : String = "ClearShoppingList"
     
@@ -39,6 +39,10 @@ class Constants{
     static let SearchBarCancel : String = "SearchBarCancel"
     
     static let SetRefreshLock : String = "SetRefreshLock"
+    
+    static let InactiveLock : String = "InactiveLock"
+    
+    static let ActionOnLocked : String = "ActionOnLocked"
     
     static let ShoppingListSections = 3
     

@@ -19,8 +19,30 @@ class ShoppingListItemTableViewCell: UITableViewCell, UITextViewDelegate
     
     weak var reminderSortViewController : ReminderSortViewController!
     
+    var inactiveLockObserver : NSObjectProtocol?
+    
     //Setter for the cells reminder
     var reminder: EKReminder?
+    
+    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+
+        initializeCell()
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        
+        initializeCell()
+    }
+
+    deinit{
+        
+        if let observer = inactiveLockObserver{
+            
+            NSNotificationCenter.defaultCenter().removeObserver(observer, name: Constants.InactiveLock, object: nil)
+        }
+    }
     
     override func layoutSubviews() {
         
@@ -32,19 +54,6 @@ class ShoppingListItemTableViewCell: UITableViewCell, UITextViewDelegate
                 ? UIColor(red:0.00, green:0.50196081400000003, blue:1, alpha:0.5).CGColor
                 : UIColor.clearColor().CGColor
         }
-    }
-    
-    func setShoppingListItem(reminder: EKReminder) {
-        
-        self.reminder = reminder
-        
-        let attributes = [ NSFontAttributeName: Constants.ShoppingListItemFont ]
-        shoppingListItemTextView.attributedText = NSMutableAttributedString(string: getAutoCapitalisationTitle(reminder.title), attributes: attributes)
-
-        //Extra section for completed items
-        setShoppingListItemCompletedText(reminder)
-        
-        shoppingListItemTextView.delegate = self
     }
     
     @IBAction func addNewTouchUpInside(sender: AnyObject) {
@@ -94,6 +103,39 @@ class ShoppingListItemTableViewCell: UITableViewCell, UITextViewDelegate
         }
     }
     
+    func initializeCell() {
+        
+        //Observer for when our settings change
+        inactiveLockObserver = NSNotificationCenter.defaultCenter().addObserverForName(Constants.InactiveLock, object: nil, queue: nil){
+            (notification) -> Void in
+            
+            if let lock = notification.object as? Bool {
+                
+                self.setInactiveLock(lock)
+            }
+        }
+    }
+    
+    func setInactiveLock(lock: Bool) {
+        
+        completedSwitch.enabled = !lock
+        shoppingListItemTextView.editable = !lock
+        shoppingListItemTextView.selectable = !lock
+    }
+    
+    func setShoppingListItem(reminder: EKReminder) {
+        
+        self.reminder = reminder
+        
+        let attributes = [ NSFontAttributeName: Constants.ShoppingListItemFont ]
+        shoppingListItemTextView.attributedText = NSMutableAttributedString(string: getAutoCapitalisationTitle(reminder.title), attributes: attributes)
+        
+        //Extra section for completed items
+        setShoppingListItemCompletedText(reminder)
+        
+        shoppingListItemTextView.delegate = self
+    }
+    
     //Return the title based on the auto-capitalisation settings
     func getAutoCapitalisationTitle(title : String) -> String {
         
@@ -123,9 +165,9 @@ class ShoppingListItemTableViewCell: UITableViewCell, UITextViewDelegate
     //Puts a strike through the text of completed items
     func setShoppingListItemCompletedText(shoppingListItemReminder : EKReminder) {
         
-        completedSwitch.on = !shoppingListItemReminder.completed
-        
         if let checkSwitch = completedSwitch {
+            
+            checkSwitch.on = !shoppingListItemReminder.completed
             
             switch shoppingListItemReminder.title{
                 

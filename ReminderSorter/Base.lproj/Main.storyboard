@@ -200,10 +200,23 @@
                                 </connections>
                             </button>
                         </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" style="done" id="gIf-nR-bgG">
+                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" hasAttributedTitle="YES" id="kmd-5C-nsS">
+                                <rect key="frame" x="550" y="7" width="30" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal">
+                                    <attributedString key="attributedTitle"/>
+                                </state>
+                                <connections>
+                                    <action selector="settingsButtonTouchUpInside:" destination="VI3-1w-ipy" eventType="touchUpInside" id="rwY-pC-7AE"/>
+                                </connections>
+                            </button>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="clearShoppingCartButton" destination="tKa-UI-f1d" id="9e4-q0-V1w"/>
                         <outlet property="closeButton" destination="HHw-QH-cb9" id="Sfz-jj-C5x"/>
+                        <outlet property="settingsButton" destination="kmd-5C-nsS" id="4N9-yM-Ec4"/>
                         <outlet property="shoppingCartExipryDatePicker" destination="98q-CM-t01" id="yjK-Yl-0Tb"/>
                     </connections>
                 </viewController>
@@ -316,15 +329,12 @@
                         </variation>
                     </view>
                     <navigationItem key="navigationItem" title="Shopping List" id="sah-Ac-zZQ">
-                        <barButtonItem key="leftBarButtonItem" style="done" id="gIf-nR-bgG">
-                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" hasAttributedTitle="YES" id="kmd-5C-nsS">
+                        <barButtonItem key="leftBarButtonItem" style="plain" id="ZMY-Pj-zQm">
+                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="9iF-8T-RuH">
                                 <rect key="frame" x="20" y="7" width="30" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal">
-                                    <attributedString key="attributedTitle"/>
-                                </state>
                                 <connections>
-                                    <action selector="settingsButtonTouchUpInside:" destination="wXl-h5-U25" eventType="touchUpInside" id="y9S-gk-f7X"/>
+                                    <action selector="lockButtonTouchUpInside:" destination="wXl-h5-U25" eventType="touchUpInside" id="Wbg-t1-zQC"/>
                                 </connections>
                             </button>
                         </barButtonItem>
@@ -359,8 +369,8 @@
                     <connections>
                         <outlet property="doneButton" destination="1PZ-bV-3gX" id="API-pn-pRp"/>
                         <outlet property="infoButton" destination="P2a-Vy-cd3" id="kDT-xv-nrh"/>
+                        <outlet property="lockButton" destination="9iF-8T-RuH" id="gt2-Zv-D9T"/>
                         <outlet property="searchBar" destination="QfV-Dt-qnq" id="02L-mX-o0V"/>
-                        <outlet property="settingsButton" destination="kmd-5C-nsS" id="Rds-Mq-peL"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ltc-n5-pWM" userLabel="First Responder" sceneMemberID="firstResponder"/>

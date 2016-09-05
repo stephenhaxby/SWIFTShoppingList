@@ -26,6 +26,8 @@ class ReminderSortViewController: UITableViewController {
     
     var searchText : String = String()
 
+    var inactiveLock : Bool = false
+    
     var eventStoreObserver : NSObjectProtocol?
     var settingsObserver : NSObjectProtocol?
     var quickScrollObserver : NSObjectProtocol?
@@ -37,6 +39,7 @@ class ReminderSortViewController: UITableViewController {
     var searchBarTextDidChangeObserver : NSObjectProtocol?
     var searchBarCancelObserver : NSObjectProtocol?
     var setRefreshLock : NSObjectProtocol?
+    var inactiveLockObserver : NSObjectProtocol?
     
     var defaults : NSUserDefaults {
         
@@ -158,6 +161,14 @@ class ReminderSortViewController: UITableViewController {
             }
         }
 
+        inactiveLockObserver = NSNotificationCenter.defaultCenter().addObserverForName(Constants.InactiveLock, object: nil, queue: nil){
+            (notification) -> Void in
+            
+            if let lock = notification.object as? Bool {
+                
+                self.inactiveLock = lock
+            }
+        }
     }
     
     deinit{
@@ -207,6 +218,11 @@ class ReminderSortViewController: UITableViewController {
         if let observer = searchBarCancelObserver{
             
             NSNotificationCenter.defaultCenter().removeObserver(observer, name: Constants.SearchBarCancel, object: nil)
+        }
+        
+        if let observer = searchBarCancelObserver{
+            
+            NSNotificationCenter.defaultCenter().removeObserver(observer, name: Constants.InactiveLock, object: nil)
         }
     }
     
@@ -829,7 +845,7 @@ class ReminderSortViewController: UITableViewController {
     //This method is for the swipe left to delete
     override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
         
-        if(indexPath.row < groupedShoppingList[indexPath.section].count){
+        if(!inactiveLock && indexPath.row < groupedShoppingList[indexPath.section].count){
             
             let shoppingListItem : EKReminder = groupedShoppingList[indexPath.section][indexPath.row]
             

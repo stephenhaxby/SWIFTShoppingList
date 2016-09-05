@@ -9,48 +9,22 @@
 import UIKit
 
 class ContainerViewController : UIViewController, UISearchBarDelegate {
-
-    @IBOutlet weak var settingsButton: UIButton!
+    
+    let lockTimer : NSTimer = NSTimer()
+    
+    var saveReminderObserver : NSObjectProtocol?
+    
+    var actionOnLockedObserver : NSObjectProtocol?
+    
+    var actionOnLockedCounter : Int = 0
+    
+    @IBOutlet weak var lockButton: UIButton!
     
     @IBOutlet weak var infoButton: UIButton!
     
     @IBOutlet weak var doneButton: UIButton!
     
     @IBOutlet weak var searchBar: UISearchBar!
-    
-    var saveReminderObserver : NSObjectProtocol?
-    
-    //When the settings butto is pressed, open the settings page at the settings for our app
-    @IBAction func settingsButtonTouchUpInside(sender: AnyObject) {
-        
-        if let appSettings = NSURL(string: UIApplicationOpenSettingsURLString){
-            
-            UIApplication.sharedApplication().openURL(appSettings)
-        }
-    }
-    
-    @IBAction func doneButtonTouchUpInside(sender: AnyObject) {
-        
-        //Find the active / editing Text View and set it to no longer editing
-        for controller in self.childViewControllers {
-            
-            if let reminderSortViewController = controller as? ReminderSortViewController {
-                
-                for cell in reminderSortViewController.tableView.visibleCells {
-                
-                    if let shoppingListItemCell = cell as? ShoppingListItemTableViewCell {
-                        
-                        if shoppingListItemCell.shoppingListItemTextView.isFirstResponder() {
-                        
-                            shoppingListItemCell.shoppingListItemTextView.resignFirstResponder()
-                        }
-                    }
-                }
-            }
-        }
-        
-        setupRightBarButtons(false)
-    }
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -60,6 +34,25 @@ class ContainerViewController : UIViewController, UISearchBarDelegate {
             (notification) -> Void in
             
             self.setupRightBarButtons(false)
+        }
+        
+        saveReminderObserver = NSNotificationCenter.defaultCenter().addObserverForName(Constants.ActionOnLocked, object: nil, queue: nil){
+            (notification) -> Void in
+            
+            self.actionOnLocked()
+        }
+    }
+    
+    deinit{
+        
+        if let observer = saveReminderObserver{
+            
+            NSNotificationCenter.defaultCenter().removeObserver(observer, name: Constants.SaveReminder, object: nil)
+        }
+        
+        if let observer = actionOnLockedObserver{
+            
+            NSNotificationCenter.defaultCenter().removeObserver(observer, name: Constants.ActionOnLocked, object: nil)
         }
     }
     
@@ -89,16 +82,82 @@ class ContainerViewController : UIViewController, UISearchBarDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-     
-        //Set the text and font of the Settings button (unicode)
-        settingsButton.setTitle("\u{2699}", forState: UIControlState.Normal)
-        settingsButton.titleLabel?.font = UIFont.boldSystemFontOfSize(26)
-
+        
+        lockButton.setTitle("\u{1F513}", forState: UIControlState.Normal)
+        lockButton.titleLabel?.font = UIFont.boldSystemFontOfSize(20)
+        
         //Set the text and font of the Info button (unicode)
         infoButton.setTitle("\u{24D8}", forState: UIControlState.Normal)
         infoButton.titleLabel?.font = UIFont.boldSystemFontOfSize(20)
         
         setupRightBarButtons(false)
+        
+        //lockTimer = NSTimer.scheduledTimerWithTimeInterval(<#T##ti: NSTimeInterval##NSTimeInterval#>, invocation: <#T##NSInvocation#>, repeats: <#T##Bool#>)
+    }
+    
+    @IBAction func lockButtonTouchUpInside(sender: AnyObject) {
+        
+        //lock = U+1F512
+        //unlock = U+1F513
+
+        if lockButton.currentTitle == "\u{1F513}" {
+        
+            lockButton.setTitle("\u{1F512}", forState: UIControlState.Normal)
+            
+            NSNotificationCenter.defaultCenter().postNotificationName(Constants.InactiveLock, object: true)
+        }
+        else {
+            
+            lockButton.setTitle("\u{1F513}", forState: UIControlState.Normal)
+            
+            NSNotificationCenter.defaultCenter().postNotificationName(Constants.InactiveLock, object: false)
+        }
+        
+        //lockTimer.invalidate()
+    }
+    
+    @IBAction func doneButtonTouchUpInside(sender: AnyObject) {
+        
+        //Find the active / editing Text View and set it to no longer editing
+        for controller in self.childViewControllers {
+            
+            if let reminderSortViewController = controller as? ReminderSortViewController {
+                
+                for cell in reminderSortViewController.tableView.visibleCells {
+                    
+                    if let shoppingListItemCell = cell as? ShoppingListItemTableViewCell {
+                        
+                        if shoppingListItemCell.shoppingListItemTextView.isFirstResponder() {
+                            
+                            shoppingListItemCell.shoppingListItemTextView.resignFirstResponder()
+                        }
+                    }
+                }
+            }
+        }
+        
+        setupRightBarButtons(false)
+    }
+    
+    func actionOnLocked() {
+        
+        actionOnLockedCounter += 1
+        
+        if (actionOnLockedCounter >= 3) {
+            
+            //Display an alert to specify that we couldn't get access
+            let errorAlert = UIAlertController(title: "Locked", message: "Unlock your list to complete this action", preferredStyle: UIAlertControllerStyle.Alert)
+            
+            //Add an Ok button to the alert
+            errorAlert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler:
+                { (action: UIAlertAction!) in
+                    
+                    self.actionOnLockedCounter = 0
+            }))
+            
+            //Present the alert
+            self.presentViewController(errorAlert, animated: true, completion: nil)
+        }
     }
     
     func setupRightBarButtons(editing : Bool) {
