@@ -17,6 +17,8 @@ class ShoppingListItemTableViewCell: UITableViewCell, UITextViewDelegate
     
     @IBOutlet weak var addNewButton: UIButton!
     
+    @IBOutlet weak var completedSwitchView: UIView!
+    
     weak var reminderSortViewController : ReminderSortViewController!
     
     var inactiveLockObserver : NSObjectProtocol?
@@ -53,6 +55,20 @@ class ShoppingListItemTableViewCell: UITableViewCell, UITextViewDelegate
             self.layer.backgroundColor = Utility.itemIsInShoppingCart(shoppingListItemReminder)
                 ? UIColor(red:0.00, green:0.50196081400000003, blue:1, alpha:0.5).CGColor
                 : UIColor.clearColor().CGColor
+        }
+        
+        let pressGesture : UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(self.viewPressed(_:)))
+        pressGesture.delegate = self
+        pressGesture.numberOfTapsRequired = 1
+        
+        completedSwitchView.addGestureRecognizer(pressGesture)
+    }
+    
+    func viewPressed(gestureRecognizer:UIGestureRecognizer) {
+        
+        // If it's the begining of the gesture, set the table to editing mode
+        if (gestureRecognizer.state == UIGestureRecognizerState.Began){
+            
         }
     }
     
@@ -114,6 +130,17 @@ class ShoppingListItemTableViewCell: UITableViewCell, UITextViewDelegate
                 self.setInactiveLock(lock)
             }
         }
+        
+//        // Get the table cell
+//        let cell : RemindMeTableViewCell = tableView.dequeueReusableCellWithIdentifier("ReminderCell")! as! RemindMeTableViewCell
+//        
+//        // Setup a Long Press Gesture for each cell, calling the cellLongPressed method
+//        let longPress: UILongPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(RemindMeViewController.cellLongPressed(_:)))
+//        longPress.delegate = self
+//        longPress.minimumPressDuration = 1
+//        longPress.numberOfTouchesRequired = 1
+//        
+//        cell.addGestureRecognizer(longPress)
     }
     
     func setInactiveLock(lock: Bool) {

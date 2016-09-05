@@ -70,6 +70,10 @@
                                                 <action selector="completedSwitchValueChanged:" destination="9Z4-o8-zaC" eventType="valueChanged" id="T3g-xp-Yw4"/>
                                             </connections>
                                         </switch>
+                                        <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hvG-UR-9oi">
+                                            <rect key="frame" x="8" y="3" width="54" height="35"/>
+                                            <gestureRecognizers/>
+                                        </view>
                                     </subviews>
                                     <constraints>
                                         <constraint firstItem="ReJ-9B-XiB" firstAttribute="leading" secondItem="7r9-Qh-qDR" secondAttribute="leadingMargin" id="3aO-FO-Bl5"/>
@@ -96,6 +100,7 @@
                                 <connections>
                                     <outlet property="addNewButton" destination="uyh-4K-TeC" id="Y3h-AD-kMR"/>
                                     <outlet property="completedSwitch" destination="ReJ-9B-XiB" id="JS0-Dj-ab2"/>
+                                    <outlet property="completedSwitchView" destination="hvG-UR-9oi" id="9Sm-YX-1mv"/>
                                     <outlet property="shoppingListItemTextView" destination="Jdo-wX-8WJ" id="CGU-r8-S50"/>
                                 </connections>
                             </tableViewCell>
@@ -118,7 +123,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="WHI-qa-sdU" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1067.5" y="1582"/>
+            <point key="canvasLocation" x="1067" y="1582"/>
         </scene>
         <!--Information-->
         <scene sceneID="RxP-ya-XXD">
