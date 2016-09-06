@@ -10,7 +10,7 @@ import UIKit
 
 class ContainerViewController : UIViewController, UISearchBarDelegate {
     
-    let lockTimer : NSTimer = NSTimer()
+    var lockTimer : NSTimer = NSTimer()
     
     var saveReminderObserver : NSObjectProtocol?
     
@@ -89,24 +89,7 @@ class ContainerViewController : UIViewController, UISearchBarDelegate {
         
         setupRightBarButtons(false)
         
-        //lockTimer = NSTimer.scheduledTimerWithTimeInterval(<#T##ti: NSTimeInterval##NSTimeInterval#>, invocation: <#T##NSInvocation#>, repeats: <#T##Bool#>)
-    }
-    
-    func setInfoButtonVisible() {
-        
-        infoButton = UIBarButtonItem(title: "\u{24D8}", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(infoButtonTouchUpInside))
-        infoButton.setTitleTextAttributes([NSFontAttributeName: UIFont.boldSystemFontOfSize(20)], forState: UIControlState.Normal)
-        
-        self.navigationItem.setRightBarButtonItems([infoButton], animated: true)
-    }
-    
-    func setDoneButtonVisible() {
-        
-        //UIBarButtonSystemItem.
-        doneButton = UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(doneButtonTouchUpInside))
-        doneButton.setTitleTextAttributes([NSFontAttributeName: UIFont.boldSystemFontOfSize(15)], forState: UIControlState.Normal)
-        
-        self.navigationItem.setRightBarButtonItems([doneButton], animated: true)
+        setLockTimer()
     }
     
     @IBAction func infoButtonTouchUpInside(sender: AnyObject) {
@@ -116,23 +99,7 @@ class ContainerViewController : UIViewController, UISearchBarDelegate {
     
     @IBAction func lockButtonTouchUpInside(sender: AnyObject) {
         
-        //lock = U+1F512
-        //unlock = U+1F513
-
-        if lockButton.currentTitle == "\u{1F513}" {
-        
-            lockButton.setTitle("\u{1F512}", forState: UIControlState.Normal)
-            
-            NSNotificationCenter.defaultCenter().postNotificationName(Constants.InactiveLock, object: true)
-        }
-        else {
-            
-            lockButton.setTitle("\u{1F513}", forState: UIControlState.Normal)
-            
-            NSNotificationCenter.defaultCenter().postNotificationName(Constants.InactiveLock, object: false)
-        }
-        
-        //lockTimer.invalidate()
+        lockUnlock()
     }
     
     @IBAction func doneButtonTouchUpInside(sender: AnyObject) {
@@ -156,6 +123,51 @@ class ContainerViewController : UIViewController, UISearchBarDelegate {
         }
         
         setupRightBarButtons(false)
+    }
+    
+    func setLockTimer() {
+        
+        //TODO:
+        //lockTimer = NSTimer.scheduledTimerWithTimeInterval(5.0, target:self, selector: #selector(lockUnlock), userInfo: nil, repeats: false)
+    }
+    
+    func lockUnlock(){
+        
+        //lock = U+1F512
+        //unlock = U+1F513
+        
+        if lockButton.currentTitle == "\u{1F513}" {
+            
+            lockButton.setTitle("\u{1F512}", forState: UIControlState.Normal)
+            
+            NSNotificationCenter.defaultCenter().postNotificationName(Constants.InactiveLock, object: true)
+            
+            lockTimer.invalidate()
+        }
+        else {
+            
+            lockButton.setTitle("\u{1F513}", forState: UIControlState.Normal)
+            
+            NSNotificationCenter.defaultCenter().postNotificationName(Constants.InactiveLock, object: false)
+            
+            setLockTimer()
+        }
+    }
+    
+    func setInfoButtonVisible() {
+        
+        infoButton = UIBarButtonItem(title: "\u{24D8}", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(infoButtonTouchUpInside))
+        infoButton.setTitleTextAttributes([NSFontAttributeName: UIFont.boldSystemFontOfSize(20)], forState: UIControlState.Normal)
+        
+        self.navigationItem.setRightBarButtonItems([infoButton], animated: true)
+    }
+    
+    func setDoneButtonVisible() {
+        
+        doneButton = UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(doneButtonTouchUpInside))
+        doneButton.setTitleTextAttributes([NSFontAttributeName: UIFont.boldSystemFontOfSize(15)], forState: UIControlState.Normal)
+        
+        self.navigationItem.setRightBarButtonItems([doneButton], animated: true)
     }
     
     func actionOnLocked() {

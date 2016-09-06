@@ -114,7 +114,7 @@ class ShoppingListItemTableViewCell: UITableViewCell, UITextViewDelegate
             NSNotificationCenter.defaultCenter().postNotificationName(Constants.ActionOnLocked, object: nil)
         }
         else {
-        
+            
             reminderSortViewController.refreshLock.lock()
         }
         

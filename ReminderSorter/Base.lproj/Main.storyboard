@@ -30,16 +30,6 @@
                                     <rect key="frame" x="0.0" y="0.0" width="570" height="43"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uyh-4K-TeC">
-                                            <rect key="frame" x="8" y="-2" width="30" height="37"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="48"/>
-                                            <state key="normal" title="+">
-                                                <color key="titleColor" red="0.40000000596046448" green="0.40000000596046448" blue="0.40000000596046448" alpha="1" colorSpace="calibratedRGB"/>
-                                            </state>
-                                            <connections>
-                                                <action selector="addNewTouchUpInside:" destination="9Z4-o8-zaC" eventType="touchUpInside" id="Y9a-sg-SR2"/>
-                                            </connections>
-                                        </button>
                                         <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" verticalCompressionResistancePriority="1000" directionalLockEnabled="YES" scrollEnabled="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="Jdo-wX-8WJ">
                                             <rect key="frame" x="65" y="3" width="497" height="40"/>
                                             <constraints>
@@ -71,6 +61,16 @@
                                             <rect key="frame" x="8" y="3" width="54" height="35"/>
                                             <gestureRecognizers/>
                                         </view>
+                                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uyh-4K-TeC">
+                                            <rect key="frame" x="8" y="-2" width="30" height="37"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="48"/>
+                                            <state key="normal" title="+">
+                                                <color key="titleColor" red="0.40000000596046448" green="0.40000000596046448" blue="0.40000000596046448" alpha="1" colorSpace="calibratedRGB"/>
+                                            </state>
+                                            <connections>
+                                                <action selector="addNewTouchUpInside:" destination="9Z4-o8-zaC" eventType="touchUpInside" id="Y9a-sg-SR2"/>
+                                            </connections>
+                                        </button>
                                     </subviews>
                                     <constraints>
                                         <constraint firstItem="ReJ-9B-XiB" firstAttribute="leading" secondItem="7r9-Qh-qDR" secondAttribute="leadingMargin" id="3aO-FO-Bl5"/>
