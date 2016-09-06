@@ -20,9 +20,9 @@ class ContainerViewController : UIViewController, UISearchBarDelegate {
     
     @IBOutlet weak var lockButton: UIButton!
     
-    @IBOutlet weak var infoButton: UIButton!
+    var infoButton: UIBarButtonItem!
     
-    @IBOutlet weak var doneButton: UIButton!
+    var doneButton: UIBarButtonItem!
     
     @IBOutlet weak var searchBar: UISearchBar!
     
@@ -83,16 +83,35 @@ class ContainerViewController : UIViewController, UISearchBarDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        //Unlock button
         lockButton.setTitle("\u{1F513}", forState: UIControlState.Normal)
         lockButton.titleLabel?.font = UIFont.boldSystemFontOfSize(20)
-        
-        //Set the text and font of the Info button (unicode)
-        infoButton.setTitle("\u{24D8}", forState: UIControlState.Normal)
-        infoButton.titleLabel?.font = UIFont.boldSystemFontOfSize(20)
         
         setupRightBarButtons(false)
         
         //lockTimer = NSTimer.scheduledTimerWithTimeInterval(<#T##ti: NSTimeInterval##NSTimeInterval#>, invocation: <#T##NSInvocation#>, repeats: <#T##Bool#>)
+    }
+    
+    func setInfoButtonVisible() {
+        
+        infoButton = UIBarButtonItem(title: "\u{24D8}", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(infoButtonTouchUpInside))
+        infoButton.setTitleTextAttributes([NSFontAttributeName: UIFont.boldSystemFontOfSize(20)], forState: UIControlState.Normal)
+        
+        self.navigationItem.setRightBarButtonItems([infoButton], animated: true)
+    }
+    
+    func setDoneButtonVisible() {
+        
+        //UIBarButtonSystemItem.
+        doneButton = UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(doneButtonTouchUpInside))
+        doneButton.setTitleTextAttributes([NSFontAttributeName: UIFont.boldSystemFontOfSize(15)], forState: UIControlState.Normal)
+        
+        self.navigationItem.setRightBarButtonItems([doneButton], animated: true)
+    }
+    
+    @IBAction func infoButtonTouchUpInside(sender: AnyObject) {
+     
+        performSegueWithIdentifier("InfoSegue", sender: sender)
     }
     
     @IBAction func lockButtonTouchUpInside(sender: AnyObject) {
@@ -162,8 +181,12 @@ class ContainerViewController : UIViewController, UISearchBarDelegate {
     
     func setupRightBarButtons(editing : Bool) {
         
-        infoButton.hidden = editing
-        doneButton.hidden = !editing
+        if editing {
+            setDoneButtonVisible()
+        }
+        else {
+            setInfoButtonVisible()
+        }
     }
     
     //UISearchBar Delegate methods
