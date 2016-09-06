@@ -27,7 +27,7 @@ class ReminderSortViewController: UITableViewController {
     var searchText : String = String()
 
     var inactiveLock : Bool = false
-    
+
     var eventStoreObserver : NSObjectProtocol?
     var settingsObserver : NSObjectProtocol?
     var quickScrollObserver : NSObjectProtocol?

@@ -38,7 +38,7 @@ class ShoppingListItemTableViewCell: UITableViewCell, UITextViewDelegate
         initializeCell()
     }
 
-    deinit{
+    deinit {
         
         if let observer = inactiveLockObserver{
             
@@ -47,10 +47,9 @@ class ShoppingListItemTableViewCell: UITableViewCell, UITextViewDelegate
     }
     
     override func layoutSubviews() {
-        
         super.layoutSubviews();
         
-        if let shoppingListItemReminder = reminder{
+        if let shoppingListItemReminder = reminder {
             
             self.layer.backgroundColor = Utility.itemIsInShoppingCart(shoppingListItemReminder)
                 ? UIColor(red:0.00, green:0.50196081400000003, blue:1, alpha:0.5).CGColor
@@ -64,30 +63,15 @@ class ShoppingListItemTableViewCell: UITableViewCell, UITextViewDelegate
         completedSwitchView.addGestureRecognizer(pressGesture)
     }
     
-    func viewPressed(gestureRecognizer:UIGestureRecognizer) {
+    func viewPressed(gestureRecognizer: UIGestureRecognizer) {
         
-        // If it's the begining of the gesture, set the table to editing mode
-        if (gestureRecognizer.state == UIGestureRecognizerState.Began){
-            
-        }
-    }
-    
-    @IBAction func addNewTouchUpInside(sender: AnyObject) {
-        
-        //When the '+' is clicked we bring up the keyboard for the text field
-        shoppingListItemTextView.becomeFirstResponder()
-    }
-    
-    //When an item is marked as complete or in-complete.
-    //Add a small delay for useability so the item doesn't go off the list straight away
-    @IBAction func completedSwitchValueChanged(sender: AnyObject) {
-        
-        if let checkSwitch = sender as? UISwitch{
-            
-            if let editedReminder = reminder{
+        if completedSwitch.enabled {
+
+            if let editedReminder = reminder {
                 
-                editedReminder.completed = !checkSwitch.on
-                
+                editedReminder.completed = completedSwitch.on
+                completedSwitch.setOn(!completedSwitch.on, animated: true)
+
                 if editedReminder.completed {
                     
                     //Add the datetime to the reminder as notes (Jan 27, 2010, 1:00 PM)
@@ -104,7 +88,7 @@ class ShoppingListItemTableViewCell: UITableViewCell, UITextViewDelegate
                     
                     editedReminder.notes = nil
                 }
-                
+
                 let delayInMilliSeconds = (editedReminder.completed) ? 500.0 : 200.00
                 
                 //The dalay is in nano seconds so we just convert it using the standard NSEC_PER_MSEC value
@@ -117,12 +101,36 @@ class ShoppingListItemTableViewCell: UITableViewCell, UITextViewDelegate
                 }
             }
         }
+        else {
+
+            NSNotificationCenter.defaultCenter().postNotificationName(Constants.ActionOnLocked, object: nil)
+        }
+    }
+
+    func textViewShouldBeginEditing(textView: UITextView) -> Bool {
+
+        if !shoppingListItemTextView.editable {
+            
+            NSNotificationCenter.defaultCenter().postNotificationName(Constants.ActionOnLocked, object: nil)
+        }
+        else {
+        
+            reminderSortViewController.refreshLock.lock()
+        }
+        
+        return shoppingListItemTextView.editable
+    }
+
+    @IBAction func addNewTouchUpInside(sender: AnyObject) {
+        
+        //When the '+' is clicked we bring up the keyboard for the text field
+        shoppingListItemTextView.becomeFirstResponder()
     }
     
     func initializeCell() {
         
         //Observer for when our settings change
-        inactiveLockObserver = NSNotificationCenter.defaultCenter().addObserverForName(Constants.InactiveLock, object: nil, queue: nil){
+        inactiveLockObserver = NSNotificationCenter.defaultCenter().addObserverForName(Constants.InactiveLock, object: nil, queue: nil) {
             (notification) -> Void in
             
             if let lock = notification.object as? Bool {
@@ -130,17 +138,6 @@ class ShoppingListItemTableViewCell: UITableViewCell, UITextViewDelegate
                 self.setInactiveLock(lock)
             }
         }
-        
-//        // Get the table cell
-//        let cell : RemindMeTableViewCell = tableView.dequeueReusableCellWithIdentifier("ReminderCell")! as! RemindMeTableViewCell
-//        
-//        // Setup a Long Press Gesture for each cell, calling the cellLongPressed method
-//        let longPress: UILongPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(RemindMeViewController.cellLongPressed(_:)))
-//        longPress.delegate = self
-//        longPress.minimumPressDuration = 1
-//        longPress.numberOfTouchesRequired = 1
-//        
-//        cell.addGestureRecognizer(longPress)
     }
     
     func setInactiveLock(lock: Bool) {
@@ -237,14 +234,7 @@ class ShoppingListItemTableViewCell: UITableViewCell, UITextViewDelegate
             UIView.setAnimationsEnabled(true)
         }
     }
-    
-    func textViewShouldBeginEditing(textView: UITextView) -> Bool {
         
-        reminderSortViewController.refreshLock.lock()
-        
-        return true
-    }
-    
     func textViewDidBeginEditing(textView: UITextView) {
         
         reminderSortViewController.setupRightBarButtons(true)

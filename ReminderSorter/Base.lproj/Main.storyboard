@@ -54,7 +54,7 @@
                                                 </mask>
                                             </variation>
                                         </textView>
-                                        <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ReJ-9B-XiB">
+                                        <switch opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ReJ-9B-XiB">
                                             <rect key="frame" x="8" y="7" width="51" height="31"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="31" id="6iy-6K-dv8"/>
@@ -66,9 +66,6 @@
                                                     <exclude reference="cBp-mH-vcg"/>
                                                 </mask>
                                             </variation>
-                                            <connections>
-                                                <action selector="completedSwitchValueChanged:" destination="9Z4-o8-zaC" eventType="valueChanged" id="T3g-xp-Yw4"/>
-                                            </connections>
                                         </switch>
                                         <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hvG-UR-9oi">
                                             <rect key="frame" x="8" y="3" width="54" height="35"/>
