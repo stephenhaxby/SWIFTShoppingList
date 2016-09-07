@@ -845,6 +845,10 @@ class ReminderSortViewController: UITableViewController {
     //This method is for the swipe left to delete
     override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
         
+        if(inactiveLock) {
+            NSNotificationCenter.defaultCenter().postNotificationName(Constants.ActionOnLocked, object: nil)
+        }
+
         if(!inactiveLock && indexPath.row < groupedShoppingList[indexPath.section].count){
             
             let shoppingListItem : EKReminder = groupedShoppingList[indexPath.section][indexPath.row]

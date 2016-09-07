@@ -109,11 +109,7 @@ class ShoppingListItemTableViewCell: UITableViewCell, UITextViewDelegate
 
     func textViewShouldBeginEditing(textView: UITextView) -> Bool {
 
-        if !shoppingListItemTextView.editable {
-            
-            NSNotificationCenter.defaultCenter().postNotificationName(Constants.ActionOnLocked, object: nil)
-        }
-        else {
+        if shoppingListItemTextView.editable {
             
             reminderSortViewController.refreshLock.lock()
         }
@@ -238,6 +234,7 @@ class ShoppingListItemTableViewCell: UITableViewCell, UITextViewDelegate
     func textViewDidBeginEditing(textView: UITextView) {
         
         reminderSortViewController.setupRightBarButtons(true)
+        NSNotificationCenter.defaultCenter().postNotificationName(Constants.ItemEditing, object: true)
     }
     
     func textViewDidEndEditing(textView: UITextView) {
@@ -253,5 +250,7 @@ class ShoppingListItemTableViewCell: UITableViewCell, UITextViewDelegate
         }
         
         reminderSortViewController.refreshLock.unlock()
+
+        NSNotificationCenter.defaultCenter().postNotificationName(Constants.ItemEditing, object: false)
     }
 }

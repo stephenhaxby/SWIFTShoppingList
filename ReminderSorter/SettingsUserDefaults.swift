@@ -45,6 +45,13 @@ class SettingsUserDefaults{
             : true
     }
     
+    static var autoLockList: Bool {
+        
+        return hasDefaultValue(Constants.SettingUserDefaultAutoLockList)
+            ? NSUserDefaults.standardUserDefaults().boolForKey(Constants.SettingUserDefaultAutoLockList)
+            : false
+    }
+    
     static func hasDefaultValue(key: String) -> Bool {
         
         return NSUserDefaults.standardUserDefaults().valueForKey(key) != nil

@@ -43,6 +43,8 @@ class Constants{
     static let InactiveLock : String = "InactiveLock"
     
     static let ActionOnLocked : String = "ActionOnLocked"
+
+    static let ItemEditing : String = "ItemEditing"   
     
     static let ShoppingListSections = 3
     
@@ -59,6 +61,8 @@ class Constants{
     static let SettingUserDefaultDisableScreenLock = "disableScreenLock"
     
     static let SettingUserDefaultSearchBeginsWith = "searchBeginsWith"
+    
+    static let SettingUserDefaultAutoLockList = "autoLockList"
     
     enum ShoppingListSection : Int, CustomStringConvertible {
         case List

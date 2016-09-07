@@ -12,9 +12,11 @@ class ContainerViewController : UIViewController, UISearchBarDelegate {
     
     var lockTimer : NSTimer = NSTimer()
     
-    var saveReminderObserver : NSObjectProtocol?
-    
+    var saveReminderObserver : NSObjectProtocol?    
     var actionOnLockedObserver : NSObjectProtocol?
+    var itemBeginEditingObserver : NSObjectProtocol?
+    var itemEndEditingObserver : NSObjectProtocol?
+    var settingsObserver : NSObjectProtocol?
     
     var actionOnLockedCounter : Int = 0
     
@@ -41,8 +43,24 @@ class ContainerViewController : UIViewController, UISearchBarDelegate {
             
             self.actionOnLocked()
         }
+
+
+        itemBeginEditingObserver = NSNotificationCenter.defaultCenter().addObserverForName(Constants.ItemEditing, object: nil, queue: nil){
+            (notification) -> Void in
+            
+            if let isEditing = notification.object as? Bool {
+                self.startStopTimer(isEditing)
+            }
+        }
+        
+        //Observer for when our settings change
+        settingsObserver = NSNotificationCenter.defaultCenter().addObserverForName(NSUserDefaultsDidChangeNotification, object: nil, queue: nil){
+            (notification) -> Void in
+            
+            self.lockUnlock()
+        }
     }
-    
+
     deinit{
         
         if let observer = saveReminderObserver{
@@ -53,6 +71,16 @@ class ContainerViewController : UIViewController, UISearchBarDelegate {
         if let observer = actionOnLockedObserver{
             
             NSNotificationCenter.defaultCenter().removeObserver(observer, name: Constants.ActionOnLocked, object: nil)
+        }
+
+        if let observer = actionOnLockedObserver{
+            
+            NSNotificationCenter.defaultCenter().removeObserver(observer, name: Constants.ItemEditing, object: nil)
+        }
+        
+        if let observer = settingsObserver{
+            
+            NSNotificationCenter.defaultCenter().removeObserver(observer, name: NSUserDefaultsDidChangeNotification, object: nil)
         }
     }
     
@@ -125,10 +153,22 @@ class ContainerViewController : UIViewController, UISearchBarDelegate {
         setupRightBarButtons(false)
     }
     
+    func startStopTimer(stop: Bool) {
+        
+        if stop {
+            lockTimer.invalidate()
+        }
+        else {
+            setLockTimer()
+        }
+    }
+
     func setLockTimer() {
         
-        //TODO:
-        //lockTimer = NSTimer.scheduledTimerWithTimeInterval(5.0, target:self, selector: #selector(lockUnlock), userInfo: nil, repeats: false)
+        if SettingsUserDefaults.autoLockList {
+        
+            lockTimer = NSTimer.scheduledTimerWithTimeInterval(5.0, target:self, selector: #selector(lockUnlock), userInfo: nil, repeats: false)
+        }
     }
     
     func lockUnlock(){
