@@ -17,52 +17,61 @@ class ShoppingListItemTableViewCell: UITableViewCell, UITextViewDelegate
     
     @IBOutlet weak var addNewButton: UIButton!
     
+    @IBOutlet weak var completedSwitchView: UIView!
+    
     weak var reminderSortViewController : ReminderSortViewController!
+    
+    var inactiveLockObserver : NSObjectProtocol?
     
     //Setter for the cells reminder
     var reminder: EKReminder?
     
-    override func layoutSubviews() {
+    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+
+        initializeCell()
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
         
+        initializeCell()
+    }
+
+    deinit {
+        
+        if let observer = inactiveLockObserver{
+            
+            NSNotificationCenter.defaultCenter().removeObserver(observer, name: Constants.InactiveLock, object: nil)
+        }
+    }
+    
+    override func layoutSubviews() {
         super.layoutSubviews();
         
-        if let shoppingListItemReminder = reminder{
+        if let shoppingListItemReminder = reminder {
             
             self.layer.backgroundColor = Utility.itemIsInShoppingCart(shoppingListItemReminder)
                 ? UIColor(red:0.00, green:0.50196081400000003, blue:1, alpha:0.5).CGColor
                 : UIColor.clearColor().CGColor
         }
+        
+        let pressGesture : UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(self.viewPressed(_:)))
+        pressGesture.delegate = self
+        pressGesture.numberOfTapsRequired = 1
+        
+        completedSwitchView.addGestureRecognizer(pressGesture)
     }
     
-    func setShoppingListItem(reminder: EKReminder) {
+    func viewPressed(gestureRecognizer: UIGestureRecognizer) {
         
-        self.reminder = reminder
-        
-        let attributes = [ NSFontAttributeName: Constants.ShoppingListItemFont ]
-        shoppingListItemTextView.attributedText = NSMutableAttributedString(string: getAutoCapitalisationTitle(reminder.title), attributes: attributes)
+        if completedSwitch.enabled {
 
-        //Extra section for completed items
-        setShoppingListItemCompletedText(reminder)
-        
-        shoppingListItemTextView.delegate = self
-    }
-    
-    @IBAction func addNewTouchUpInside(sender: AnyObject) {
-        
-        //When the '+' is clicked we bring up the keyboard for the text field
-        shoppingListItemTextView.becomeFirstResponder()
-    }
-    
-    //When an item is marked as complete or in-complete.
-    //Add a small delay for useability so the item doesn't go off the list straight away
-    @IBAction func completedSwitchValueChanged(sender: AnyObject) {
-        
-        if let checkSwitch = sender as? UISwitch{
-            
-            if let editedReminder = reminder{
+            if let editedReminder = reminder {
                 
-                editedReminder.completed = !checkSwitch.on
-                
+                editedReminder.completed = completedSwitch.on
+                completedSwitch.setOn(!completedSwitch.on, animated: true)
+
                 if editedReminder.completed {
                     
                     //Add the datetime to the reminder as notes (Jan 27, 2010, 1:00 PM)
@@ -79,7 +88,7 @@ class ShoppingListItemTableViewCell: UITableViewCell, UITextViewDelegate
                     
                     editedReminder.notes = nil
                 }
-                
+
                 let delayInMilliSeconds = (editedReminder.completed) ? 500.0 : 200.00
                 
                 //The dalay is in nano seconds so we just convert it using the standard NSEC_PER_MSEC value
@@ -92,6 +101,59 @@ class ShoppingListItemTableViewCell: UITableViewCell, UITextViewDelegate
                 }
             }
         }
+        else {
+
+            NSNotificationCenter.defaultCenter().postNotificationName(Constants.ActionOnLocked, object: nil)
+        }
+    }
+
+    func textViewShouldBeginEditing(textView: UITextView) -> Bool {
+
+        if shoppingListItemTextView.editable {
+            
+            reminderSortViewController.refreshLock.lock()
+        }
+        
+        return shoppingListItemTextView.editable
+    }
+
+    @IBAction func addNewTouchUpInside(sender: AnyObject) {
+        
+        //When the '+' is clicked we bring up the keyboard for the text field
+        shoppingListItemTextView.becomeFirstResponder()
+    }
+    
+    func initializeCell() {
+        
+        //Observer for when our settings change
+        inactiveLockObserver = NSNotificationCenter.defaultCenter().addObserverForName(Constants.InactiveLock, object: nil, queue: nil) {
+            (notification) -> Void in
+            
+            if let lock = notification.object as? Bool {
+                
+                self.setInactiveLock(lock)
+            }
+        }
+    }
+    
+    func setInactiveLock(lock: Bool) {
+        
+        completedSwitch.enabled = !lock
+        shoppingListItemTextView.editable = !lock
+        shoppingListItemTextView.selectable = !lock
+    }
+    
+    func setShoppingListItem(reminder: EKReminder) {
+        
+        self.reminder = reminder
+        
+        let attributes = [ NSFontAttributeName: Constants.ShoppingListItemFont ]
+        shoppingListItemTextView.attributedText = NSMutableAttributedString(string: getAutoCapitalisationTitle(reminder.title), attributes: attributes)
+        
+        //Extra section for completed items
+        setShoppingListItemCompletedText(reminder)
+        
+        shoppingListItemTextView.delegate = self
     }
     
     //Return the title based on the auto-capitalisation settings
@@ -123,9 +185,9 @@ class ShoppingListItemTableViewCell: UITableViewCell, UITextViewDelegate
     //Puts a strike through the text of completed items
     func setShoppingListItemCompletedText(shoppingListItemReminder : EKReminder) {
         
-        completedSwitch.on = !shoppingListItemReminder.completed
-        
         if let checkSwitch = completedSwitch {
+            
+            checkSwitch.on = !shoppingListItemReminder.completed
             
             switch shoppingListItemReminder.title{
                 
@@ -162,25 +224,17 @@ class ShoppingListItemTableViewCell: UITableViewCell, UITextViewDelegate
         
         if let tableView = reminderSortViewController.tableView {
             
-//            let currentOffset = tableView.contentOffset
             UIView.setAnimationsEnabled(false)
             tableView.beginUpdates()
             tableView.endUpdates()
             UIView.setAnimationsEnabled(true)
-//            tableView.setContentOffset(currentOffset, animated: false)
         }
     }
-    
-    func textViewShouldBeginEditing(textView: UITextView) -> Bool {
         
-        reminderSortViewController.refreshLock.lock()
-        
-        return true
-    }
-    
     func textViewDidBeginEditing(textView: UITextView) {
         
         reminderSortViewController.setupRightBarButtons(true)
+        NSNotificationCenter.defaultCenter().postNotificationName(Constants.ItemEditing, object: true)
     }
     
     func textViewDidEndEditing(textView: UITextView) {
@@ -196,5 +250,7 @@ class ShoppingListItemTableViewCell: UITableViewCell, UITextViewDelegate
         }
         
         reminderSortViewController.refreshLock.unlock()
+
+        NSNotificationCenter.defaultCenter().postNotificationName(Constants.ItemEditing, object: false)
     }
 }

@@ -10,6 +10,16 @@
 			<key>Type</key>
 			<string>PSToggleSwitchSpecifier</string>
 			<key>Title</key>
+			<string>Auto Lock List</string>
+			<key>Key</key>
+			<string>autoLockList</string>
+			<key>DefaultValue</key>
+			<false/>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSToggleSwitchSpecifier</string>
+			<key>Title</key>
 			<string>Disable Screen Lock</string>
 			<key>Key</key>
 			<string>disableScreenLock</string>
@@ -49,6 +59,22 @@
 			<string>Complete</string>
 			<key>Key</key>
 			<string>alphabeticalSortComplete</string>
+			<key>DefaultValue</key>
+			<true/>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSGroupSpecifier</string>
+			<key>Title</key>
+			<string>Search</string>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSToggleSwitchSpecifier</string>
+			<key>Title</key>
+			<string>Begins With</string>
+			<key>Key</key>
+			<string>searchBeginsWith</string>
 			<key>DefaultValue</key>
 			<true/>
 		</dict>

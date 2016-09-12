@@ -16,7 +16,7 @@ class NavigationViewController : UINavigationController {
         return false
     }
     
-    override func supportedInterfaceOrientations() -> UIInterfaceOrientationMask{
+    override func supportedInterfaceOrientations() -> UIInterfaceOrientationMask {
         
         return UIInterfaceOrientationMask.Portrait
     }
