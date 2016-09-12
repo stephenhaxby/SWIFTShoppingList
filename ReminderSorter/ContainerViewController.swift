@@ -17,6 +17,7 @@ class ContainerViewController : UIViewController, UISearchBarDelegate {
     var itemBeginEditingObserver : NSObjectProtocol?
     var itemEndEditingObserver : NSObjectProtocol?
     var settingsObserver : NSObjectProtocol?
+    var resetLockObserver : NSObjectProtocol?
     
     var actionOnLockedCounter : Int = 0
     
@@ -31,7 +32,7 @@ class ContainerViewController : UIViewController, UISearchBarDelegate {
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
 
-        //Custom observer for when an cell / reminder needs to be saved
+        //Custom observer for when a cell / reminder needs to be saved
         saveReminderObserver = NSNotificationCenter.defaultCenter().addObserverForName(Constants.SaveReminder, object: nil, queue: nil){
             (notification) -> Void in
             
@@ -59,6 +60,12 @@ class ContainerViewController : UIViewController, UISearchBarDelegate {
             
             self.lockUnlock()
         }
+        
+        resetLockObserver = NSNotificationCenter.defaultCenter().addObserverForName(Constants.ResetLock, object: nil, queue: nil){
+            (notification) -> Void in
+            
+            self.resetLock()
+        }
     }
 
     deinit{
@@ -73,7 +80,7 @@ class ContainerViewController : UIViewController, UISearchBarDelegate {
             NSNotificationCenter.defaultCenter().removeObserver(observer, name: Constants.ActionOnLocked, object: nil)
         }
 
-        if let observer = actionOnLockedObserver{
+        if let observer = itemBeginEditingObserver{
             
             NSNotificationCenter.defaultCenter().removeObserver(observer, name: Constants.ItemEditing, object: nil)
         }
@@ -81,6 +88,11 @@ class ContainerViewController : UIViewController, UISearchBarDelegate {
         if let observer = settingsObserver{
             
             NSNotificationCenter.defaultCenter().removeObserver(observer, name: NSUserDefaultsDidChangeNotification, object: nil)
+        }
+        
+        if let observer = resetLockObserver{
+            
+            NSNotificationCenter.defaultCenter().removeObserver(observer, name: Constants.ResetLock, object: nil)
         }
     }
     
@@ -171,7 +183,7 @@ class ContainerViewController : UIViewController, UISearchBarDelegate {
         }
     }
     
-    func lockUnlock(){
+    func lockUnlock() {
         
         //lock = U+1F512
         //unlock = U+1F513
@@ -186,12 +198,17 @@ class ContainerViewController : UIViewController, UISearchBarDelegate {
         }
         else {
             
-            lockButton.setTitle("\u{1F513}", forState: UIControlState.Normal)
-            
-            NSNotificationCenter.defaultCenter().postNotificationName(Constants.InactiveLock, object: false)
-            
-            setLockTimer()
+            resetLock()
         }
+    }
+    
+    func resetLock(){
+        
+        lockButton.setTitle("\u{1F513}", forState: UIControlState.Normal)
+        
+        NSNotificationCenter.defaultCenter().postNotificationName(Constants.InactiveLock, object: false)
+        
+        setLockTimer()
     }
     
     func setInfoButtonVisible() {

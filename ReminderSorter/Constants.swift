@@ -44,7 +44,9 @@ class Constants{
     
     static let ActionOnLocked : String = "ActionOnLocked"
 
-    static let ItemEditing : String = "ItemEditing"   
+    static let ItemEditing : String = "ItemEditing"
+    
+    static let ResetLock : String = "ResetLock"
     
     static let ShoppingListSections = 3
     
