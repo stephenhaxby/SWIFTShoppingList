@@ -8,6 +8,26 @@
 
 import UIKit
 import EventKit
+fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l < r
+  case (nil, _?):
+    return true
+  default:
+    return false
+  }
+}
+
+fileprivate func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l > r
+  default:
+    return rhs < lhs
+  }
+}
+
 
 class ReminderSortViewController: UITableViewController {
     
@@ -41,11 +61,11 @@ class ReminderSortViewController: UITableViewController {
     var setRefreshLock : NSObjectProtocol?
     var inactiveLockObserver : NSObjectProtocol?
     
-    var defaults : NSUserDefaults {
+    var defaults : UserDefaults {
         
         get {
             
-            return NSUserDefaults.standardUserDefaults()
+            return UserDefaults.standard
         }
     }
     
@@ -60,16 +80,16 @@ class ReminderSortViewController: UITableViewController {
         }
         
         //Used for when the app goes into the background (as we want to commit any changes...)
-        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
         appDelegate.reminderSortViewController = self
         
         //Observer for the app for when the event store is changed in the background (or when our app isn't running)
-        eventStoreObserver = NSNotificationCenter.defaultCenter().addObserverForName(EKEventStoreChangedNotification, object: nil, queue: nil){
+        eventStoreObserver = NotificationCenter.default.addObserver(forName: NSNotification.Name.EKEventStoreChanged, object: nil, queue: nil){
             (notification) -> Void in
             
             //<NSRecursiveLock: 0x79e264d0>{locked = YES, thread = 0x2dcf000, recursion count = 2, name = nil}
             
-            if self.refreshLock.tryLock() {
+            if self.refreshLock.try() {
             
                 //Reload the grid only if there are new items from iCloud that we don't have
                 self.conditionalLoadShoppingList()
@@ -79,14 +99,14 @@ class ReminderSortViewController: UITableViewController {
         }
         
         //Observer for when our settings change
-        settingsObserver = NSNotificationCenter.defaultCenter().addObserverForName(NSUserDefaultsDidChangeNotification, object: nil, queue: nil){
+        settingsObserver = NotificationCenter.default.addObserver(forName: UserDefaults.didChangeNotification, object: nil, queue: nil){
             (notification) -> Void in
             
             self.refresh()
         }
         
         //Custom observer for when a quickscroll button is pressed
-        quickScrollObserver = NSNotificationCenter.defaultCenter().addObserverForName(Constants.QuickScrollButtonPressed, object: nil, queue: nil){
+        quickScrollObserver = NotificationCenter.default.addObserver(forName: NSNotification.Name(rawValue: Constants.QuickScrollButtonPressed), object: nil, queue: nil){
             (notification) -> Void in
             
             if let quickScrollButton : UIButton = notification.object as? UIButton {
@@ -96,7 +116,7 @@ class ReminderSortViewController: UITableViewController {
         }
         
         //Custom observer for when an cell / reminder needs to be saved
-        saveReminderObserver = NSNotificationCenter.defaultCenter().addObserverForName(Constants.SaveReminder, object: nil, queue: nil){
+        saveReminderObserver = NotificationCenter.default.addObserver(forName: NSNotification.Name(rawValue: Constants.SaveReminder), object: nil, queue: nil){
             (notification) -> Void in
             
             if let reminder : EKReminder = notification.object as? EKReminder{
@@ -105,25 +125,25 @@ class ReminderSortViewController: UITableViewController {
             }
         }
         
-        clearShoppingCartObserver = NSNotificationCenter.defaultCenter().addObserverForName(Constants.ClearShoppingList, object: nil, queue: nil){
+        clearShoppingCartObserver = NotificationCenter.default.addObserver(forName: NSNotification.Name(rawValue: Constants.ClearShoppingList), object: nil, queue: nil){
             (notification) -> Void in
             
             self.clearShoppingCart()
         }
         
-        setClearShoppingCartObserver = NSNotificationCenter.defaultCenter().addObserverForName(Constants.SetClearShoppingList, object: nil, queue: nil){
+        setClearShoppingCartObserver = NotificationCenter.default.addObserver(forName: NSNotification.Name(rawValue: Constants.SetClearShoppingList), object: nil, queue: nil){
             (notification) -> Void in
             
             self.setClearShoppingCart()
         }
         
-        clearShoppingListOnOpenObserver = NSNotificationCenter.defaultCenter().addObserverForName(Constants.ClearShoppingListOnOpen, object: nil, queue: nil){
+        clearShoppingListOnOpenObserver = NotificationCenter.default.addObserver(forName: NSNotification.Name(rawValue: Constants.ClearShoppingListOnOpen), object: nil, queue: nil){
             (notification) -> Void in
             
             self.CearShoppingCartOnOpen()
         }
         
-        searchBarTextDidChangeObserver = NSNotificationCenter.defaultCenter().addObserverForName(Constants.SearchBarTextDidChange, object: nil, queue: nil){
+        searchBarTextDidChangeObserver = NotificationCenter.default.addObserver(forName: NSNotification.Name(rawValue: Constants.SearchBarTextDidChange), object: nil, queue: nil){
             (notification) -> Void in
             
             if let searchText = notification.object as? String {
@@ -134,7 +154,7 @@ class ReminderSortViewController: UITableViewController {
             }
         }
         
-        searchBarCancelObserver = NSNotificationCenter.defaultCenter().addObserverForName(Constants.SearchBarCancel, object: nil, queue: nil){
+        searchBarCancelObserver = NotificationCenter.default.addObserver(forName: NSNotification.Name(rawValue: Constants.SearchBarCancel), object: nil, queue: nil){
             (notification) -> Void in
             
             self.startRefreshControl()
@@ -145,7 +165,7 @@ class ReminderSortViewController: UITableViewController {
             self.endRefreshControl()
         }
         
-        setRefreshLock = NSNotificationCenter.defaultCenter().addObserverForName(Constants.SetRefreshLock, object: nil, queue: nil){
+        setRefreshLock = NotificationCenter.default.addObserver(forName: NSNotification.Name(rawValue: Constants.SetRefreshLock), object: nil, queue: nil){
             (notification) -> Void in
             
             if let lock = notification.object as? Bool {
@@ -161,7 +181,7 @@ class ReminderSortViewController: UITableViewController {
             }
         }
 
-        inactiveLockObserver = NSNotificationCenter.defaultCenter().addObserverForName(Constants.InactiveLock, object: nil, queue: nil){
+        inactiveLockObserver = NotificationCenter.default.addObserver(forName: NSNotification.Name(rawValue: Constants.InactiveLock), object: nil, queue: nil){
             (notification) -> Void in
             
             if let lock = notification.object as? Bool {
@@ -177,52 +197,52 @@ class ReminderSortViewController: UITableViewController {
         //Don't really need to do this, but it's nice...
         if let observer = eventStoreObserver{
             
-            NSNotificationCenter.defaultCenter().removeObserver(observer, name: EKEventStoreChangedNotification, object: nil)
+            NotificationCenter.default.removeObserver(observer, name: NSNotification.Name.EKEventStoreChanged, object: nil)
         }
         
         if let observer = settingsObserver{
             
-            NSNotificationCenter.defaultCenter().removeObserver(observer, name: NSUserDefaultsDidChangeNotification, object: nil)
+            NotificationCenter.default.removeObserver(observer, name: UserDefaults.didChangeNotification, object: nil)
         }
         
         if let observer = quickScrollObserver{
             
-            NSNotificationCenter.defaultCenter().removeObserver(observer, name: Constants.QuickScrollButtonPressed, object: nil)
+            NotificationCenter.default.removeObserver(observer, name: NSNotification.Name(rawValue: Constants.QuickScrollButtonPressed), object: nil)
         }
         
         if let observer = saveReminderObserver{
             
-            NSNotificationCenter.defaultCenter().removeObserver(observer, name: Constants.SaveReminder, object: nil)
+            NotificationCenter.default.removeObserver(observer, name: NSNotification.Name(rawValue: Constants.SaveReminder), object: nil)
         }
         
         if let observer = clearShoppingCartObserver{
             
-            NSNotificationCenter.defaultCenter().removeObserver(observer, name: Constants.ClearShoppingList, object: nil)
+            NotificationCenter.default.removeObserver(observer, name: NSNotification.Name(rawValue: Constants.ClearShoppingList), object: nil)
         }
         
         if let observer = setClearShoppingCartObserver{
             
-            NSNotificationCenter.defaultCenter().removeObserver(observer, name: Constants.ClearShoppingList, object: nil)
+            NotificationCenter.default.removeObserver(observer, name: NSNotification.Name(rawValue: Constants.ClearShoppingList), object: nil)
         }
         
         if let observer = clearShoppingListOnOpenObserver{
             
-            NSNotificationCenter.defaultCenter().removeObserver(observer, name: Constants.ClearShoppingList, object: nil)
+            NotificationCenter.default.removeObserver(observer, name: NSNotification.Name(rawValue: Constants.ClearShoppingList), object: nil)
         }
         
         if let observer = searchBarTextDidChangeObserver{
             
-            NSNotificationCenter.defaultCenter().removeObserver(observer, name: Constants.SearchBarTextDidChange, object: nil)
+            NotificationCenter.default.removeObserver(observer, name: NSNotification.Name(rawValue: Constants.SearchBarTextDidChange), object: nil)
         }
         
         if let observer = searchBarCancelObserver{
             
-            NSNotificationCenter.defaultCenter().removeObserver(observer, name: Constants.SearchBarCancel, object: nil)
+            NotificationCenter.default.removeObserver(observer, name: NSNotification.Name(rawValue: Constants.SearchBarCancel), object: nil)
         }
         
         if let observer = searchBarCancelObserver{
             
-            NSNotificationCenter.defaultCenter().removeObserver(observer, name: Constants.InactiveLock, object: nil)
+            NotificationCenter.default.removeObserver(observer, name: NSNotification.Name(rawValue: Constants.InactiveLock), object: nil)
         }
     }
     
@@ -230,10 +250,10 @@ class ReminderSortViewController: UITableViewController {
         super.viewDidLoad()
         
         //Make it so the screen doesn't turn off
-        UIApplication.sharedApplication().idleTimerDisabled = SettingsUserDefaults.disableScreenLock
+        UIApplication.shared.isIdleTimerDisabled = SettingsUserDefaults.disableScreenLock
         
         //Set the font size of the navigation view controller
-        self.navigationController?.navigationBar.titleTextAttributes = [NSFontAttributeName: UIFont.boldSystemFontOfSize(18.0)]
+        self.navigationController?.navigationBar.titleTextAttributes = [NSFontAttributeName: UIFont.boldSystemFont(ofSize: 18.0)]
         
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.estimatedRowHeight = 70
@@ -250,14 +270,14 @@ class ReminderSortViewController: UITableViewController {
         reminderManager.requestAccessToReminders(requestedAccessToReminders)
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
      
-        tableView.backgroundColor = .clearColor()
+        tableView.backgroundColor = UIColor.clear
     }
     
     //Event for pull down to refresh
-    @IBAction private func refresh(sender: UIRefreshControl?) {
+    @IBAction fileprivate func refresh(_ sender: UIRefreshControl?) {
         
         //Delay for 300 milliseconds then run the refresh / commit
         delay(0.3){
@@ -280,7 +300,7 @@ class ReminderSortViewController: UITableViewController {
         
         if let clearShoppingListNotification : UILocalNotification = getClearShoppingCartNotification() {
             
-            UIApplication.sharedApplication().cancelLocalNotification(clearShoppingListNotification) // there should be a maximum of one match on UUID
+            UIApplication.shared.cancelLocalNotification(clearShoppingListNotification) // there should be a maximum of one match on UUID
         }
         
         getShoppingList(shoppingList)
@@ -290,7 +310,7 @@ class ReminderSortViewController: UITableViewController {
         
         var clearShoppingListNotification : UILocalNotification?
         
-        for notification in UIApplication.sharedApplication().scheduledLocalNotifications! as [UILocalNotification] { // loop through notifications...
+        for notification in UIApplication.shared.scheduledLocalNotifications! as [UILocalNotification] { // loop through notifications...
             
             if (notification.userInfo!["UUID"] as! String == Constants.SetClearShoppingList) { // ...and cancel the notification that corresponds to this TodoItem instance (matched by UUID)
                 
@@ -307,9 +327,9 @@ class ReminderSortViewController: UITableViewController {
         
         var clearShoppingListNotification : UILocalNotification? = getClearShoppingCartNotification()
         
-        if let shoppingCartExpiryTime : NSDate = defaults.objectForKey(Constants.ClearShoppingListExpire) as? NSDate {
+        if let shoppingCartExpiryTime : Date = defaults.object(forKey: Constants.ClearShoppingListExpire) as? Date {
             
-            let dateComponents : NSDateComponents = NSDateManager.getDateComponentsFromDate(shoppingCartExpiryTime)
+            let dateComponents : DateComponents = NSDateManager.getDateComponentsFromDate(shoppingCartExpiryTime)
             
             if clearShoppingListNotification == nil {
                 
@@ -321,10 +341,10 @@ class ReminderSortViewController: UITableViewController {
                 //notification.soundName = UILocalNotificationDefaultSoundName // play default sound
                 clearShoppingListNotification!.userInfo = ["UUID": Constants.SetClearShoppingList] // assign a unique identifier to the notification so that we can retrieve it later
                 //notification.category = "TODO_CATEGORY"
-                UIApplication.sharedApplication().scheduleLocalNotification(clearShoppingListNotification!)
+                UIApplication.shared.scheduleLocalNotification(clearShoppingListNotification!)
             }
             
-            clearShoppingListNotification!.fireDate = NSDateManager.addHoursAndMinutesToDate(NSDate(), hours: dateComponents.hour, Minutes: dateComponents.minute) // todo item due date (when notification will be fired)
+            clearShoppingListNotification!.fireDate = NSDateManager.addHoursAndMinutesToDate(Date(), hours: dateComponents.hour!, Minutes: dateComponents.minute!) // todo item due date (when notification will be fired)
 
         }
     }
@@ -335,7 +355,7 @@ class ReminderSortViewController: UITableViewController {
         
         if let notification : UILocalNotification = getClearShoppingCartNotification() {
             
-            if notification.fireDate != nil && NSDateManager.dateIsAfterDate(notification.fireDate!, date2: NSDate()) {
+            if notification.fireDate != nil && NSDateManager.dateIsAfterDate(notification.fireDate!, date2: Date()) {
                 
                 clearShoppingCart()
             }
@@ -384,7 +404,7 @@ class ReminderSortViewController: UITableViewController {
 
         if let shoppingListTable = self.tableView{
             
-            dispatch_async(dispatch_get_main_queue()) { () -> Void in
+            DispatchQueue.main.async { () -> Void in
             
                 //Request a reload of the Table
                 shoppingListTable.reloadData()
@@ -395,19 +415,15 @@ class ReminderSortViewController: UITableViewController {
     }
     
     //Delay function to delay the execution of something for a number of seconds
-    func delay(delay: Double, closure: ()->()) {
-        dispatch_after(
-            dispatch_time(
-                DISPATCH_TIME_NOW,
-                Int64(delay * Double(NSEC_PER_SEC))
-            ),
-            dispatch_get_main_queue(),
-            closure
+    func delay(_ delay: Double, closure: @escaping ()->()) {
+        DispatchQueue.main.asyncAfter(
+            deadline: DispatchTime.now() + Double(Int64(delay * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC),
+            execute: closure
         )
     }
     
     //Only update the shopping list if items have been updated
-    func conditionalLoadShoppingList(iCloudShoppingList : [EKReminder]) {
+    func conditionalLoadShoppingList(_ iCloudShoppingList : [EKReminder]) {
 
         //Filter out any blank items
         let updatedShoppingList : [EKReminder] = iCloudShoppingList.filter({(reminder : EKReminder) in reminder.title != ""})
@@ -426,14 +442,14 @@ class ReminderSortViewController: UITableViewController {
                 let currentItem : ShoppingListItem = storedShoppingList[i]
                 
                 //Find a matching item by ID in the iCloud list
-                let updatedItemIndex : Int? = updatedShoppingList.indexOf({(reminder : EKReminder) in reminder.calendarItemExternalIdentifier == currentItem.calendarItemExternalIdentifier})
+                let updatedItemIndex : Int? = updatedShoppingList.index(where: {(reminder : EKReminder) in reminder.calendarItemExternalIdentifier == currentItem.calendarItemExternalIdentifier})
                 
                 //If the item exists, check if we need to update our local copy
                 if updatedItemIndex != nil {
 
                     let updatedItem : EKReminder = updatedShoppingList[updatedItemIndex!]
 
-                    if currentItem.completed != updatedItem.completed
+                    if currentItem.completed != updatedItem.isCompleted
                         || currentItem.title != updatedItem.title
                         || currentItem.notes != updatedItem.notes {
                             
@@ -454,7 +470,7 @@ class ReminderSortViewController: UITableViewController {
         
         if let refresh = refreshControl{
             
-            if !refresh.refreshing {
+            if !refresh.isRefreshing {
              
                 refresh.beginRefreshing()
             }
@@ -465,14 +481,14 @@ class ReminderSortViewController: UITableViewController {
         
         if let refresh = refreshControl{
             
-            if refresh.refreshing {
+            if refresh.isRefreshing {
             
                 refresh.endRefreshing()
             }
         }
     }
     
-    func endRefreshControl(sender: UIRefreshControl?){
+    func endRefreshControl(_ sender: UIRefreshControl?){
         
         if let refresh = sender{
             
@@ -481,7 +497,7 @@ class ReminderSortViewController: UITableViewController {
     }
     
     //Once access is granted to the reminders list
-    func requestedAccessToReminders(status : Bool){
+    func requestedAccessToReminders(_ status : Bool){
         
         if status {
             
@@ -496,7 +512,7 @@ class ReminderSortViewController: UITableViewController {
     }
     
     //Once the reminders have been loaded from iCloud
-    func getShoppingList(iCloudShoppingList : [EKReminder]){
+    func getShoppingList(_ iCloudShoppingList : [EKReminder]){
         
         createGroupedShoppingList(iCloudShoppingList)
         
@@ -508,7 +524,7 @@ class ReminderSortViewController: UITableViewController {
             let storedShoppingListItem : ShoppingListItem = ShoppingListItem()
             storedShoppingListItem.calendarItemExternalIdentifier = shoppingListItem.calendarItemExternalIdentifier
             storedShoppingListItem.title = shoppingListItem.title
-            storedShoppingListItem.completed = shoppingListItem.completed
+            storedShoppingListItem.completed = shoppingListItem.isCompleted
             storedShoppingListItem.notes = shoppingListItem.notes
             
             self.storedShoppingList.append(storedShoppingListItem)
@@ -517,7 +533,7 @@ class ReminderSortViewController: UITableViewController {
         filterGroupedShoppingList()
 
         //As we a in another thread, post back to the main thread so we can update the UI
-        dispatch_async(dispatch_get_main_queue()) { () -> Void in
+        DispatchQueue.main.async { () -> Void in
 
             if let shoppingListTable = self.tableView {
 
@@ -527,7 +543,7 @@ class ReminderSortViewController: UITableViewController {
         }
     }
 
-    func createGroupedShoppingList(iCloudShoppingList : [EKReminder]) {
+    func createGroupedShoppingList(_ iCloudShoppingList : [EKReminder]) {
         
         //var shoppingList = [EKReminder]() // All reminders from the store
         
@@ -536,13 +552,13 @@ class ReminderSortViewController: UITableViewController {
         //var groupedShoppingList = [[EKReminder]]() // Datasource
         
         //Small function for sorting reminders
-        func reminderSort(reminder1: EKReminder, reminder2: EKReminder) -> Bool {
+        func reminderSort(_ reminder1: EKReminder, reminder2: EKReminder) -> Bool {
             
-            return reminder1.title.lowercaseString < reminder2.title.lowercaseString
+            return reminder1.title.lowercased() < reminder2.title.lowercased()
         }
         
         //Find all items that are NOT completed
-        var itemsToGet : [EKReminder] = iCloudShoppingList.filter({(reminder : EKReminder) in !reminder.completed})
+        var itemsToGet : [EKReminder] = iCloudShoppingList.filter({(reminder : EKReminder) in !reminder.isCompleted})
         
         //Find all items that are in the shopping cart
         var itemsGot : [EKReminder] = iCloudShoppingList.filter( {
@@ -555,29 +571,29 @@ class ReminderSortViewController: UITableViewController {
         var completedItems : [EKReminder] = iCloudShoppingList.filter( {
             (reminder : EKReminder) in
             
-            return reminder.completed && !Utility.itemIsInShoppingCart(reminder)
+            return reminder.isCompleted && !Utility.itemIsInShoppingCart(reminder)
         })
         
         //If the setting specify alphabetical sorting of incomplete items
         if SettingsUserDefaults.alphabeticalSortIncomplete {
             
-            itemsToGet = itemsToGet.sort(reminderSort)
+            itemsToGet = itemsToGet.sorted(by: reminderSort)
         }
         
         if SettingsUserDefaults.alphabeticalSortIncomplete {
             
-            itemsGot = itemsGot.sort(reminderSort)
+            itemsGot = itemsGot.sorted(by: reminderSort)
         }
         
         //If the settings specify alphabetical sorting of complete items
         if SettingsUserDefaults.alphabeticalSortComplete {
             
-            completedItems = completedItems.sort(reminderSort)
+            completedItems = completedItems.sorted(by: reminderSort)
         }
         
-        groupedShoppingList[Constants.ShoppingListSection.List.rawValue] = itemsToGet
-        groupedShoppingList[Constants.ShoppingListSection.Cart.rawValue] = itemsGot
-        groupedShoppingList[Constants.ShoppingListSection.History.rawValue] = completedItems
+        groupedShoppingList[Constants.ShoppingListSection.list.rawValue] = itemsToGet
+        groupedShoppingList[Constants.ShoppingListSection.cart.rawValue] = itemsGot
+        groupedShoppingList[Constants.ShoppingListSection.history.rawValue] = completedItems
         
         //Join the two lists from above
         shoppingList = itemsToGet + itemsGot + completedItems
@@ -585,34 +601,34 @@ class ReminderSortViewController: UITableViewController {
     
     func filterGroupedShoppingList() {
 
-        func reminderTitleContains(reminder : EKReminder, searchText : String) -> Bool {
+        func reminderTitleContains(_ reminder : EKReminder, searchText : String) -> Bool {
    
             if SettingsUserDefaults.searchBeginsWith {
             
-                return reminder.title.lowercaseString.hasPrefix(searchText.lowercaseString)
+                return reminder.title.lowercased().hasPrefix(searchText.lowercased())
             }
             else {
                 
-                return reminder.title.lowercaseString.containsString(searchText.lowercaseString)
+                return reminder.title.lowercased().contains(searchText.lowercased())
             }
         }
 
         if searchText != String() {
         
-            let filteredShoppingList : [EKReminder] = groupedShoppingList[Constants.ShoppingListSection.List.rawValue].filter{reminder in reminderTitleContains(reminder, searchText : searchText)}
+            let filteredShoppingList : [EKReminder] = groupedShoppingList[Constants.ShoppingListSection.list.rawValue].filter{reminder in reminderTitleContains(reminder, searchText : searchText)}
             
-            let filteredShoppingCart : [EKReminder] = groupedShoppingList[Constants.ShoppingListSection.Cart.rawValue].filter{reminder in reminderTitleContains(reminder, searchText : searchText)}
+            let filteredShoppingCart : [EKReminder] = groupedShoppingList[Constants.ShoppingListSection.cart.rawValue].filter{reminder in reminderTitleContains(reminder, searchText : searchText)}
             
-            let filteredShoppingHistory : [EKReminder] = groupedShoppingList[Constants.ShoppingListSection.History.rawValue].filter{reminder in reminderTitleContains(reminder, searchText : searchText)}
+            let filteredShoppingHistory : [EKReminder] = groupedShoppingList[Constants.ShoppingListSection.history.rawValue].filter{reminder in reminderTitleContains(reminder, searchText : searchText)}
             
-            groupedShoppingList[Constants.ShoppingListSection.List.rawValue] = filteredShoppingList
-            groupedShoppingList[Constants.ShoppingListSection.Cart.rawValue] = filteredShoppingCart
-            groupedShoppingList[Constants.ShoppingListSection.History.rawValue] = filteredShoppingHistory
+            groupedShoppingList[Constants.ShoppingListSection.list.rawValue] = filteredShoppingList
+            groupedShoppingList[Constants.ShoppingListSection.cart.rawValue] = filteredShoppingCart
+            groupedShoppingList[Constants.ShoppingListSection.history.rawValue] = filteredShoppingHistory
         }
     }
     
     //Save a reminder to the users reminders list
-    func saveReminder(reminder : EKReminder){
+    func saveReminder(_ reminder : EKReminder){
         
         guard reminderManager.saveReminder(reminder, commit: false) else {
             
@@ -621,7 +637,7 @@ class ReminderSortViewController: UITableViewController {
             return
         }
         
-        let existingIndex : Int? = shoppingList.indexOf({(existingReminder : EKReminder) in existingReminder.calendarItemExternalIdentifier == reminder.calendarItemExternalIdentifier})
+        let existingIndex : Int? = shoppingList.index(where: {(existingReminder : EKReminder) in existingReminder.calendarItemExternalIdentifier == reminder.calendarItemExternalIdentifier})
         
         if existingIndex == nil {
             
@@ -632,41 +648,41 @@ class ReminderSortViewController: UITableViewController {
         getShoppingList(shoppingList)
     }
 
-    func displayError(message : String){
+    func displayError(_ message : String){
         
         //Display an alert to specify that we couldn't get access
-        let errorAlert = UIAlertController(title: "Error!", message: message, preferredStyle: UIAlertControllerStyle.Alert)
+        let errorAlert = UIAlertController(title: "Error!", message: message, preferredStyle: UIAlertControllerStyle.alert)
         
         //Add an Ok button to the alert
-        errorAlert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler:
+        errorAlert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler:
             { (action: UIAlertAction!) in
                 
         }))
         
         //Present the alert
-        self.presentViewController(errorAlert, animated: true, completion: nil)
+        self.present(errorAlert, animated: true, completion: nil)
     }
     
-    override func scrollViewShouldScrollToTop(scrollView: UIScrollView) -> Bool {
+    override func scrollViewShouldScrollToTop(_ scrollView: UIScrollView) -> Bool {
         
         if shoppingList.count > 0 {
             
-            var shoppingListSection : Int = Constants.ShoppingListSection.History.rawValue
+            var shoppingListSection : Int = Constants.ShoppingListSection.history.rawValue
             
             let firstItemShoppingListItem : EKReminder = shoppingList[0]
             
-            if !firstItemShoppingListItem.completed {
+            if !firstItemShoppingListItem.isCompleted {
                 
-                shoppingListSection = Constants.ShoppingListSection.List.rawValue
+                shoppingListSection = Constants.ShoppingListSection.list.rawValue
             }
             else if Utility.itemIsInShoppingCart(firstItemShoppingListItem) {
                 
-                shoppingListSection = Constants.ShoppingListSection.Cart.rawValue
+                shoppingListSection = Constants.ShoppingListSection.cart.rawValue
             }
             
-            let indexPath = NSIndexPath(forRow: 0, inSection: shoppingListSection)
+            let indexPath = IndexPath(row: 0, section: shoppingListSection)
             
-            remindersTableView.scrollToRowAtIndexPath(indexPath, atScrollPosition: UITableViewScrollPosition.Top, animated: true)
+            remindersTableView.scrollToRow(at: indexPath, at: UITableViewScrollPosition.top, animated: true)
             
             return false
         }
@@ -675,14 +691,14 @@ class ReminderSortViewController: UITableViewController {
     }
     
     //Called when we receive the notification from the buttons on the quick sort view
-    func scrollToLetter(letter: String) {
+    func scrollToLetter(_ letter: String) {
         
         //If pressing '+' just scroll to the bottom
         if letter == "+" {
             
-            let indexPath = NSIndexPath(forRow: groupedShoppingList[Constants.ShoppingListSection.History.rawValue].count, inSection: Constants.ShoppingListSection.History.rawValue)
+            let indexPath = IndexPath(row: groupedShoppingList[Constants.ShoppingListSection.history.rawValue].count, section: Constants.ShoppingListSection.history.rawValue)
 
-            remindersTableView.scrollToRowAtIndexPath(indexPath, atScrollPosition: UITableViewScrollPosition.Top, animated: true)
+            remindersTableView.scrollToRow(at: indexPath, at: UITableViewScrollPosition.top, animated: true)
         }
         else {
             
@@ -692,26 +708,26 @@ class ReminderSortViewController: UITableViewController {
     }
     
     //Recursive function to find the nearest letter in the alphabet
-    func scrollToNearestLetter(letter: String){
+    func scrollToNearestLetter(_ letter: String){
         
         //Find any items begining with the specified letter
-        var itemsBeginingWith : [EKReminder] = groupedShoppingList[Constants.ShoppingListSection.History.rawValue].filter({(reminder : EKReminder) in reminder.completed && reminder.title.hasPrefix(letter)})
+        var itemsBeginingWith : [EKReminder] = groupedShoppingList[Constants.ShoppingListSection.history.rawValue].filter({(reminder : EKReminder) in reminder.isCompleted && reminder.title.hasPrefix(letter)})
         
         //If one exists, find the item first item in the list with that letter
         if itemsBeginingWith.count > 0 {
             
-            var index = groupedShoppingList[Constants.ShoppingListSection.History.rawValue].indexOf(itemsBeginingWith[0])
+            var index = groupedShoppingList[Constants.ShoppingListSection.history.rawValue].index(of: itemsBeginingWith[0])
             
             index = (index! == 0) ? 0 : index!-1
             
-            let indexPath = NSIndexPath(forRow: index!, inSection: Constants.ShoppingListSection.History.rawValue)
+            let indexPath = IndexPath(row: index!, section: Constants.ShoppingListSection.history.rawValue)
             
-            remindersTableView.scrollToRowAtIndexPath(indexPath, atScrollPosition: UITableViewScrollPosition.Top, animated: true)
+            remindersTableView.scrollToRow(at: indexPath, at: UITableViewScrollPosition.top, animated: true)
         }
         else{
             
             //If no items exist that start with that letter, go back up the alphabet to find one that exists
-            let indexOfLetter = Constants.alphabet.indexOf(letter)
+            let indexOfLetter = Constants.alphabet.index(of: letter)
             
             if(indexOfLetter > 0) {
                 
@@ -720,14 +736,14 @@ class ReminderSortViewController: UITableViewController {
             else {
                 
                 //If we are at the begining, scroll to the top
-                remindersTableView.scrollToRowAtIndexPath(NSIndexPath(forRow: 0, inSection: Constants.ShoppingListSection.History.rawValue), atScrollPosition: UITableViewScrollPosition.Top, animated: true)
+                remindersTableView.scrollToRow(at: IndexPath(row: 0, section: Constants.ShoppingListSection.history.rawValue), at: UITableViewScrollPosition.top, animated: true)
             }
         }
     }
     
-    func setupRightBarButtons(editing : Bool) {
+    func setupRightBarButtons(_ editing : Bool) {
         
-        if let containerViewController : ContainerViewController = self.parentViewController as? ContainerViewController {
+        if let containerViewController : ContainerViewController = self.parent as? ContainerViewController {
             
             containerViewController.setupRightBarButtons(editing)
         }
@@ -737,11 +753,11 @@ class ReminderSortViewController: UITableViewController {
     
     //To return the number of items that the table view needs to show.
     //We increase it by two for the first blank row and the final "+" (add new item) row
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
         var sectionCount = groupedShoppingList[section].count
         
-        if section == Constants.ShoppingListSection.History.rawValue
+        if section == Constants.ShoppingListSection.history.rawValue
             && searchText == String() {
             
             sectionCount += 1
@@ -750,18 +766,18 @@ class ReminderSortViewController: UITableViewController {
         return sectionCount
     }
     
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    override func numberOfSections(in tableView: UITableView) -> Int {
         
         return Constants.ShoppingListSections
     }
     
     //To populate each cell's text based on the index into the calendars array, with the extra item at the bottom
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         var shoppingListItem : EKReminder?
         
         //Get the cell
-        let cell : ShoppingListItemTableViewCell = tableView.dequeueReusableCellWithIdentifier("ReminderCell") as! ShoppingListItemTableViewCell
+        let cell : ShoppingListItemTableViewCell = tableView.dequeueReusableCell(withIdentifier: "ReminderCell") as! ShoppingListItemTableViewCell
         
         if(cell.shoppingListItemTextView != nil){
             
@@ -772,15 +788,15 @@ class ReminderSortViewController: UITableViewController {
         //Based on the settings, set up the auto-capitalisation for the keyboard
         if SettingsUserDefaults.autoCapitalisation{
             
-            cell.shoppingListItemTextView.autocapitalizationType = UITextAutocapitalizationType.Words
+            cell.shoppingListItemTextView.autocapitalizationType = UITextAutocapitalizationType.words
         }
         else{
             
-            cell.shoppingListItemTextView.autocapitalizationType = UITextAutocapitalizationType.Sentences
+            cell.shoppingListItemTextView.autocapitalizationType = UITextAutocapitalizationType.sentences
         }
         
         //Add in the extra item at the bottom
-        if indexPath.row == groupedShoppingList[indexPath.section].count && indexPath.section == Constants.ShoppingListSection.History.rawValue {
+        if (indexPath as NSIndexPath).row == groupedShoppingList[(indexPath as NSIndexPath).section].count && (indexPath as NSIndexPath).section == Constants.ShoppingListSection.history.rawValue {
             
             shoppingListItem = reminderManager.getNewReminder()
             
@@ -791,13 +807,13 @@ class ReminderSortViewController: UITableViewController {
             }
             
             shoppingListItem!.title = Constants.ShoppingListItemTableViewCell.NewItemCell
-            shoppingListItem!.completed = false
+            shoppingListItem!.isCompleted = false
         }
         
         //Each actual list item...
         else{
             
-            shoppingListItem = groupedShoppingList[indexPath.section][indexPath.row]
+            shoppingListItem = groupedShoppingList[(indexPath as NSIndexPath).section][(indexPath as NSIndexPath).row]
         }
         
         cell.setShoppingListItem(shoppingListItem!)
@@ -827,31 +843,31 @@ class ReminderSortViewController: UITableViewController {
 //    }
     
     //This method is setting which cells can be edited
-    override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         
         //Don't allow delete of the last blank row...
-        if(indexPath.row < groupedShoppingList[indexPath.section].count){
+        if((indexPath as NSIndexPath).row < groupedShoppingList[(indexPath as NSIndexPath).section].count){
             return true
         }
         
         return false
     }
     
-    override func tableView(tableView: UITableView, shouldIndentWhileEditingRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+    override func tableView(_ tableView: UITableView, shouldIndentWhileEditingRowAt indexPath: IndexPath) -> Bool {
         
         return false
     }
 
     //This method is for the swipe left to delete
-    override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         
         if(inactiveLock) {
-            NSNotificationCenter.defaultCenter().postNotificationName(Constants.ActionOnLocked, object: nil)
+            NotificationCenter.default.post(name: Notification.Name(rawValue: Constants.ActionOnLocked), object: nil)
         }
 
-        if(!inactiveLock && indexPath.row < groupedShoppingList[indexPath.section].count){
+        if(!inactiveLock && (indexPath as NSIndexPath).row < groupedShoppingList[(indexPath as NSIndexPath).section].count){
             
-            let shoppingListItem : EKReminder = groupedShoppingList[indexPath.section][indexPath.row]
+            let shoppingListItem : EKReminder = groupedShoppingList[(indexPath as NSIndexPath).section][(indexPath as NSIndexPath).row]
             
             guard reminderManager.removeReminder(shoppingListItem, commit: false) else {
                 
@@ -860,27 +876,27 @@ class ReminderSortViewController: UITableViewController {
                 return
             }
             
-            groupedShoppingList[indexPath.section].removeAtIndex(indexPath.row)
+            groupedShoppingList[(indexPath as NSIndexPath).section].remove(at: (indexPath as NSIndexPath).row)
             
-            tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
+            tableView.deleteRows(at: [indexPath], with: .fade)
         }
     }
     
-    override func tableView(tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+    override func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
         
         if let headerView : UITableViewHeaderFooterView = view as? UITableViewHeaderFooterView {
             
-            headerView.textLabel?.font = UIFont.systemFontOfSize(12)
+            headerView.textLabel?.font = UIFont.systemFont(ofSize: 12)
         }
     }
     
-    override func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+    override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         
         // Set's the height of the Header
         return CGFloat(20)
     }
     
-    override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         
          return Constants.ShoppingListSection(rawValue: section)?.description
     }

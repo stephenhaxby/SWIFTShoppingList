@@ -67,19 +67,19 @@ class Constants{
     static let SettingUserDefaultAutoLockList = "autoLockList"
     
     enum ShoppingListSection : Int, CustomStringConvertible {
-        case List
-        case Cart
-        case History
+        case list
+        case cart
+        case history
         
         var description: String {
             
             switch self {
             
-                case List: return "Shopping List"
+                case .list: return "Shopping List"
             
-                case Cart: return "Trolley"
+                case .cart: return "Trolley"
                 
-                case History: return "History"
+                case .history: return "History"
                 
             }
         }

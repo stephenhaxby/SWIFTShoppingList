@@ -10,31 +10,31 @@ import EventKit
 
 class Utility {
     
-    static var defaults : NSUserDefaults {
+    static var defaults : UserDefaults {
         
         get {
             
-            return NSUserDefaults.standardUserDefaults()
+            return UserDefaults.standard
         }
     }
     
-    static func itemIsInShoppingCart(reminder : EKReminder) -> Bool {
+    static func itemIsInShoppingCart(_ reminder : EKReminder) -> Bool {
         
-        if reminder.completed && reminder.notes != nil {
+        if reminder.isCompleted && reminder.notes != nil {
             
-            let dateFormatter = NSDateFormatter()
-            dateFormatter.dateStyle = NSDateFormatterStyle.MediumStyle
-            dateFormatter.timeStyle = NSDateFormatterStyle.ShortStyle
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateStyle = DateFormatter.Style.medium
+            dateFormatter.timeStyle = DateFormatter.Style.short
             
-            if let reminderDate : NSDate = dateFormatter.dateFromString(reminder.notes!) {
+            if let reminderDate : Date = dateFormatter.date(from: reminder.notes!) {
                 
-                if let shoppingCartExpiryTime : NSDate = defaults.objectForKey(Constants.ClearShoppingListExpire) as? NSDate {
+                if let shoppingCartExpiryTime : Date = defaults.object(forKey: Constants.ClearShoppingListExpire) as? Date {
                     
-                    let shoppingCartExpiryTime : NSDateComponents =  NSDateManager.getDateComponentsFromDate(shoppingCartExpiryTime)
+                    let shoppingCartExpiryTime : DateComponents =  NSDateManager.getDateComponentsFromDate(shoppingCartExpiryTime)
                     
-                    let expiryTime : NSDate = NSDateManager.addHoursAndMinutesToDate(reminderDate, hours: shoppingCartExpiryTime.hour, Minutes: shoppingCartExpiryTime.minute)
+                    let expiryTime : Date = NSDateManager.addHoursAndMinutesToDate(reminderDate, hours: shoppingCartExpiryTime.hour!, Minutes: shoppingCartExpiryTime.minute!)
                     
-                    return NSDateManager.dateIsBeforeDate(expiryTime, date2: NSDate())
+                    return NSDateManager.dateIsBeforeDate(expiryTime, date2: Date())
                 }
                 else {
                     

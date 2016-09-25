@@ -1,9 +1,10 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="jGZ-Bv-awX">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11201" systemVersion="16A323" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="jGZ-Bv-awX">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
         <!--Reminder Sort View Controller-->
@@ -11,27 +12,26 @@
             <objects>
                 <tableViewController id="5Ag-tc-sUf" customClass="ReminderSortViewController" customModule="ReminderSorter" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" keyboardDismissMode="onDrag" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="gn4-vH-fZP">
-                        <rect key="frame" x="0.0" y="0.0" width="570" height="492"/>
+                        <rect key="frame" x="0.0" y="0.0" width="353" height="559"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="HeaderCell" rowHeight="20" id="dQi-ck-MSx">
-                                <rect key="frame" x="0.0" y="22" width="570" height="20"/>
+                                <rect key="frame" x="0.0" y="22" width="353" height="20"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="dQi-ck-MSx" id="XeQ-RU-ReQ">
-                                    <rect key="frame" x="0.0" y="0.0" width="570" height="19"/>
+                                    <frame key="frameInset" width="353" height="19"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </tableViewCellContentView>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="ReminderCell" rowHeight="44" id="9Z4-o8-zaC" customClass="ShoppingListItemTableViewCell" customModule="ReminderSorter" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="42" width="570" height="44"/>
+                                <rect key="frame" x="0.0" y="42" width="353" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="9Z4-o8-zaC" id="7r9-Qh-qDR">
-                                    <rect key="frame" x="0.0" y="0.0" width="570" height="43"/>
+                                    <frame key="frameInset" width="353" height="43"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" verticalCompressionResistancePriority="1000" directionalLockEnabled="YES" scrollEnabled="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="Jdo-wX-8WJ">
-                                            <rect key="frame" x="65" y="3" width="497" height="40"/>
+                                        <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" horizontalCompressionResistancePriority="749" verticalCompressionResistancePriority="1000" directionalLockEnabled="YES" scrollEnabled="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="Jdo-wX-8WJ">
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="70" id="zr4-NP-TrG"/>
                                             </constraints>
@@ -45,7 +45,6 @@
                                             </variation>
                                         </textView>
                                         <switch opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ReJ-9B-XiB">
-                                            <rect key="frame" x="8" y="7" width="51" height="31"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="31" id="6iy-6K-dv8"/>
                                                 <constraint firstAttribute="width" constant="49" id="cBp-mH-vcg"/>
@@ -58,14 +57,16 @@
                                             </variation>
                                         </switch>
                                         <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hvG-UR-9oi">
-                                            <rect key="frame" x="8" y="3" width="54" height="35"/>
+                                            <frame key="frameInset" minX="8" minY="3" width="54" height="35"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <gestureRecognizers/>
                                         </view>
                                         <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uyh-4K-TeC">
-                                            <rect key="frame" x="8" y="-2" width="30" height="37"/>
+                                            <frame key="frameInset" minX="8" minY="-2" width="30" height="37"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="48"/>
                                             <state key="normal" title="+">
-                                                <color key="titleColor" red="0.40000000596046448" green="0.40000000596046448" blue="0.40000000596046448" alpha="1" colorSpace="calibratedRGB"/>
+                                                <color key="titleColor" red="0.40000000596046448" green="0.40000000596046448" blue="0.40000000596046448" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             </state>
                                             <connections>
                                                 <action selector="addNewTouchUpInside:" destination="9Z4-o8-zaC" eventType="touchUpInside" id="Y9a-sg-SR2"/>
@@ -131,26 +132,24 @@
                         <viewControllerLayoutGuide type="bottom" id="jnn-hy-VxU"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="pz3-9h-JUp">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tKa-UI-f1d">
-                                <rect key="frame" x="221" y="298" width="158" height="30"/>
-                                <color key="backgroundColor" red="0.94901960780000005" green="0.94901960780000005" blue="0.94901960780000005" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" red="0.94901960780000005" green="0.94901960780000005" blue="0.94901960780000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="Gek-sS-ILd"/>
                                     <constraint firstAttribute="width" constant="158" id="ZyU-pv-l9K"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                 <state key="normal" title="Clear Shopping Cart">
-                                    <color key="titleColor" red="0.0" green="0.50196081400000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleColor" red="0.0" green="0.50196081400000003" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
                                 <connections>
                                     <action selector="clearShoppingCartButtonTouchUpInside:" destination="VI3-1w-ipy" eventType="touchUpInside" id="SCD-qr-QUw"/>
                                 </connections>
                             </button>
                             <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="time" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="98q-CM-t01">
-                                <rect key="frame" x="200" y="122" width="200" height="120"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="200" id="EbS-RP-9gl"/>
                                 </constraints>
@@ -160,16 +159,15 @@
                                 <locale key="locale" localeIdentifier="nl_NL"/>
                             </datePicker>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Clear Shopping Cart after (hours minutes):" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0vR-0t-mnH">
-                                <rect key="frame" x="20" y="82" width="301" height="21"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="301" id="mdn-An-fmq"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <gestureRecognizers/>
                         <constraints>
                             <constraint firstItem="0vR-0t-mnH" firstAttribute="top" secondItem="f6b-nj-r9J" secondAttribute="bottom" constant="18" id="8Ks-cb-eeX"/>
@@ -185,7 +183,7 @@
                     <navigationItem key="navigationItem" title="Information" id="Qrk-jS-5dL">
                         <barButtonItem key="leftBarButtonItem" style="done" id="6JR-Id-kR6">
                             <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" hasAttributedTitle="YES" id="HHw-QH-cb9">
-                                <rect key="frame" x="20" y="7" width="60" height="30"/>
+                                <rect key="frame" x="16" y="7" width="60" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal">
                                     <attributedString key="attributedTitle">
@@ -204,7 +202,7 @@
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" style="done" id="gIf-nR-bgG">
                             <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" hasAttributedTitle="YES" id="kmd-5C-nsS">
-                                <rect key="frame" x="550" y="7" width="30" height="30"/>
+                                <rect key="frame" x="329" y="7" width="30" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal">
                                     <attributedString key="attributedTitle"/>
@@ -235,11 +233,10 @@
                         <viewControllerLayoutGuide type="bottom" id="kum-re-Wa8"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="ZAt-hv-4hm">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="akY-23-ae6">
-                                <rect key="frame" x="570" y="64" width="30" height="536"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="30" id="PsG-Y0-md6"/>
                                 </constraints>
@@ -248,17 +245,15 @@
                                 </connections>
                             </containerView>
                             <searchBar contentMode="redraw" searchBarStyle="minimal" placeholder="Search" showsCancelButton="YES" translatesAutoresizingMaskIntoConstraints="NO" id="QfV-Dt-qnq">
-                                <rect key="frame" x="0.0" y="64" width="570" height="44"/>
                                 <textInputTraits key="textInputTraits"/>
                             </searchBar>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gyl-GM-m4T">
-                                <rect key="frame" x="0.0" y="108" width="570" height="492"/>
                                 <connections>
                                     <segue destination="5Ag-tc-sUf" kind="embed" id="Hl8-yx-S4N"/>
                                 </connections>
                             </containerView>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="gyl-GM-m4T" firstAttribute="top" secondItem="ZAt-hv-4hm" secondAttribute="top" id="0Pn-6X-iQS"/>
                             <constraint firstItem="gyl-GM-m4T" firstAttribute="leading" secondItem="ZAt-hv-4hm" secondAttribute="leadingMargin" constant="-20" id="0cA-9R-yts"/>
@@ -333,7 +328,7 @@
                     <navigationItem key="navigationItem" title="Shopping List" id="sah-Ac-zZQ">
                         <barButtonItem key="leftBarButtonItem" style="plain" id="ZMY-Pj-zQm">
                             <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="9iF-8T-RuH">
-                                <rect key="frame" x="20" y="7" width="30" height="30"/>
+                                <rect key="frame" x="16" y="7" width="30" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <connections>
                                     <action selector="lockButtonTouchUpInside:" destination="wXl-h5-U25" eventType="touchUpInside" id="Wbg-t1-zQC"/>
@@ -378,14 +373,14 @@
                         <viewControllerLayoutGuide type="bottom" id="MQr-a3-fXH"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="7bZ-Bj-n9q">
-                        <rect key="frame" x="0.0" y="0.0" width="30" height="536"/>
+                        <rect key="frame" x="0.0" y="0.0" width="30" height="603"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cNf-j8-fbg">
-                                <rect key="frame" x="-2" y="20" width="30" height="495"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="o2o-IO-QLi">
-                                        <rect key="frame" x="0.0" y="0.0" width="30" height="25"/>
+                                        <frame key="frameInset" width="30" height="25"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" name="Chalkboard SE" family="Bradley Hand" pointSize="14"/>
                                         <state key="normal" title="A"/>
                                         <connections>
@@ -393,7 +388,8 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KIr-Mt-Rmm">
-                                        <rect key="frame" x="0.0" y="18" width="30" height="25"/>
+                                        <frame key="frameInset" minY="18" width="30" height="25"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" name="Chalkboard SE" family="Bradley Hand" pointSize="14"/>
                                         <state key="normal" title="B"/>
                                         <connections>
@@ -401,7 +397,8 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kgo-gI-4hc">
-                                        <rect key="frame" x="0.0" y="36" width="30" height="25"/>
+                                        <frame key="frameInset" minY="36" width="30" height="25"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" name="Chalkboard SE" family="Bradley Hand" pointSize="14"/>
                                         <state key="normal" title="C"/>
                                         <connections>
@@ -409,7 +406,8 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zNy-dP-jmM">
-                                        <rect key="frame" x="0.0" y="54" width="30" height="25"/>
+                                        <frame key="frameInset" minY="54" width="30" height="25"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" name="Chalkboard SE" family="Bradley Hand" pointSize="14"/>
                                         <state key="normal" title="D"/>
                                         <connections>
@@ -417,7 +415,8 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GQF-vZ-gIC">
-                                        <rect key="frame" x="0.0" y="90" width="30" height="25"/>
+                                        <frame key="frameInset" minY="90" width="30" height="25"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" name="Chalkboard SE" family="Bradley Hand" pointSize="14"/>
                                         <state key="normal" title="F"/>
                                         <connections>
@@ -425,7 +424,8 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Y49-6A-3YB">
-                                        <rect key="frame" x="0.0" y="126" width="30" height="25"/>
+                                        <frame key="frameInset" minY="126" width="30" height="25"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" name="Chalkboard SE" family="Bradley Hand" pointSize="14"/>
                                         <state key="normal" title="H"/>
                                         <connections>
@@ -433,7 +433,8 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GEM-G0-6mx">
-                                        <rect key="frame" x="0.0" y="108" width="30" height="25"/>
+                                        <frame key="frameInset" minY="108" width="30" height="25"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" name="Chalkboard SE" family="Bradley Hand" pointSize="14"/>
                                         <state key="normal" title="G"/>
                                         <connections>
@@ -441,7 +442,8 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5gr-TX-2Yk">
-                                        <rect key="frame" x="0.0" y="162" width="30" height="25"/>
+                                        <frame key="frameInset" minY="162" width="30" height="25"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" name="Chalkboard SE" family="Bradley Hand" pointSize="14"/>
                                         <state key="normal" title="J"/>
                                         <connections>
@@ -449,7 +451,8 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LrU-bm-Z0i">
-                                        <rect key="frame" x="0.0" y="144" width="30" height="25"/>
+                                        <frame key="frameInset" minY="144" width="30" height="25"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" name="Chalkboard SE" family="Bradley Hand" pointSize="14"/>
                                         <state key="normal" title="I"/>
                                         <connections>
@@ -457,7 +460,8 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9X4-PV-kO6">
-                                        <rect key="frame" x="0.0" y="198" width="30" height="25"/>
+                                        <frame key="frameInset" minY="198" width="30" height="25"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" name="Chalkboard SE" family="Bradley Hand" pointSize="14"/>
                                         <state key="normal" title="L"/>
                                         <connections>
@@ -465,7 +469,8 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dnG-tV-Nw5">
-                                        <rect key="frame" x="0.0" y="252" width="30" height="25"/>
+                                        <frame key="frameInset" minY="252" width="30" height="25"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" name="Chalkboard SE" family="Bradley Hand" pointSize="14"/>
                                         <state key="normal" title="O"/>
                                         <connections>
@@ -473,7 +478,8 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2rw-Po-BNl">
-                                        <rect key="frame" x="0.0" y="234" width="30" height="25"/>
+                                        <frame key="frameInset" minY="234" width="30" height="25"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" name="Chalkboard SE" family="Bradley Hand" pointSize="14"/>
                                         <state key="normal" title="N"/>
                                         <connections>
@@ -481,7 +487,8 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xm6-aA-cYi">
-                                        <rect key="frame" x="0.0" y="216" width="30" height="25"/>
+                                        <frame key="frameInset" minY="216" width="30" height="25"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" name="Chalkboard SE" family="Bradley Hand" pointSize="14"/>
                                         <state key="normal" title="M"/>
                                         <connections>
@@ -489,7 +496,8 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gHR-Vl-pYU">
-                                        <rect key="frame" x="0.0" y="307" width="30" height="25"/>
+                                        <frame key="frameInset" minY="307" width="30" height="25"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" name="Chalkboard SE" family="Bradley Hand" pointSize="14"/>
                                         <state key="normal" title="R"/>
                                         <connections>
@@ -497,7 +505,8 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="q3L-Jl-cRS">
-                                        <rect key="frame" x="0.0" y="288" width="30" height="25"/>
+                                        <frame key="frameInset" minY="288" width="30" height="25"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" name="Chalkboard SE" family="Bradley Hand" pointSize="14"/>
                                         <state key="normal" title="Q"/>
                                         <connections>
@@ -505,7 +514,8 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lNt-wZ-vK3">
-                                        <rect key="frame" x="0.0" y="270" width="30" height="25"/>
+                                        <frame key="frameInset" minY="270" width="30" height="25"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" name="Chalkboard SE" family="Bradley Hand" pointSize="14"/>
                                         <state key="normal" title="P"/>
                                         <connections>
@@ -513,7 +523,8 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bKJ-mm-eCL">
-                                        <rect key="frame" x="0.0" y="360" width="30" height="25"/>
+                                        <frame key="frameInset" minY="360" width="30" height="25"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" name="Chalkboard SE" family="Bradley Hand" pointSize="14"/>
                                         <state key="normal" title="U"/>
                                         <connections>
@@ -521,7 +532,8 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="W6H-1p-QEY">
-                                        <rect key="frame" x="0.0" y="342" width="30" height="25"/>
+                                        <frame key="frameInset" minY="342" width="30" height="25"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" name="Chalkboard SE" family="Bradley Hand" pointSize="14"/>
                                         <state key="normal" title="T"/>
                                         <connections>
@@ -529,7 +541,8 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pE3-GU-aOJ">
-                                        <rect key="frame" x="0.0" y="324" width="30" height="25"/>
+                                        <frame key="frameInset" minY="324" width="30" height="25"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" name="Chalkboard SE" family="Bradley Hand" pointSize="14"/>
                                         <state key="normal" title="S"/>
                                         <connections>
@@ -537,7 +550,8 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AUU-kK-LTo">
-                                        <rect key="frame" x="0.0" y="396" width="30" height="25"/>
+                                        <frame key="frameInset" minY="396" width="30" height="25"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" name="Chalkboard SE" family="Bradley Hand" pointSize="14"/>
                                         <state key="normal" title="W"/>
                                         <connections>
@@ -545,7 +559,8 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZXw-ar-cVf">
-                                        <rect key="frame" x="0.0" y="378" width="30" height="25"/>
+                                        <frame key="frameInset" minY="378" width="30" height="25"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" name="Chalkboard SE" family="Bradley Hand" pointSize="14"/>
                                         <state key="normal" title="V"/>
                                         <connections>
@@ -553,7 +568,8 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dVQ-oF-KD0">
-                                        <rect key="frame" x="0.0" y="432" width="30" height="25"/>
+                                        <frame key="frameInset" minY="432" width="30" height="25"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" name="Chalkboard SE" family="Bradley Hand" pointSize="14"/>
                                         <state key="normal" title="Y"/>
                                         <connections>
@@ -561,7 +577,8 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gC5-Jd-osY">
-                                        <rect key="frame" x="0.0" y="414" width="30" height="25"/>
+                                        <frame key="frameInset" minY="414" width="30" height="25"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" name="Chalkboard SE" family="Bradley Hand" pointSize="14"/>
                                         <state key="normal" title="X"/>
                                         <connections>
@@ -569,7 +586,8 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FXj-XI-HEM">
-                                        <rect key="frame" x="0.0" y="180" width="30" height="25"/>
+                                        <frame key="frameInset" minY="180" width="30" height="25"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" name="Chalkboard SE" family="Bradley Hand" pointSize="14"/>
                                         <state key="normal" title="K"/>
                                         <connections>
@@ -577,7 +595,8 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uT8-QA-WcC">
-                                        <rect key="frame" x="0.0" y="450" width="30" height="25"/>
+                                        <frame key="frameInset" minY="450" width="30" height="25"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" name="Chalkboard SE" family="Bradley Hand" pointSize="14"/>
                                         <state key="normal" title="Z"/>
                                         <connections>
@@ -585,7 +604,8 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IaD-l5-qf8">
-                                        <rect key="frame" x="0.0" y="468" width="30" height="25"/>
+                                        <frame key="frameInset" minY="468" width="30" height="25"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" name="Chalkboard SE" family="Bradley Hand" pointSize="14"/>
                                         <state key="normal" title="+"/>
                                         <connections>
@@ -593,7 +613,8 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5Y7-M2-IcN">
-                                        <rect key="frame" x="0.0" y="72" width="30" height="25"/>
+                                        <frame key="frameInset" minY="72" width="30" height="25"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" name="Chalkboard SE" family="Bradley Hand" pointSize="14"/>
                                         <state key="normal" title="E"/>
                                         <connections>

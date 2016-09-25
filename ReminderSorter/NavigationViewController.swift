@@ -11,18 +11,18 @@ import UIKit
 class NavigationViewController : UINavigationController {
     
     //All these three methods lock the orentation
-    override func shouldAutorotate() -> Bool {
+    override var shouldAutorotate : Bool {
         
         return false
     }
     
-    override func supportedInterfaceOrientations() -> UIInterfaceOrientationMask {
+    override var supportedInterfaceOrientations : UIInterfaceOrientationMask {
         
-        return UIInterfaceOrientationMask.Portrait
+        return UIInterfaceOrientationMask.portrait
     }
     
-    override func preferredInterfaceOrientationForPresentation() -> UIInterfaceOrientation {
+    override var preferredInterfaceOrientationForPresentation : UIInterfaceOrientation {
         
-        return UIInterfaceOrientation.Portrait
+        return UIInterfaceOrientation.portrait
     }
 }

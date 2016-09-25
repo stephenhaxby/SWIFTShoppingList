@@ -10,7 +10,7 @@ import UIKit
 
 class ContainerViewController : UIViewController, UISearchBarDelegate {
     
-    var lockTimer : NSTimer = NSTimer()
+    var lockTimer : Timer = Timer()
     
     var saveReminderObserver : NSObjectProtocol?    
     var actionOnLockedObserver : NSObjectProtocol?
@@ -33,20 +33,20 @@ class ContainerViewController : UIViewController, UISearchBarDelegate {
         super.init(coder: aDecoder)
 
         //Custom observer for when a cell / reminder needs to be saved
-        saveReminderObserver = NSNotificationCenter.defaultCenter().addObserverForName(Constants.SaveReminder, object: nil, queue: nil){
+        saveReminderObserver = NotificationCenter.default.addObserver(forName: NSNotification.Name(rawValue: Constants.SaveReminder), object: nil, queue: nil){
             (notification) -> Void in
             
             self.setupRightBarButtons(false)
         }
         
-        saveReminderObserver = NSNotificationCenter.defaultCenter().addObserverForName(Constants.ActionOnLocked, object: nil, queue: nil){
+        saveReminderObserver = NotificationCenter.default.addObserver(forName: NSNotification.Name(rawValue: Constants.ActionOnLocked), object: nil, queue: nil){
             (notification) -> Void in
             
             self.actionOnLocked()
         }
 
 
-        itemBeginEditingObserver = NSNotificationCenter.defaultCenter().addObserverForName(Constants.ItemEditing, object: nil, queue: nil){
+        itemBeginEditingObserver = NotificationCenter.default.addObserver(forName: NSNotification.Name(rawValue: Constants.ItemEditing), object: nil, queue: nil){
             (notification) -> Void in
             
             if let isEditing = notification.object as? Bool {
@@ -55,13 +55,13 @@ class ContainerViewController : UIViewController, UISearchBarDelegate {
         }
         
         //Observer for when our settings change
-        settingsObserver = NSNotificationCenter.defaultCenter().addObserverForName(NSUserDefaultsDidChangeNotification, object: nil, queue: nil){
+        settingsObserver = NotificationCenter.default.addObserver(forName: UserDefaults.didChangeNotification, object: nil, queue: nil){
             (notification) -> Void in
             
             self.lockUnlock()
         }
         
-        resetLockObserver = NSNotificationCenter.defaultCenter().addObserverForName(Constants.ResetLock, object: nil, queue: nil){
+        resetLockObserver = NotificationCenter.default.addObserver(forName: NSNotification.Name(rawValue: Constants.ResetLock), object: nil, queue: nil){
             (notification) -> Void in
             
             self.resetLock()
@@ -72,31 +72,31 @@ class ContainerViewController : UIViewController, UISearchBarDelegate {
         
         if let observer = saveReminderObserver{
             
-            NSNotificationCenter.defaultCenter().removeObserver(observer, name: Constants.SaveReminder, object: nil)
+            NotificationCenter.default.removeObserver(observer, name: NSNotification.Name(rawValue: Constants.SaveReminder), object: nil)
         }
         
         if let observer = actionOnLockedObserver{
             
-            NSNotificationCenter.defaultCenter().removeObserver(observer, name: Constants.ActionOnLocked, object: nil)
+            NotificationCenter.default.removeObserver(observer, name: NSNotification.Name(rawValue: Constants.ActionOnLocked), object: nil)
         }
 
         if let observer = itemBeginEditingObserver{
             
-            NSNotificationCenter.defaultCenter().removeObserver(observer, name: Constants.ItemEditing, object: nil)
+            NotificationCenter.default.removeObserver(observer, name: NSNotification.Name(rawValue: Constants.ItemEditing), object: nil)
         }
         
         if let observer = settingsObserver{
             
-            NSNotificationCenter.defaultCenter().removeObserver(observer, name: NSUserDefaultsDidChangeNotification, object: nil)
+            NotificationCenter.default.removeObserver(observer, name: UserDefaults.didChangeNotification, object: nil)
         }
         
         if let observer = resetLockObserver{
             
-            NSNotificationCenter.defaultCenter().removeObserver(observer, name: Constants.ResetLock, object: nil)
+            NotificationCenter.default.removeObserver(observer, name: NSNotification.Name(rawValue: Constants.ResetLock), object: nil)
         }
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
         searchBar.delegate = self
@@ -108,12 +108,12 @@ class ContainerViewController : UIViewController, UISearchBarDelegate {
         
         var imageView : UIImageView!
         imageView = UIImageView(frame: view.bounds)
-        imageView.contentMode =  UIViewContentMode.ScaleAspectFill
+        imageView.contentMode =  UIViewContentMode.scaleAspectFill
         imageView.clipsToBounds = true
         imageView.image = background
         imageView.center = view.center
         view.addSubview(imageView)
-        self.view.sendSubviewToBack(imageView)
+        self.view.sendSubview(toBack: imageView)
         
         self.navigationController?.navigationBar.titleTextAttributes =
             [NSForegroundColorAttributeName: UIColor.init(red: 0.0, green: 0.5, blue: 1, alpha: 1),
@@ -124,25 +124,25 @@ class ContainerViewController : UIViewController, UISearchBarDelegate {
         super.viewDidLoad()
         
         //Unlock button
-        lockButton.setTitle("\u{1F513}", forState: UIControlState.Normal)
-        lockButton.titleLabel?.font = UIFont.boldSystemFontOfSize(20)
+        lockButton.setTitle("\u{1F513}", for: UIControlState())
+        lockButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 20)
         
         setupRightBarButtons(false)
         
         setLockTimer()
     }
     
-    @IBAction func infoButtonTouchUpInside(sender: AnyObject) {
+    @IBAction func infoButtonTouchUpInside(_ sender: AnyObject) {
      
-        performSegueWithIdentifier("InfoSegue", sender: sender)
+        performSegue(withIdentifier: "InfoSegue", sender: sender)
     }
     
-    @IBAction func lockButtonTouchUpInside(sender: AnyObject) {
+    @IBAction func lockButtonTouchUpInside(_ sender: AnyObject) {
         
         lockUnlock()
     }
     
-    @IBAction func doneButtonTouchUpInside(sender: AnyObject) {
+    @IBAction func doneButtonTouchUpInside(_ sender: AnyObject) {
         
         //Find the active / editing Text View and set it to no longer editing
         for controller in self.childViewControllers {
@@ -153,7 +153,7 @@ class ContainerViewController : UIViewController, UISearchBarDelegate {
                     
                     if let shoppingListItemCell = cell as? ShoppingListItemTableViewCell {
                         
-                        if shoppingListItemCell.shoppingListItemTextView.isFirstResponder() {
+                        if shoppingListItemCell.shoppingListItemTextView.isFirstResponder {
                             
                             shoppingListItemCell.shoppingListItemTextView.resignFirstResponder()
                         }
@@ -165,7 +165,7 @@ class ContainerViewController : UIViewController, UISearchBarDelegate {
         setupRightBarButtons(false)
     }
     
-    func startStopTimer(stop: Bool) {
+    func startStopTimer(_ stop: Bool) {
         
         if stop {
             lockTimer.invalidate()
@@ -179,7 +179,7 @@ class ContainerViewController : UIViewController, UISearchBarDelegate {
         
         if SettingsUserDefaults.autoLockList {
         
-            lockTimer = NSTimer.scheduledTimerWithTimeInterval(5.0, target:self, selector: #selector(lockUnlock), userInfo: nil, repeats: false)
+            lockTimer = Timer.scheduledTimer(timeInterval: 5.0, target:self, selector: #selector(lockUnlock), userInfo: nil, repeats: false)
         }
     }
     
@@ -190,9 +190,9 @@ class ContainerViewController : UIViewController, UISearchBarDelegate {
         
         if lockButton.currentTitle == "\u{1F513}" {
             
-            lockButton.setTitle("\u{1F512}", forState: UIControlState.Normal)
+            lockButton.setTitle("\u{1F512}", for: UIControlState())
             
-            NSNotificationCenter.defaultCenter().postNotificationName(Constants.InactiveLock, object: true)
+            NotificationCenter.default.post(name: Notification.Name(rawValue: Constants.InactiveLock), object: true)
             
             lockTimer.invalidate()
         }
@@ -204,25 +204,25 @@ class ContainerViewController : UIViewController, UISearchBarDelegate {
     
     func resetLock(){
         
-        lockButton.setTitle("\u{1F513}", forState: UIControlState.Normal)
+        lockButton.setTitle("\u{1F513}", for: UIControlState())
         
-        NSNotificationCenter.defaultCenter().postNotificationName(Constants.InactiveLock, object: false)
+        NotificationCenter.default.post(name: Notification.Name(rawValue: Constants.InactiveLock), object: false)
         
         setLockTimer()
     }
     
     func setInfoButtonVisible() {
         
-        infoButton = UIBarButtonItem(title: "\u{24D8}", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(infoButtonTouchUpInside))
-        infoButton.setTitleTextAttributes([NSFontAttributeName: UIFont.boldSystemFontOfSize(20)], forState: UIControlState.Normal)
+        infoButton = UIBarButtonItem(title: "\u{24D8}", style: UIBarButtonItemStyle.plain, target: self, action: #selector(infoButtonTouchUpInside))
+        infoButton.setTitleTextAttributes([NSFontAttributeName: UIFont.boldSystemFont(ofSize: 20)], for: UIControlState())
         
         self.navigationItem.setRightBarButtonItems([infoButton], animated: true)
     }
     
     func setDoneButtonVisible() {
         
-        doneButton = UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(doneButtonTouchUpInside))
-        doneButton.setTitleTextAttributes([NSFontAttributeName: UIFont.boldSystemFontOfSize(15)], forState: UIControlState.Normal)
+        doneButton = UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.plain, target: self, action: #selector(doneButtonTouchUpInside))
+        doneButton.setTitleTextAttributes([NSFontAttributeName: UIFont.boldSystemFont(ofSize: 15)], for: UIControlState())
         
         self.navigationItem.setRightBarButtonItems([doneButton], animated: true)
     }
@@ -234,21 +234,21 @@ class ContainerViewController : UIViewController, UISearchBarDelegate {
         if (actionOnLockedCounter >= 3) {
             
             //Display an alert to specify that we couldn't get access
-            let errorAlert = UIAlertController(title: "Locked", message: "Unlock your list to complete this action", preferredStyle: UIAlertControllerStyle.Alert)
+            let errorAlert = UIAlertController(title: "Locked", message: "Unlock your list to complete this action", preferredStyle: UIAlertControllerStyle.alert)
             
             //Add an Ok button to the alert
-            errorAlert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler:
+            errorAlert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler:
                 { (action: UIAlertAction!) in
                     
                     self.actionOnLockedCounter = 0
             }))
             
             //Present the alert
-            self.presentViewController(errorAlert, animated: true, completion: nil)
+            self.present(errorAlert, animated: true, completion: nil)
         }
     }
     
-    func setupRightBarButtons(editing : Bool) {
+    func setupRightBarButtons(_ editing : Bool) {
         
         if editing {
             setDoneButtonVisible()
@@ -259,31 +259,31 @@ class ContainerViewController : UIViewController, UISearchBarDelegate {
     }
     
     //UISearchBar Delegate methods
-    func searchBarCancelButtonClicked(searchBar: UISearchBar) {
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
                 
-        NSNotificationCenter.defaultCenter().postNotificationName(Constants.SearchBarCancel, object: nil)
+        NotificationCenter.default.post(name: Notification.Name(rawValue: Constants.SearchBarCancel), object: nil)
         
         searchBar.resignFirstResponder()
         searchBar.text = String()
     }
     
-    func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         
-        NSNotificationCenter.defaultCenter().postNotificationName(Constants.SearchBarTextDidChange, object: searchBar.text)
+        NotificationCenter.default.post(name: Notification.Name(rawValue: Constants.SearchBarTextDidChange), object: searchBar.text)
     }
     
-    func searchBarTextDidBeginEditing(searchBar: UISearchBar) {
+    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
         
-        NSNotificationCenter.defaultCenter().postNotificationName(Constants.SetRefreshLock, object: true)
+        NotificationCenter.default.post(name: Notification.Name(rawValue: Constants.SetRefreshLock), object: true)
     }
 
     //This gets called after searchBarCancelButtonClicked
-    func searchBarTextDidEndEditing(searchBar: UISearchBar) {
+    func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
         
-        NSNotificationCenter.defaultCenter().postNotificationName(Constants.SetRefreshLock, object: false)
+        NotificationCenter.default.post(name: Notification.Name(rawValue: Constants.SetRefreshLock), object: false)
     }
     
-    func searchBarSearchButtonClicked(searchBar: UISearchBar) {
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         
         searchBar.resignFirstResponder()
     }
