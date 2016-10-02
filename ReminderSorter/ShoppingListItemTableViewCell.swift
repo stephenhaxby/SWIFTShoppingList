@@ -143,8 +143,9 @@ class ShoppingListItemTableViewCell: UITableViewCell, UITextViewDelegate
     
     func setInactiveLock(_ lock: Bool) {
         
-        if !reminder!.isCompleted
-            || Utility.itemIsInShoppingCart(reminder!) {
+        if reminder != nil &&
+            (!reminder!.isCompleted
+            || Utility.itemIsInShoppingCart(reminder!)) {
             
             completedSwitch.isEnabled = !lock
             shoppingListItemTextView.isEditable = !lock
