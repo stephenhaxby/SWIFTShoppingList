@@ -60,7 +60,10 @@ class ShoppingListItemTableViewCell: UITableViewCell, UITextViewDelegate
         pressGesture.delegate = self
         pressGesture.numberOfTapsRequired = 1
         
-        completedSwitchView.addGestureRecognizer(pressGesture)
+        if completedSwitchView != nil {
+        
+            completedSwitchView.addGestureRecognizer(pressGesture)
+        }
     }
     
     func viewPressed(_ gestureRecognizer: UIGestureRecognizer) {
@@ -68,6 +71,8 @@ class ShoppingListItemTableViewCell: UITableViewCell, UITextViewDelegate
         if completedSwitch.isEnabled {
 
             if let editedReminder = reminder {
+                
+                NotificationCenter.default.post(name: Notification.Name(rawValue: Constants.ResetLock), object: self)
                 
                 editedReminder.isCompleted = completedSwitch.isOn
                 completedSwitch.setOn(!completedSwitch.isOn, animated: true)
@@ -138,9 +143,13 @@ class ShoppingListItemTableViewCell: UITableViewCell, UITextViewDelegate
     
     func setInactiveLock(_ lock: Bool) {
         
-        completedSwitch.isEnabled = !lock
-        shoppingListItemTextView.isEditable = !lock
-        shoppingListItemTextView.isSelectable = !lock
+        if !reminder!.isCompleted
+            || Utility.itemIsInShoppingCart(reminder!) {
+            
+            completedSwitch.isEnabled = !lock
+            shoppingListItemTextView.isEditable = !lock
+            shoppingListItemTextView.isSelectable = !lock
+        }
     }
     
     func setShoppingListItem(_ reminder: EKReminder) {

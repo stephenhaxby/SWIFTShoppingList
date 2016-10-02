@@ -204,7 +204,9 @@ class ContainerViewController : UIViewController, UISearchBarDelegate {
     
     func resetLock(){
         
-        lockButton.setTitle("\u{1F513}", for: UIControlState())
+        lockTimer.invalidate()
+        
+        lockButton.setTitle("\u{1F513}", for: UIControlState())       
         
         NotificationCenter.default.post(name: Notification.Name(rawValue: Constants.InactiveLock), object: false)
         

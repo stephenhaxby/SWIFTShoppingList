@@ -360,10 +360,6 @@ class ReminderSortViewController: UITableViewController {
                 clearShoppingCart()
             }
         }
-        else {
-            
-            clearShoppingCart()
-        }
     }
     
     func commitShoppingList() {
