@@ -92,7 +92,7 @@ class ReminderSortViewController: UITableViewController {
             if self.refreshLock.try() {
             
                 //Reload the grid only if there are new items from iCloud that we don't have
-                self.conditionalLoadShoppingList()
+                self.conditionalLoadShoppingList() 
                 
                 self.refreshLock.unlock()
             }
