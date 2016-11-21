@@ -18,11 +18,11 @@ class InfoViewController : UIViewController {
     
     @IBOutlet weak var clearShoppingCartButton: UIButton!
     
-    var defaults : NSUserDefaults {
+    var defaults : UserDefaults {
         
         get {
             
-            return NSUserDefaults.standardUserDefaults()
+            return UserDefaults.standard
         }
     }
     
@@ -30,52 +30,52 @@ class InfoViewController : UIViewController {
         super.viewDidLoad()
         
         //Set the text and font of the Settings button (unicode)
-        settingsButton.setTitle("\u{2699}", forState: UIControlState.Normal)
-        settingsButton.titleLabel?.font = UIFont.boldSystemFontOfSize(26)
+        settingsButton.setTitle("\u{2699}", for: UIControlState())
+        settingsButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 26)
         
-        let arrowAttributes = [NSFontAttributeName : UIFont.boldSystemFontOfSize(22.0)]
-        let textAttributes = [NSFontAttributeName : UIFont.systemFontOfSize(18.0)]
+        let arrowAttributes = [NSFontAttributeName : UIFont.boldSystemFont(ofSize: 22.0)]
+        let textAttributes = [NSFontAttributeName : UIFont.systemFont(ofSize: 18.0)]
         
         let backString : NSMutableAttributedString = NSMutableAttributedString(string: "<", attributes: arrowAttributes)
-        backString.appendAttributedString(NSMutableAttributedString(string: " Back", attributes: textAttributes))
+        backString.append(NSMutableAttributedString(string: " Back", attributes: textAttributes))
         
-        closeButton.setAttributedTitle(backString, forState: UIControlState.Normal)
+        closeButton.setAttributedTitle(backString, for: UIControlState())
 
-        if let shoppingCartExpiryTime : NSDate = defaults.objectForKey(Constants.ClearShoppingListExpire) as? NSDate {
+        if let shoppingCartExpiryTime : Date = defaults.object(forKey: Constants.ClearShoppingListExpire) as? Date {
             
             shoppingCartExipryDatePicker.date = shoppingCartExpiryTime
         }
         
-        clearShoppingCartButton.layer.borderColor = UIColor(red:0.5, green:0.5, blue:0.5, alpha:1.0).CGColor
+        clearShoppingCartButton.layer.borderColor = UIColor(red:0.5, green:0.5, blue:0.5, alpha:1.0).cgColor
         clearShoppingCartButton.layer.borderWidth = 1.0
         clearShoppingCartButton.layer.cornerRadius = 5
     }
     
     //When the settings butto is pressed, open the settings page at the settings for our app
-    @IBAction func settingsButtonTouchUpInside(sender: AnyObject) {
+    @IBAction func settingsButtonTouchUpInside(_ sender: AnyObject) {
         
-        if let appSettings = NSURL(string: UIApplicationOpenSettingsURLString){
+        if let appSettings = URL(string: UIApplicationOpenSettingsURLString){
             
-            UIApplication.sharedApplication().openURL(appSettings)
+            UIApplication.shared.openURL(appSettings)
         }
     }
     
-    @IBAction func closeButtonTouchUpInside(sender: AnyObject) {
+    @IBAction func closeButtonTouchUpInside(_ sender: AnyObject) {
         
         closeInformation()
     }
     
-    @IBAction func clearShoppingCartButtonTouchUpInside(sender: AnyObject) {
+    @IBAction func clearShoppingCartButtonTouchUpInside(_ sender: AnyObject) {
         
-        NSNotificationCenter.defaultCenter().postNotificationName(Constants.ClearShoppingList, object: nil)
+        NotificationCenter.default.post(name: Notification.Name(rawValue: Constants.ClearShoppingList), object: nil)
         
         closeInformation()
     }
     
     func closeInformation(){
         
-        defaults.setObject(shoppingCartExipryDatePicker.date, forKey: Constants.ClearShoppingListExpire)
+        defaults.set(shoppingCartExipryDatePicker.date, forKey: Constants.ClearShoppingListExpire)
         
-        presentingViewController?.dismissViewControllerAnimated(true, completion: nil)
+        presentingViewController?.dismiss(animated: true, completion: nil)
     }
 }

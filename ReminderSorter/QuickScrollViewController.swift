@@ -19,19 +19,19 @@ class QuickScrollViewController : UIViewController {
         
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
      
         view.backgroundColor = UIColor(red:0.95, green:0.95, blue:0.95, alpha:0.4)
     }
     
-    @IBAction func touchUpInside(sender: UIButton) {
+    @IBAction func touchUpInside(_ sender: UIButton) {
         
         //When any of the alphabet buttons are clicked, post the notification along with the button that was pressed
-        NSNotificationCenter.defaultCenter().postNotificationName(Constants.QuickScrollButtonPressed, object: sender)
+        NotificationCenter.default.post(name: Notification.Name(rawValue: Constants.QuickScrollButtonPressed), object: sender)
     }
     
-    func setQuickLinkButtonFont(views: [UIView]) {
+    func setQuickLinkButtonFont(_ views: [UIView]) {
         
         for subview in views as [UIView] {
             
