@@ -8,6 +8,8 @@
 
 import UIKit
 import EventKit
+import UserNotifications
+
 fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
   switch (lhs, rhs) {
   case let (l?, r?):
@@ -286,6 +288,35 @@ class ReminderSortViewController: UITableViewController {
         }
     }
     
+    func clearPendingShoppingCartNotification() {
+        
+        if let clearShoppingListNotification : UNNotificationRequest = getPendingShoppingCartNotification() {
+            
+            // there should be a maximum of one match on UUID
+            UNUserNotificationCenter.current().removePendingNotificationRequests(
+                withIdentifiers: [clearShoppingListNotification.identifier])
+        }
+    }
+    
+    func clearDeliveredShoppingCartNotification() {
+        
+        UNUserNotificationCenter.current().getDeliveredNotifications { notifications in
+            
+            var requests : [UNNotificationRequest] = [UNNotificationRequest]()
+            
+            for notification in notifications {
+                
+                requests.append(notification.request)
+            }
+            
+            if let calendarNotification : UNNotificationRequest = self.getClearShoppingCartNotification(forNotifications: requests) {
+                
+                UNUserNotificationCenter.current().removeDeliveredNotifications(
+                    withIdentifiers: [calendarNotification.identifier])
+            }
+        }
+    }
+    
     func clearShoppingCart() {
         
         for shoppingListItem in shoppingList {
@@ -298,21 +329,51 @@ class ReminderSortViewController: UITableViewController {
             }
         }
         
-        if let clearShoppingListNotification : UILocalNotification = getClearShoppingCartNotification() {
-            
-            UIApplication.shared.cancelLocalNotification(clearShoppingListNotification) // there should be a maximum of one match on UUID
-        }
+        clearPendingShoppingCartNotification()
+        clearDeliveredShoppingCartNotification()
         
         getShoppingList(shoppingList)
     }
     
-    func getClearShoppingCartNotification() -> UILocalNotification? {
+    func getDeliveredShoppingCartNotification() -> UNNotificationRequest? {
         
-        var clearShoppingListNotification : UILocalNotification?
+        var clearShoppingListNotification : UNNotificationRequest?
         
-        for notification in UIApplication.shared.scheduledLocalNotifications! as [UILocalNotification] { // loop through notifications...
+        UNUserNotificationCenter.current().getDeliveredNotifications { notifications in
             
-            if (notification.userInfo!["UUID"] as! String == Constants.SetClearShoppingList) { // ...and cancel the notification that corresponds to this TodoItem instance (matched by UUID)
+            var requests : [UNNotificationRequest] = [UNNotificationRequest]()
+            
+            for notification in notifications {
+                
+                requests.append(notification.request)
+            }
+            
+            clearShoppingListNotification = self.getClearShoppingCartNotification(forNotifications: requests)
+        }
+        
+        return clearShoppingListNotification
+    }
+    
+    func getPendingShoppingCartNotification() -> UNNotificationRequest? {
+        
+        var clearShoppingListNotification : UNNotificationRequest?
+        
+        UNUserNotificationCenter.current().getPendingNotificationRequests { requests in
+         
+            clearShoppingListNotification = self.getClearShoppingCartNotification(forNotifications: requests)
+        }
+        
+        return clearShoppingListNotification
+    }
+    
+    func getClearShoppingCartNotification(forNotifications requests : [UNNotificationRequest]) -> UNNotificationRequest? {
+        
+        var clearShoppingListNotification : UNNotificationRequest?
+        
+        for notification in requests { // loop through notifications...
+            
+            // ...and cancel the notification that corresponds to this TodoItem instance (matched by UUID)
+            if notification.identifier.hasPrefix(Constants.SetClearShoppingList) {
                 
                 clearShoppingListNotification = notification
                 
@@ -325,40 +386,49 @@ class ReminderSortViewController: UITableViewController {
     
     func setClearShoppingCart() {
         
-        var clearShoppingListNotification : UILocalNotification? = getClearShoppingCartNotification()
-        
+        clearPendingShoppingCartNotification()
+        clearDeliveredShoppingCartNotification()
+ 
         if let shoppingCartExpiryTime : Date = defaults.object(forKey: Constants.ClearShoppingListExpire) as? Date {
             
             let dateComponents : DateComponents = NSDateManager.getDateComponentsFromDate(shoppingCartExpiryTime)
             
-            if clearShoppingListNotification == nil {
-                
-                // create a corresponding local notification
-                clearShoppingListNotification = UILocalNotification()
-                //notification.alertBody = "TEST Alert!" // text that will be displayed in the notification
-                //notification.alertAction = "open" // text that is displayed after "slide to..." on the lock screen - defaults to "slide to view"
-                
-                //notification.soundName = UILocalNotificationDefaultSoundName // play default sound
-                clearShoppingListNotification!.userInfo = ["UUID": Constants.SetClearShoppingList] // assign a unique identifier to the notification so that we can retrieve it later
-                //notification.category = "TODO_CATEGORY"
-                UIApplication.shared.scheduleLocalNotification(clearShoppingListNotification!)
-            }
-            
-            clearShoppingListNotification!.fireDate = NSDateManager.addHoursAndMinutesToDate(Date(), hours: dateComponents.hour!, Minutes: dateComponents.minute!) // todo item due date (when notification will be fired)
-
+            setClearShoppingCartNotification(forDate: dateComponents)
         }
+    }
+    
+    func setClearShoppingCartNotification(forDate dateComponents : DateComponents) {
+
+        let notification = UNMutableNotificationContent()
+        
+        notification.categoryIdentifier = Constants.NotificationCategory
+        
+        let triggerDate : Date = NSDateManager.addHoursAndMinutesToDate(Date(), hours: dateComponents.hour!, Minutes: dateComponents.minute!)
+        
+        let triggerDateComponents : DateComponents = NSDateManager.getDateComponentsFromDate(triggerDate)
+        
+        let trigger : UNNotificationTrigger =
+            UNCalendarNotificationTrigger(
+                dateMatching: triggerDateComponents,
+                repeats: false)
+        
+        //NOTE: As the find/remove methods are async, we could create a new request with this id before the old on has been deleted
+        //      thus our new notification could be removed. The find method needs to use has prefix instead...
+        let request = UNNotificationRequest(
+            identifier: Constants.SetClearShoppingList.appending(UUID().uuidString),
+            content: notification,
+            trigger: trigger
+        )
+        
+        UNUserNotificationCenter.current().add(request)
     }
     
     func CearShoppingCartOnOpen() {
         
         //If the notification fires while we are not active it's not in the list anymore so we need to clear it...
-        
-        if let notification : UILocalNotification = getClearShoppingCartNotification() {
+        if getDeliveredShoppingCartNotification() != nil {
             
-            if notification.fireDate != nil && NSDateManager.dateIsAfterDate(notification.fireDate!, date2: Date()) {
-                
-                clearShoppingCart()
-            }
+            clearShoppingCart()
         }
     }
     

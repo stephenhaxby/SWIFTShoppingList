@@ -56,7 +56,7 @@ class InfoViewController : UIViewController {
         
         if let appSettings = URL(string: UIApplicationOpenSettingsURLString){
             
-            UIApplication.shared.openURL(appSettings)
+            UIApplication.shared.open(appSettings, options: [:])
         }
     }
     

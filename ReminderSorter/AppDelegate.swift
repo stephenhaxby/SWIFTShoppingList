@@ -7,18 +7,30 @@
 //
 
 import UIKit
+import UserNotifications
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate {
 
+    var accessGranted = false
+    
     var window: UIWindow?
 
     var reminderSortViewController : ReminderSortViewController?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
-
-        application.registerUserNotificationSettings(UIUserNotificationSettings(types: .alert, categories: nil))
+        
+        let currentNotificationCenter = UNUserNotificationCenter.current()
+        
+        currentNotificationCenter.delegate = self
+        
+        currentNotificationCenter.requestAuthorization(options: [.alert, .badge]) { (granted, error) in
+            
+            self.accessGranted = granted
+        }
+        
+        //application.registerUserNotificationSettings(UIUserNotificationSettings(types: .alert, categories: nil))
         
         return true
     }
@@ -27,7 +39,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
         // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
         
-        if reminderSortViewController != nil {
+        if reminderSortViewController != nil && accessGranted {
             
             reminderSortViewController?.commitShoppingList()
         }
@@ -55,9 +67,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
     }
     
-    func application(_ application: UIApplication, didReceive notification: UILocalNotification) {
+    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
         
-        NotificationCenter.default.post(name: Notification.Name(rawValue: Constants.ClearShoppingList), object: self)
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: Constants.ClearShoppingList), object: nil)
     }
 }
 

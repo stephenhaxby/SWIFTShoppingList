@@ -66,6 +66,8 @@ class Constants{
     
     static let SettingUserDefaultAutoLockList = "autoLockList"
     
+    static let NotificationCategory = "NotificationCategory"
+    
     enum ShoppingListSection : Int, CustomStringConvertible {
         case list
         case cart

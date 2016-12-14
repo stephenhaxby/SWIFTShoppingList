@@ -65,7 +65,10 @@ class ShoppingListItemTableViewCell: UITableViewCell, UITextViewDelegate
             completedSwitchView.addGestureRecognizer(pressGesture)
         }
         
-        setInactiveLock(reminderSortViewController.inactiveLock)
+        if reminderSortViewController != nil {
+        
+            setInactiveLock(reminderSortViewController.inactiveLock)
+        }
     }
     
     func viewPressed(_ gestureRecognizer: UIGestureRecognizer) {
