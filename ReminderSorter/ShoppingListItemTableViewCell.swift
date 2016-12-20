@@ -75,9 +75,9 @@ class ShoppingListItemTableViewCell: UITableViewCell, UITextViewDelegate
         
         if completedSwitch.isEnabled {
 
-            if let editedReminder = reminder {
+            if let editedReminder = reminder { 
                 
-                if reminderIsNotInHistory() {
+                if !reminderIsInHistory() {
                     NotificationCenter.default.post(name: Notification.Name(rawValue: Constants.ResetLock), object: self)
                 }
                                 
@@ -148,20 +148,19 @@ class ShoppingListItemTableViewCell: UITableViewCell, UITextViewDelegate
         }
     }
     
-    func reminderIsNotInHistory() -> Bool {
+    func reminderIsInHistory() -> Bool {
         
-        return !reminder!.isCompleted
-            || Utility.itemIsInShoppingCart(reminder!)
+        return reminder!.isCompleted
+            && !Utility.itemIsInShoppingCart(reminder!)
     }
     
     func setInactiveLock(_ lock: Bool) {
         
-        if reminder != nil &&
-            reminderIsNotInHistory (){
+        if reminder != nil {
             
-            completedSwitch.isEnabled = !lock
-            shoppingListItemTextView.isEditable = !lock
-            shoppingListItemTextView.isSelectable = !lock
+            completedSwitch.isEnabled = !lock || reminderIsInHistory()
+            shoppingListItemTextView.isEditable = !lock || reminderIsInHistory()
+            shoppingListItemTextView.isSelectable = !lock || reminderIsInHistory()
         }
     }
     
