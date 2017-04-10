@@ -12,23 +12,52 @@ import UserNotifications
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate {
 
-    var accessGranted = false
+    //Gets the managed object context for core data (as a singleton)
+    private let coreDataContext = CoreDataManager.context()
+    
+    private var storageType : Constants.StorageType = Constants.StorageType.local
+    
+    private var storageFacade : StorageFacadeProtocol?
+    
+    //var accessGranted = false
     
     var window: UIWindow?
 
     var reminderSortViewController : ReminderSortViewController?
 
+    var AppStorageFacade : StorageFacadeProtocol {
+        
+        get{
+            
+            return storageFacade!
+        }
+    }
+    
+    override init() {
+        super.init()
+        
+        setStorageType()
+    }
+    
+    func setStorageType() {
+        
+        storageType = Constants.StorageType.local
+        storageFacade = StorageFacadeFactory.getStorageFacade(storageType, managedObjectContext: coreDataContext)
+    }
+    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         
-        let currentNotificationCenter = UNUserNotificationCenter.current()
+        //TODO: This is where we need to check for access to iCloud Reminders if the option is selected...
         
-        currentNotificationCenter.delegate = self
-        
-        currentNotificationCenter.requestAuthorization(options: [.alert, .badge]) { (granted, error) in
-            
-            self.accessGranted = granted
-        }
+//        let currentNotificationCenter = UNUserNotificationCenter.current()
+//        
+//        currentNotificationCenter.delegate = self
+//        
+//        currentNotificationCenter.requestAuthorization(options: [.alert, .badge]) { (granted, error) in
+//            
+//            self.accessGranted = granted
+//        }
         
         //application.registerUserNotificationSettings(UIUserNotificationSettings(types: .alert, categories: nil))
         
@@ -39,7 +68,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
         // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
         
-        if reminderSortViewController != nil && accessGranted {
+        if reminderSortViewController != nil { //&& accessGranted {
             
             reminderSortViewController?.commitShoppingList()
         }

@@ -68,6 +68,8 @@ class Constants{
     
     static let NotificationCategory = "NotificationCategory"
     
+    static let RefreshNotification = "RefreshNotification"
+    
     enum ShoppingListSection : Int, CustomStringConvertible {
         case list
         case cart
@@ -85,5 +87,10 @@ class Constants{
                 
             }
         }
+    }
+    
+    enum StorageType {
+        case local
+        case iCloud
     }
 }

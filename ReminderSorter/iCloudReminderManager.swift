@@ -28,10 +28,44 @@ class iCloudReminderManager{
                 //Save the 'granted' value - if we were granted access
                 self.eventStoreAccessGranted = granted
                 
-                self.getReminderList()
+                //TODO: Do we need this?
+                let _ = self.getReminderList()
                 
                 accessStatus(granted)
             })
+        }
+    }
+    
+    func getReminder(_ id : String, returnReminder : @escaping (EKReminder?) -> ()) {
+
+        var remindersList = [EKReminder]()
+
+        if(eventStoreAccessGranted && reminderList != nil){
+
+            let singlecallendarArrayForPredicate : [EKCalendar] = [reminderList!]
+            let predicate = eventStore.predicateForReminders(in: singlecallendarArrayForPredicate)
+
+            //Stupidly named method... All it does is get reminders for the calendars passed into it
+            eventStore.fetchReminders(matching: predicate) { reminders in
+
+                if let matchingReminders = reminders {
+
+                    //For each reminder in iCloud
+                    for reminder in matchingReminders {
+
+                        remindersList.append(reminder)
+                    }
+                }
+
+                var foundReminder : EKReminder?
+
+                if let index = remindersList.index(where: { (reminder : EKReminder) in reminder.calendarItemExternalIdentifier == id}) {
+
+                    foundReminder = remindersList[index]
+                }
+                
+                returnReminder(foundReminder)
+            }
         }
     }
     

@@ -438,7 +438,7 @@ class ReminderSortViewController: UITableViewController {
         if let blankReminder : EKReminder = self.reminderManager.addReminder("", commit: false) {
             
             //Commit all updated items yet to be committed
-            self.reminderManager.commit()
+            let _ = self.reminderManager.commit()
             
             //Remove the blank reminder added above
             if !self.reminderManager.removeReminder(blankReminder, commit: true) {
