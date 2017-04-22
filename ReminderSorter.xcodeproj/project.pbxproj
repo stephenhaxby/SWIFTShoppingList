@@ -19,7 +19,6 @@
 		0E6BF32D1B2EE54C0005F4E2 /* ReminderSortViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E6BF32C1B2EE54C0005F4E2 /* ReminderSortViewController.swift */; };
 		0E7471031E918F980090D10E /* ShoppingItemFacade.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E7471021E918F980090D10E /* ShoppingItemFacade.swift */; };
 		0E7471061E9190E00090D10E /* ShoppingItemRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E7471051E9190E00090D10E /* ShoppingItemRepository.swift */; };
-		0E7471081E9191800090D10E /* ShoppingItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E7471071E9191800090D10E /* ShoppingItem.swift */; };
 		0E77741E1BCFAD2E00D6720D /* QuickScrollViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E77741D1BCFAD2E00D6720D /* QuickScrollViewController.swift */; };
 		0E9372421C562B680087ABE2 /* ShoppingListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E9372411C562B680087ABE2 /* ShoppingListItem.swift */; };
 		0ECD47601E8D815F005133D0 /* StorageFacadeFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ECD475E1E8D815F005133D0 /* StorageFacadeFactory.swift */; };
@@ -59,7 +58,6 @@
 		0E6BF32C1B2EE54C0005F4E2 /* ReminderSortViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReminderSortViewController.swift; sourceTree = "<group>"; };
 		0E7471021E918F980090D10E /* ShoppingItemFacade.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShoppingItemFacade.swift; sourceTree = "<group>"; };
 		0E7471051E9190E00090D10E /* ShoppingItemRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShoppingItemRepository.swift; sourceTree = "<group>"; };
-		0E7471071E9191800090D10E /* ShoppingItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShoppingItem.swift; sourceTree = "<group>"; };
 		0E77741D1BCFAD2E00D6720D /* QuickScrollViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QuickScrollViewController.swift; sourceTree = "<group>"; };
 		0E9372411C562B680087ABE2 /* ShoppingListItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShoppingListItem.swift; sourceTree = "<group>"; };
 		0ECD475E1E8D815F005133D0 /* StorageFacadeFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StorageFacadeFactory.swift; sourceTree = "<group>"; };
@@ -155,7 +153,6 @@
 				0E01EEA41BFB3FCB00365CF3 /* SettingsUserDefaults.swift */,
 				0E9372411C562B680087ABE2 /* ShoppingListItem.swift */,
 				0ECEAFA51CA1586A00453CF4 /* Utility.swift */,
-				0E7471071E9191800090D10E /* ShoppingItem.swift */,
 				0E316B381E9C1D78005ACC56 /* ShoppingItem.xcdatamodeld */,
 			);
 			path = ReminderSorter;
@@ -304,7 +301,6 @@
 				0E77741E1BCFAD2E00D6720D /* QuickScrollViewController.swift in Sources */,
 				0E7471031E918F980090D10E /* ShoppingItemFacade.swift in Sources */,
 				0ECEAFA61CA1586A00453CF4 /* Utility.swift in Sources */,
-				0E7471081E9191800090D10E /* ShoppingItem.swift in Sources */,
 				0ECD47611E8D815F005133D0 /* StorageFacadeProtocol.swift in Sources */,
 				0E3F2F831BCD11A000B1E323 /* ContainerViewController.swift in Sources */,
 				0ECEAFA41CA1508F00453CF4 /* NSDateManager.swift in Sources */,

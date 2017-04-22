@@ -52,6 +52,13 @@ class SettingsUserDefaults{
             : false
     }
     
+    static var storageICloudReminders: Bool {
+        
+        return hasDefaultValue(Constants.SettingUserDefaultStorageICloudReminders)
+            ? UserDefaults.standard.bool(forKey: Constants.SettingUserDefaultStorageICloudReminders)
+            : false
+    }
+    
     static func hasDefaultValue(_ key: String) -> Bool {
         
         return UserDefaults.standard.value(forKey: key) != nil

@@ -10,7 +10,7 @@ import Foundation
 import EventKit
 
 class iCloudShoppingItemFacade : StorageFacadeProtocol {
-
+    
     var eventStoreObserver : NSObjectProtocol?
 
     var icloudReminderManager : iCloudReminderManager! = nil
@@ -37,27 +37,27 @@ class iCloudShoppingItemFacade : StorageFacadeProtocol {
 
     func accessGranted(_ granted : Bool) {
 
-        //TODO: Callback method from icloudReminderManager.requestAccessToReminders for if access is granted...
+        // TODO: Callback method from icloudReminderManager.requestAccessToReminders for if access is granted...
         // Perhaps call a NotificationCenter method that will set the save method to local reminders.?.?
     }
     
-    func createOrUpdateShoppingListItem(_ shoppingListItem : ShoppingListItem) -> Bool {
-
-        var reminderSaved : Bool = false
-        
+    func createOrUpdateShoppingListItem(_ shoppingListItem : ShoppingListItem, saveSuccess : @escaping (Bool) -> ()) {
+       
         icloudReminderManager.getReminder(shoppingListItem.calendarItemExternalIdentifier) {
             reminder in
-
+            
             var reminderToSave : EKReminder?
             
+            // Existing shopping list item
             if let matchingReminder : EKReminder = reminder {
                 
                 reminderToSave = matchingReminder
             }
             else {
                 
-                if let newReminder = self.icloudReminderManager.addReminder(shoppingListItem.title, commit: true) {
+                if let newReminder = self.icloudReminderManager.addReminder(shoppingListItem.title) {
                     
+                    shoppingListItem.calendarItemExternalIdentifier = newReminder.calendarItemExternalIdentifier
                     reminderToSave = newReminder
                 }
             }
@@ -68,33 +68,27 @@ class iCloudShoppingItemFacade : StorageFacadeProtocol {
                 matchingReminder.isCompleted = shoppingListItem.completed
                 matchingReminder.notes = shoppingListItem.notes
                 
-                reminderSaved = self.icloudReminderManager.saveReminder(matchingReminder, commit: true)
+                saveSuccess(self.icloudReminderManager.saveReminder(matchingReminder))
             }
         }
-        
-        return reminderSaved
     }
-
-    func removeShoppingListItem(_ Id : String) -> Bool {
-
-        var reminderRemoved = false
+    
+    func removeShoppingListItem(_ Id : String, saveSuccess : @escaping (Bool) -> ()) {
         
         icloudReminderManager.getReminder(Id) {
             reminder in
             
             if let matchingReminder : EKReminder = reminder {
                 
-                reminderRemoved = self.icloudReminderManager.removeReminder(matchingReminder, commit: true)
+                saveSuccess(self.icloudReminderManager.removeReminder(matchingReminder))
                 
             }
         }
-        
-        return reminderRemoved
     }
 
-    func removeShoppingListItem(_ shoppingListItem : ShoppingListItem) -> Bool {
+    func removeShoppingListItem(_ shoppingListItem : ShoppingListItem, saveSuccess : @escaping (Bool) -> ()) {
 
-        return removeShoppingListItem(shoppingListItem.calendarItemExternalIdentifier)
+        removeShoppingListItem(shoppingListItem.calendarItemExternalIdentifier, saveSuccess: saveSuccess)
     }
 
     //Expects a function that has a parameter that's an array of RemindMeItem
@@ -115,6 +109,28 @@ class iCloudShoppingItemFacade : StorageFacadeProtocol {
         }))
     }
 
+    func forceUpdateShoppingList() {
+
+        icloudReminderManager.forceUpdateShoppingList()
+        
+//        let tempHelperShoppingListItem : ShoppingListItem = ShoppingListItem()
+//        tempHelperShoppingListItem.title = Constants.ShoppingListItemTableViewCell.iCloudRefreshHelperCell
+//        
+//        createOrUpdateShoppingListItem(tempHelperShoppingListItem) { success in
+//            
+//            if success {
+//                
+//                self.removeShoppingListItem(tempHelperShoppingListItem, saveSuccess : self.save)
+//                self.commit()
+//            }
+//        }
+    }
+    
+    func save(success : Bool) {
+        
+        
+    }
+    
     func commit() -> Bool {
 
         return icloudReminderManager.commit()

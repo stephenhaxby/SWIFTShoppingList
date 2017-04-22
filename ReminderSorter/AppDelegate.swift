@@ -15,7 +15,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     //Gets the managed object context for core data (as a singleton)
     private let coreDataContext = CoreDataManager.context()
     
-    private var storageType : Constants.StorageType = Constants.StorageType.local
+    private var storageType : Constants.StorageType = Constants.StorageType.iCloudReminders
     
     private var storageFacade : StorageFacadeProtocol?
     
@@ -41,7 +41,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     
     func setStorageType() {
         
-        storageType = Constants.StorageType.local
+        storageType = (SettingsUserDefaults.storageICloudReminders) ? Constants.StorageType.iCloudReminders : Constants.StorageType.local
         storageFacade = StorageFacadeFactory.getStorageFacade(storageType, managedObjectContext: coreDataContext)
     }
     
@@ -70,13 +70,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         
         if reminderSortViewController != nil { //&& accessGranted {
             
-            reminderSortViewController?.commitShoppingList()
+            storageFacade?.commit()
         }
     }
 
     func applicationDidEnterBackground(_ application: UIApplication) {
         // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
         // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+        
+        if storageType == Constants.StorageType.local {
+            
+            CoreDataManager.saveContext(context: coreDataContext)
+        }
     }
 
     func applicationWillEnterForeground(_ application: UIApplication) {

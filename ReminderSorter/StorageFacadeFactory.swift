@@ -17,7 +17,7 @@ class StorageFacadeFactory {
             
             case Constants.StorageType.local:
                 return ShoppingItemFacade(shoppingItemRepository: ShoppingItemRepository(managedObjectContext : managedObjectContext!))
-            case Constants.StorageType.iCloud:
+            case Constants.StorageType.iCloudReminders:
                 return iCloudShoppingItemFacade(icloudReminderManager: iCloudReminderManager())
         }
    }

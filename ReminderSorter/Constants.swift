@@ -16,6 +16,8 @@ class Constants{
         static let EmptyCell:String = "<EMPTY_CELL>"
         
         static let NewItemCell:String = "<NEW_ITEM_CELL>"
+        
+        static let iCloudRefreshHelperCell:String = "<ICLOUD_REFRESH_HELPER_CELL>"
     }
     
     static let QuickScrollButtonPressed:String = "QuickScrollButtonPressed"
@@ -66,6 +68,8 @@ class Constants{
     
     static let SettingUserDefaultAutoLockList = "autoLockList"
     
+    static let SettingUserDefaultStorageICloudReminders = "storageICloudReminders"
+    
     static let NotificationCategory = "NotificationCategory"
     
     static let RefreshNotification = "RefreshNotification"
@@ -91,6 +95,6 @@ class Constants{
     
     enum StorageType {
         case local
-        case iCloud
+        case iCloudReminders
     }
 }

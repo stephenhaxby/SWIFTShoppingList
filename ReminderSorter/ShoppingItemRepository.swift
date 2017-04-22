@@ -22,9 +22,7 @@ class ShoppingItemRepository {
         
         let entity = NSEntityDescription.entity(forEntityName: "ShoppingItem", in:managedObjectContext)
         
-        let shoppingItemManagedObject = NSManagedObject(entity: entity!, insertInto: managedObjectContext)
-        
-        return ShoppingItem(managedObject: shoppingItemManagedObject)
+        return ShoppingItem(entity: entity!, insertInto: managedObjectContext)
     }
     
     func createNewShoppingItem(_ title : String, completed : Bool, notes : String?) -> ShoppingItem {
@@ -57,13 +55,8 @@ class ShoppingItemRepository {
         shoppingItemFetch.predicate = NSPredicate(format: "id == %@", shoppingItemId)
         
         do {
-            
-            let shoppingItems : [ShoppingItem] = (try managedObjectContext.fetch(shoppingItemFetch) as! [NSManagedObject]).map({
-                
-                (managedObject : NSManagedObject) -> ShoppingItem in
-                
-                return ShoppingItem(managedObject: managedObject)
-            })
+
+            let shoppingItems : [ShoppingItem] = (try managedObjectContext.fetch(shoppingItemFetch) as! [ShoppingItem])
             
             if shoppingItems.count == 1 {
                 
@@ -83,13 +76,7 @@ class ShoppingItemRepository {
         do {
             
             return
-                (try managedObjectContext.fetch(NSFetchRequest(entityName: "ShoppingItem")) ).map({
-                    
-                    (managedObject : NSManagedObject) -> ShoppingItem in
-                    
-                    return ShoppingItem(managedObject: managedObject)
-                })
-            
+                (try managedObjectContext.fetch(NSFetchRequest(entityName: "ShoppingItem")))
         }
         catch let error as NSError {
             
@@ -111,7 +98,7 @@ class ShoppingItemRepository {
     
     func removeShoppingItem(_ shoppingItem : ShoppingItem) -> Bool {
         
-        managedObjectContext.delete(shoppingItem.shoppingItem)
+        managedObjectContext.delete(shoppingItem)
         
         return true
     }

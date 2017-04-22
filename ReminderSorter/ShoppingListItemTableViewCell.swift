@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import EventKit
 
 class ShoppingListItemTableViewCell: UITableViewCell, UITextViewDelegate
 {
@@ -24,7 +23,7 @@ class ShoppingListItemTableViewCell: UITableViewCell, UITextViewDelegate
     var inactiveLockObserver : NSObjectProtocol?
     
     //Setter for the cells reminder
-    var reminder: EKReminder?
+    var reminder: ShoppingListItem?
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -81,10 +80,10 @@ class ShoppingListItemTableViewCell: UITableViewCell, UITextViewDelegate
                     NotificationCenter.default.post(name: Notification.Name(rawValue: Constants.ResetLock), object: self)
                 }
                                 
-                editedReminder.isCompleted = completedSwitch.isOn
+                editedReminder.completed = completedSwitch.isOn
                 completedSwitch.setOn(!completedSwitch.isOn, animated: true)
 
-                if editedReminder.isCompleted {
+                if editedReminder.completed {
                     
                     //Add the datetime to the reminder as notes (Jan 27, 2010, 1:00 PM)
                     let dateformatter = DateFormatter()
@@ -101,7 +100,7 @@ class ShoppingListItemTableViewCell: UITableViewCell, UITextViewDelegate
                     editedReminder.notes = nil
                 }
 
-                let delayInMilliSeconds = (editedReminder.isCompleted) ? 500.0 : 200.00
+                let delayInMilliSeconds = (editedReminder.completed) ? 500.0 : 200.00
                 
                 //The dalay is in nano seconds so we just convert it using the standard NSEC_PER_MSEC value
                 let delay = Int64(delayInMilliSeconds * Double(NSEC_PER_MSEC))
@@ -150,7 +149,7 @@ class ShoppingListItemTableViewCell: UITableViewCell, UITextViewDelegate
     
     func reminderIsInHistory() -> Bool {
         
-        return reminder!.isCompleted
+        return reminder!.completed
             && !Utility.itemIsInShoppingCart(reminder!)
     }
     
@@ -164,7 +163,7 @@ class ShoppingListItemTableViewCell: UITableViewCell, UITextViewDelegate
         }
     }
     
-    func setShoppingListItem(_ reminder: EKReminder) {
+    func setShoppingListItem(_ reminder: ShoppingListItem) {
         
         self.reminder = reminder
         
@@ -204,11 +203,11 @@ class ShoppingListItemTableViewCell: UITableViewCell, UITextViewDelegate
     }
     
     //Puts a strike through the text of completed items
-    func setShoppingListItemCompletedText(_ shoppingListItemReminder : EKReminder) {
+    func setShoppingListItemCompletedText(_ shoppingListItemReminder : ShoppingListItem) {
         
         if let checkSwitch = completedSwitch {
             
-            checkSwitch.isOn = !shoppingListItemReminder.isCompleted
+            checkSwitch.isOn = !shoppingListItemReminder.completed
             
             switch shoppingListItemReminder.title{
                 

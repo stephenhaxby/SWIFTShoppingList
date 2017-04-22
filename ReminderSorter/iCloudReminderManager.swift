@@ -12,7 +12,7 @@ class iCloudReminderManager{
     
     var eventStoreAccessGranted = false
     let eventStore = EKEventStore()
-    var remindersListName = "Reminders"
+    var remindersListName = Constants.RemindersListName
     var reminderList : EKCalendar?
     
     //Requests access to reminders. Takes in a function to find if access has been granted or not.
@@ -65,6 +65,17 @@ class iCloudReminderManager{
                 }
                 
                 returnReminder(foundReminder)
+            }
+        }
+    }
+    
+    func forceUpdateShoppingList() {
+
+        if let reminder : EKReminder = addReminder(Constants.ShoppingListItemTableViewCell.iCloudRefreshHelperCell) {
+            
+            if removeReminder(reminder) {
+                
+                commit()
             }
         }
     }
@@ -143,7 +154,7 @@ class iCloudReminderManager{
         }
     }
     
-    func addReminder(_ title : String, commit : Bool) -> EKReminder? {
+    func addReminder(_ title : String) -> EKReminder? {
         
         let calendar : EKCalendar? = getReminderList()
         
@@ -158,7 +169,7 @@ class iCloudReminderManager{
         
         do {
             
-            try eventStore.save(reminder, commit: commit)
+            try eventStore.save(reminder, commit: false)
             
         } catch {
 
@@ -168,11 +179,11 @@ class iCloudReminderManager{
         return reminder
     }
     
-    func saveReminder(_ reminder : EKReminder, commit: Bool) -> Bool{
+    func saveReminder(_ reminder : EKReminder) -> Bool{
         
         do {
             
-            try eventStore.save(reminder, commit: commit)
+            try eventStore.save(reminder, commit: false)
             
         } catch let error as NSError {
             
@@ -186,11 +197,11 @@ class iCloudReminderManager{
         return true
     }
     
-    func removeReminder(_ reminder : EKReminder, commit: Bool) -> Bool {
+    func removeReminder(_ reminder : EKReminder) -> Bool {
         
         do {
 
-            try eventStore.remove(reminder, commit: commit)
+            try eventStore.remove(reminder, commit: false)
             
             return true
             

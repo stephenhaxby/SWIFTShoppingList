@@ -18,9 +18,9 @@ class Utility {
         }
     }
     
-    static func itemIsInShoppingCart(_ reminder : EKReminder) -> Bool {
+    static func itemIsInShoppingCart(_ reminder : ShoppingListItem) -> Bool {
         
-        if reminder.isCompleted && reminder.notes != nil {
+        if reminder.completed && reminder.notes != nil {
             
             let dateFormatter = DateFormatter()
             dateFormatter.dateStyle = DateFormatter.Style.medium

@@ -17,7 +17,7 @@ class ShoppingItemFacade : StorageFacadeProtocol {
         self.shoppingItemRepository = shoppingItemRepository
     }
 
-    func createOrUpdateShoppingListItem(_ shoppingListItem : ShoppingListItem) -> Bool {
+    func createOrUpdateShoppingListItem(_ shoppingListItem : ShoppingListItem, saveSuccess : @escaping (Bool) -> ()) {
         
         if let shoppingItem : ShoppingItem = shoppingItemRepository.getShoppingItemBy(shoppingListItem.calendarItemExternalIdentifier) {
             
@@ -32,23 +32,25 @@ class ShoppingItemFacade : StorageFacadeProtocol {
                 completed : shoppingListItem.completed,
                 notes : shoppingListItem.notes)
         }
-        
-        return true
     }
     
-    func removeShoppingListItem(_ Id: String) -> Bool {
+    func forceUpdateShoppingList() {
         
-        return shoppingItemRepository.removeShoppingItem(Id)
     }
     
-    func removeShoppingListItem(_ shoppingListItem : ShoppingListItem) -> Bool {
+    func removeShoppingListItem(_ Id: String, saveSuccess : @escaping (Bool) -> ()){
+        
+        saveSuccess(shoppingItemRepository.removeShoppingItem(Id))
+    }
+    
+    func removeShoppingListItem(_ shoppingListItem : ShoppingListItem, saveSuccess : @escaping (Bool) -> ()) {
         
         if let shoppingItem : ShoppingItem = shoppingItemRepository.getShoppingItemBy(shoppingListItem.calendarItemExternalIdentifier) {
             
-            return shoppingItemRepository.removeShoppingItem(shoppingItem)
+            saveSuccess(shoppingItemRepository.removeShoppingItem(shoppingItem))
         }
         
-        return false
+        saveSuccess(false)
     }
     
     //Expects a function that has a parameter that's an array of RemindMeItem
@@ -70,8 +72,8 @@ class ShoppingItemFacade : StorageFacadeProtocol {
     func getShoppingItemFrom(_ shoppingItem : ShoppingItem) -> ShoppingListItem {
         
         let shoppingListItem = ShoppingListItem()
-        shoppingListItem.calendarItemExternalIdentifier = shoppingItem.id
-        shoppingListItem.title = shoppingItem.title
+        shoppingListItem.calendarItemExternalIdentifier = shoppingItem.id!
+        shoppingListItem.title = shoppingItem.title!
         shoppingListItem.completed = shoppingItem.completed
         shoppingListItem.notes = shoppingItem.notes
         
