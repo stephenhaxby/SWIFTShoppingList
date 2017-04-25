@@ -344,7 +344,7 @@ class ReminderSortViewController: UITableViewController {
         clearPendingShoppingCartNotification()
         clearDeliveredShoppingCartNotification()
         
-        getShoppingList(shoppingList)
+        //getShoppingList(shoppingList)
     }
     
     func getDeliveredShoppingCartNotification() -> UNNotificationRequest? {
@@ -690,17 +690,19 @@ class ReminderSortViewController: UITableViewController {
                 
                 return
             }
-        }
-        
-        let existingIndex : Int? = shoppingList.index(where: {(existingReminder : ShoppingListItem) in existingReminder.calendarItemExternalIdentifier == reminder.calendarItemExternalIdentifier})
-        
-        if existingIndex == nil {
             
-            shoppingList.append(reminder)
+            if let existingIndex : Int = self.shoppingList.index(where: {(existingReminder : ShoppingListItem) in existingReminder.calendarItemExternalIdentifier == reminder.calendarItemExternalIdentifier}) {
+                
+                self.shoppingList[existingIndex] = reminder
+            }
+            else {
+                
+                self.shoppingList.append(reminder)
+            }
+            
+            //Re-sort and Reload the list using our local copy
+            self.getShoppingList(self.shoppingList)
         }
-        
-        //Re-sort and Reload the list using our local copy
-        getShoppingList(shoppingList)
     }
 
     func displayError(_ message : String){
