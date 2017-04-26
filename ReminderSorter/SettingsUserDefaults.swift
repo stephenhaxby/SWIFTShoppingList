@@ -10,20 +10,6 @@ import Foundation
 
 class SettingsUserDefaults{
     
-    static var alphabeticalSortIncomplete: Bool {
-        
-        return hasDefaultValue(Constants.SettingUserDefaultAlphabeticalSortIncomplete)
-            ? UserDefaults.standard.bool(forKey: Constants.SettingUserDefaultAlphabeticalSortIncomplete)
-            : true
-    }
-    
-    static var alphabeticalSortComplete: Bool {
-        
-        return hasDefaultValue(Constants.SettingUserDefaultAlphabeticalSortComplete)
-            ? UserDefaults.standard.bool(forKey: Constants.SettingUserDefaultAlphabeticalSortComplete)
-            : true
-    }
-    
     static var autoCapitalisation: Bool {
         
         return hasDefaultValue(Constants.SettingUserDefaultAutoCapitalisation)

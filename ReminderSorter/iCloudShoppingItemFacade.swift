@@ -11,20 +11,11 @@ import EventKit
 
 class iCloudShoppingItemFacade : StorageFacadeProtocol {
     
-    var eventStoreObserver : NSObjectProtocol?
-
     var icloudReminderManager : iCloudReminderManager! = nil
 
     var returnRemindersFunc : (([ShoppingListItem]) -> ())?
 
     init (icloudReminderManager : iCloudReminderManager) {
-
-        // Sets the method to run when the Event Store is updated in the background
-        eventStoreObserver = NotificationCenter.default.addObserver(forName: NSNotification.Name.EKEventStoreChanged, object: nil, queue: nil){
-            (notification) -> Void in
-
-            NotificationCenter.default.post(name: Notification.Name(rawValue: Constants.RefreshNotification), object: nil)
-        }
 
         self.icloudReminderManager = icloudReminderManager
 
@@ -38,7 +29,7 @@ class iCloudShoppingItemFacade : StorageFacadeProtocol {
     func accessGranted(_ granted : Bool) {
 
         // TODO: Callback method from icloudReminderManager.requestAccessToReminders for if access is granted...
-        // Perhaps call a NotificationCenter method that will set the save method to local reminders.?.?
+        // Something will need to happen with this as we can't load the list until access is granted
     }
     
     func createOrUpdateShoppingListItem(_ shoppingListItem : ShoppingListItem, saveSuccess : @escaping (Bool) -> ()) {
@@ -112,23 +103,6 @@ class iCloudShoppingItemFacade : StorageFacadeProtocol {
     func forceUpdateShoppingList() {
 
         icloudReminderManager.forceUpdateShoppingList()
-        
-//        let tempHelperShoppingListItem : ShoppingListItem = ShoppingListItem()
-//        tempHelperShoppingListItem.title = Constants.ShoppingListItemTableViewCell.iCloudRefreshHelperCell
-//        
-//        createOrUpdateShoppingListItem(tempHelperShoppingListItem) { success in
-//            
-//            if success {
-//                
-//                self.removeShoppingListItem(tempHelperShoppingListItem, saveSuccess : self.save)
-//                self.commit()
-//            }
-//        }
-    }
-    
-    func save(success : Bool) {
-        
-        
     }
     
     func commit() -> Bool {

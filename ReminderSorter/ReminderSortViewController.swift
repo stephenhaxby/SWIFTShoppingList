@@ -10,6 +10,7 @@ import UIKit
 import EventKit
 import UserNotifications
 
+//Override for the less than compare operator to handle nils
 fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
   switch (lhs, rhs) {
   case let (l?, r?):
@@ -21,6 +22,7 @@ fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
   }
 }
 
+//Override for the greater than than compare operator to handle nils
 fileprivate func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
   switch (lhs, rhs) {
   case let (l?, r?):
@@ -29,7 +31,6 @@ fileprivate func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
     return rhs < lhs
   }
 }
-
 
 class ReminderSortViewController: UITableViewController {
     
@@ -45,8 +46,6 @@ class ReminderSortViewController: UITableViewController {
     }
     
     var refreshLock : NSLock = NSLock()
-    
-    //let reminderManager : iCloudReminderManager = iCloudReminderManager()
     
     var shoppingList = [ShoppingListItem]()
     
@@ -88,11 +87,7 @@ class ReminderSortViewController: UITableViewController {
             groupedShoppingList.append([ShoppingListItem]())
         }
         
-        //Used for when the app goes into the background (as we want to commit any changes...)
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        appDelegate.reminderSortViewController = self
-        
-        //Observer for the app for when the event store is changed in the background (or when our app isn't running)
+        //Observer for the app for when the event store is changed in the background (or when our app isn't running (iCloud only))
         eventStoreObserver = NotificationCenter.default.addObserver(forName: NSNotification.Name.EKEventStoreChanged, object: nil, queue: nil){
             (notification) -> Void in
             
@@ -626,22 +621,14 @@ class ReminderSortViewController: UITableViewController {
             return reminder.completed && !Utility.itemIsInShoppingCart(reminder)
         })
         
-        //If the setting specify alphabetical sorting of incomplete items
-        if SettingsUserDefaults.alphabeticalSortIncomplete {
-            
-            itemsToGet = itemsToGet.sorted(by: reminderSort)
-        }
+        //Alphabetical sorting of incomplete items
+        itemsToGet = itemsToGet.sorted(by: reminderSort)
+
+        //Alphabetical sorting of trolley items
+        itemsGot = itemsGot.sorted(by: reminderSort)
         
-        if SettingsUserDefaults.alphabeticalSortIncomplete {
-            
-            itemsGot = itemsGot.sorted(by: reminderSort)
-        }
-        
-        //If the settings specify alphabetical sorting of complete items
-        if SettingsUserDefaults.alphabeticalSortComplete {
-            
-            completedItems = completedItems.sorted(by: reminderSort)
-        }
+        //Alphabetical sorting of complete items
+        completedItems = completedItems.sorted(by: reminderSort)
         
         groupedShoppingList[Constants.ShoppingListSection.list.rawValue] = itemsToGet
         groupedShoppingList[Constants.ShoppingListSection.cart.rawValue] = itemsGot

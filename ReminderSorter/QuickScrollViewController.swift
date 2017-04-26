@@ -9,9 +9,7 @@
 import UIKit
 
 class QuickScrollViewController : UIViewController {
-
-    @IBOutlet weak var JumpListItemA: UIButton!
-    
+   
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -31,6 +29,7 @@ class QuickScrollViewController : UIViewController {
         NotificationCenter.default.post(name: Notification.Name(rawValue: Constants.QuickScrollButtonPressed), object: sender)
     }
     
+    //Recursive method to set every buttons font
     func setQuickLinkButtonFont(_ views: [UIView]) {
         
         for subview in views as [UIView] {

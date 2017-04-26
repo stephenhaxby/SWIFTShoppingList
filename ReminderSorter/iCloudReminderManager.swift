@@ -17,7 +17,7 @@ class iCloudReminderManager{
     
     //Requests access to reminders. Takes in a function to find if access has been granted or not.
     //We can then perform some action like stop a refresh control...
-    func requestAccessToReminders(_ accessStatus : @escaping (Bool) -> ()){       
+    func requestAccessToReminders(_ accessStatus : @escaping (Bool) -> ()){
         
         if(!eventStoreAccessGranted){
             
@@ -28,7 +28,7 @@ class iCloudReminderManager{
                 //Save the 'granted' value - if we were granted access
                 self.eventStoreAccessGranted = granted
                 
-                //TODO: Do we need this?
+                //Setup the Shopping Calendar
                 let _ = self.getReminderList()
                 
                 accessStatus(granted)
@@ -45,7 +45,6 @@ class iCloudReminderManager{
             let singlecallendarArrayForPredicate : [EKCalendar] = [reminderList!]
             let predicate = eventStore.predicateForReminders(in: singlecallendarArrayForPredicate)
 
-            //Stupidly named method... All it does is get reminders for the calendars passed into it
             eventStore.fetchReminders(matching: predicate) { reminders in
 
                 if let matchingReminders = reminders {
@@ -75,7 +74,7 @@ class iCloudReminderManager{
             
             if removeReminder(reminder) {
                 
-                commit()
+                let _ = commit()
             }
         }
     }

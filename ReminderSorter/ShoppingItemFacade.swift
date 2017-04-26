@@ -27,11 +27,13 @@ class ShoppingItemFacade : StorageFacadeProtocol {
         }
         else {
             
-            let _ = shoppingItemRepository.createNewShoppingItem(
+            shoppingItemRepository.createNewShoppingItem(
                 shoppingListItem.title,
                 completed : shoppingListItem.completed,
                 notes : shoppingListItem.notes)
         }
+        
+        saveSuccess(true)
     }
     
     func forceUpdateShoppingList() {

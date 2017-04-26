@@ -25,7 +25,7 @@ class ShoppingItemRepository {
         return ShoppingItem(entity: entity!, insertInto: managedObjectContext)
     }
     
-    func createNewShoppingItem(_ title : String, completed : Bool, notes : String?) -> ShoppingItem {
+    func createNewShoppingItem(_ title : String, completed : Bool, notes : String?) {
         
         let shoppingItem : ShoppingItem = createNewShoppingItem()
         
@@ -33,8 +33,6 @@ class ShoppingItemRepository {
         shoppingItem.title = title
         shoppingItem.completed = completed
         shoppingItem.notes = notes
-        
-        return shoppingItem
     }
     
     func getShoppingItemBy(_ id : String) -> ShoppingItem? {
