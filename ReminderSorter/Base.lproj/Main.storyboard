@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11542" systemVersion="16B2555" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="jGZ-Bv-awX">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12118" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="jGZ-Bv-awX">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11524"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12086"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -93,10 +93,10 @@
                                     </constraints>
                                     <variation key="default">
                                         <mask key="constraints">
-                                            <exclude reference="d4q-c7-vZp"/>
                                             <exclude reference="3aO-FO-Bl5"/>
                                             <exclude reference="4PA-Re-I5w"/>
                                             <exclude reference="Jt3-BH-HW9"/>
+                                            <exclude reference="d4q-c7-vZp"/>
                                         </mask>
                                     </variation>
                                 </tableViewCellContentView>
@@ -166,7 +166,7 @@
                                 </date>
                                 <locale key="locale" localeIdentifier="nl_NL"/>
                             </datePicker>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Clear Shopping Cart after (hours minutes):" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0vR-0t-mnH">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Clear Trolley after (hours minutes):" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0vR-0t-mnH" userLabel="Clear Trolley after (hours minutes):">
                                 <rect key="frame" x="16" y="82" width="301" height="21"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="301" id="mdn-An-fmq"/>
@@ -307,6 +307,16 @@
                         </constraints>
                         <variation key="default">
                             <mask key="constraints">
+                                <exclude reference="0Pn-6X-iQS"/>
+                                <exclude reference="20M-gF-kpc"/>
+                                <exclude reference="EwU-4c-L1u"/>
+                                <exclude reference="Htp-Df-acQ"/>
+                                <exclude reference="S66-b2-LNS"/>
+                                <exclude reference="Sr2-bh-Sl7"/>
+                                <exclude reference="dRf-Xg-7bM"/>
+                                <exclude reference="gDZ-rs-JYi"/>
+                                <exclude reference="khC-v2-dWA"/>
+                                <exclude reference="sMi-QD-Ow2"/>
                                 <exclude reference="9RI-OU-LTr"/>
                                 <exclude reference="Dop-ke-MVu"/>
                                 <exclude reference="VTX-3h-Vhj"/>
@@ -322,16 +332,6 @@
                                 <exclude reference="qCG-Zw-ztQ"/>
                                 <exclude reference="xRo-xw-lyF"/>
                                 <exclude reference="ytP-xZ-phR"/>
-                                <exclude reference="0Pn-6X-iQS"/>
-                                <exclude reference="20M-gF-kpc"/>
-                                <exclude reference="EwU-4c-L1u"/>
-                                <exclude reference="Htp-Df-acQ"/>
-                                <exclude reference="S66-b2-LNS"/>
-                                <exclude reference="Sr2-bh-Sl7"/>
-                                <exclude reference="dRf-Xg-7bM"/>
-                                <exclude reference="gDZ-rs-JYi"/>
-                                <exclude reference="khC-v2-dWA"/>
-                                <exclude reference="sMi-QD-Ow2"/>
                                 <exclude reference="Tzv-nL-L0s"/>
                                 <exclude reference="pIb-HQ-lXh"/>
                             </mask>

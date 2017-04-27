@@ -45,6 +45,10 @@ class InfoViewController : UIViewController {
             
             shoppingCartExipryDatePicker.date = shoppingCartExpiryTime
         }
+        else {
+            
+            shoppingCartExipryDatePicker.date = NSDateManager.currentDateWithHour(2, minute: 0, second: 0)
+        }
         
         clearShoppingCartButton.layer.borderColor = UIColor(red:0.5, green:0.5, blue:0.5, alpha:1.0).cgColor
         clearShoppingCartButton.layer.borderWidth = 1.0
