@@ -16,7 +16,6 @@ class ContainerViewController : UIViewController, UISearchBarDelegate {
     var actionOnLockedObserver : NSObjectProtocol?
     var itemBeginEditingObserver : NSObjectProtocol?
     var itemEndEditingObserver : NSObjectProtocol?
-    var settingsObserver : NSObjectProtocol?
     var resetLockObserver : NSObjectProtocol?
     
     var actionOnLockedCounter : Int = 0
@@ -54,13 +53,6 @@ class ContainerViewController : UIViewController, UISearchBarDelegate {
             }
         }
         
-        //Observer for when our settings change
-        settingsObserver = NotificationCenter.default.addObserver(forName: UserDefaults.didChangeNotification, object: nil, queue: nil){
-            (notification) -> Void in
-            
-            self.lockUnlock()
-        }
-        
         resetLockObserver = NotificationCenter.default.addObserver(forName: NSNotification.Name(rawValue: Constants.ResetLock), object: nil, queue: nil){
             (notification) -> Void in
             
@@ -83,11 +75,6 @@ class ContainerViewController : UIViewController, UISearchBarDelegate {
         if let observer = itemBeginEditingObserver{
             
             NotificationCenter.default.removeObserver(observer, name: NSNotification.Name(rawValue: Constants.ItemEditing), object: nil)
-        }
-        
-        if let observer = settingsObserver{
-            
-            NotificationCenter.default.removeObserver(observer, name: UserDefaults.didChangeNotification, object: nil)
         }
         
         if let observer = resetLockObserver{
