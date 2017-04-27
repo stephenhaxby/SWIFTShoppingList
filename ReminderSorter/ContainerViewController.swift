@@ -155,6 +155,7 @@ class ContainerViewController : UIViewController, UISearchBarDelegate {
                         
                         if shoppingListItemCell.shoppingListItemTextView.isFirstResponder {
                             
+                            shoppingListItemCell.textViewCanResignFirstResponder = false
                             shoppingListItemCell.shoppingListItemTextView.resignFirstResponder()
                         }
                     }

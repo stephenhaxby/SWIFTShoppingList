@@ -37,6 +37,8 @@ class iCloudShoppingItemFacade : StorageFacadeProtocol {
         icloudReminderManager.getReminder(shoppingListItem.calendarItemExternalIdentifier) {
             reminder in
             
+            var isNewReminder = false
+            
             var reminderToSave : EKReminder?
             
             // Existing shopping list item
@@ -47,6 +49,8 @@ class iCloudShoppingItemFacade : StorageFacadeProtocol {
             else {
                 
                 if let newReminder = self.icloudReminderManager.addReminder(shoppingListItem.title) {
+                    
+                    isNewReminder = true
                     
                     shoppingListItem.calendarItemExternalIdentifier = newReminder.calendarItemExternalIdentifier
                     reminderToSave = newReminder
@@ -59,7 +63,7 @@ class iCloudShoppingItemFacade : StorageFacadeProtocol {
                 matchingReminder.isCompleted = shoppingListItem.completed
                 matchingReminder.notes = shoppingListItem.notes
                 
-                saveSuccess(self.icloudReminderManager.saveReminder(matchingReminder))
+                saveSuccess(self.icloudReminderManager.saveReminder(matchingReminder, commit: isNewReminder))
             }
         }
     }

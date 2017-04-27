@@ -178,11 +178,11 @@ class iCloudReminderManager{
         return reminder
     }
     
-    func saveReminder(_ reminder : EKReminder) -> Bool{
+    func saveReminder(_ reminder : EKReminder, commit : Bool) -> Bool{
         
         do {
             
-            try eventStore.save(reminder, commit: false)
+            try eventStore.save(reminder, commit: commit)
             
         } catch let error as NSError {
             

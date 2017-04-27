@@ -22,6 +22,8 @@ class ShoppingListItemTableViewCell: UITableViewCell, UITextViewDelegate
     
     var inactiveLockObserver : NSObjectProtocol?
     
+    var textViewCanResignFirstResponder: Bool = true
+    
     //Setter for the cells reminder
     var reminder: ShoppingListItem?
     
@@ -120,12 +122,14 @@ class ShoppingListItemTableViewCell: UITableViewCell, UITextViewDelegate
 
     func textViewShouldBeginEditing(_ textView: UITextView) -> Bool {
 
-        if shoppingListItemTextView.isEditable {
+        if shoppingListItemTextView.isEditable && reminderSortViewController.refreshLock.try() {
+
+            reminderSortViewController.tableView.isScrollEnabled = false
             
-            reminderSortViewController.refreshLock.lock()
+            return shoppingListItemTextView.isEditable
         }
         
-        return shoppingListItemTextView.isEditable
+        return false
     }
 
     @IBAction func addNewTouchUpInside(_ sender: AnyObject) {
@@ -257,7 +261,16 @@ class ShoppingListItemTableViewCell: UITableViewCell, UITextViewDelegate
         NotificationCenter.default.post(name: Notification.Name(rawValue: Constants.ItemEditing), object: true)
     }
     
+    func textViewShouldEndEditing(_ textView: UITextView) -> Bool {
+        
+        return !textViewCanResignFirstResponder
+    }
+    
     func textViewDidEndEditing(_ textView: UITextView) {
+        
+        textViewCanResignFirstResponder = true
+        
+        reminderSortViewController.tableView.isScrollEnabled = false
         
         if let editedReminder = reminder {
 

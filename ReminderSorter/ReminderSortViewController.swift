@@ -191,6 +191,7 @@ class ReminderSortViewController: UITableViewController {
             
             if let lock = notification.object as? Bool {
                 
+                self.refreshLock.unlock()
                 self.inactiveLock = lock
             }
         }
