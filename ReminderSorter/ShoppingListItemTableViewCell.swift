@@ -270,7 +270,7 @@ class ShoppingListItemTableViewCell: UITableViewCell, UITextViewDelegate
         
         textViewCanResignFirstResponder = true
         
-        reminderSortViewController.tableView.isScrollEnabled = false
+        reminderSortViewController.tableView.isScrollEnabled = true
         
         if let editedReminder = reminder {
 

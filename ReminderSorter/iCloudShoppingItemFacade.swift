@@ -28,8 +28,10 @@ class iCloudShoppingItemFacade : StorageFacadeProtocol {
 
     func accessGranted(_ granted : Bool) {
 
-        // TODO: Callback method from icloudReminderManager.requestAccessToReminders for if access is granted...
-        // Something will need to happen with this as we can't load the list until access is granted
+        if !granted {
+            
+            SettingsUserDefaults.storageICloudReminders = false
+        }
     }
     
     func createOrUpdateShoppingListItem(_ shoppingListItem : ShoppingListItem, saveSuccess : @escaping (Bool) -> ()) {
