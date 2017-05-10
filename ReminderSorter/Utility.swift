@@ -7,6 +7,7 @@
 //
 
 import EventKit
+import UIKit
 
 class Utility {
     
@@ -16,6 +17,21 @@ class Utility {
             
             return UserDefaults.standard
         }
+    }
+    
+    func getSubviewsOfView<T>(view : UIView) -> [T] {
+        var viewsOfType = [T]()
+        
+        for subview in view.subviews {
+            
+            viewsOfType += getSubviewsOfView(view: subview)
+            
+            if subview is T {
+                viewsOfType.append(subview as! T)
+            }
+        }
+        
+        return viewsOfType
     }
     
     static func itemIsInShoppingCart(_ reminder : ShoppingListItem) -> Bool {

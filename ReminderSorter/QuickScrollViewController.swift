@@ -10,6 +10,36 @@ import UIKit
 
 class QuickScrollViewController : UIViewController {
    
+    var itemBeginEditingObserver : NSObjectProtocol?
+    
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        
+        itemBeginEditingObserver = NotificationCenter.default.addObserver(forName: NSNotification.Name(rawValue: Constants.ItemEditing), object: nil, queue: nil){
+            (notification) -> Void in
+            
+            if let isEditing = notification.object as? Bool {
+                
+                if isEditing {
+                    
+                    self.disableQuickScrollButtons(self.view.subviews)
+                }
+                else {
+                    
+                    self.enableQuickScrollButtons(self.view.subviews)
+                }
+            }
+        }
+    }
+    
+    deinit {
+        
+        if let observer = itemBeginEditingObserver{
+            
+            NotificationCenter.default.removeObserver(observer, name: NSNotification.Name(rawValue: Constants.ItemEditing), object: nil)
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -39,6 +69,32 @@ class QuickScrollViewController : UIViewController {
             if let button = subview as? UIButton {
                 
                 button.titleLabel?.font = Constants.QuickJumpListItemFont
+            }
+        }
+    }
+    
+    func enableQuickScrollButtons(_ views: [UIView]) {
+        
+        for subview in views as [UIView] {
+            
+            enableQuickScrollButtons(subview.subviews)
+            
+            if let button = subview as? UIButton {
+                
+                button.isEnabled = true
+            }
+        }
+    }
+    
+    func disableQuickScrollButtons(_ views: [UIView]) {
+        
+        for subview in views as [UIView] {
+            
+            disableQuickScrollButtons(subview.subviews)
+            
+            if let button = subview as? UIButton {
+                
+                button.isEnabled = false
             }
         }
     }

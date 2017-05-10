@@ -21,6 +21,7 @@ class ShoppingListItemTableViewCell: UITableViewCell, UITextViewDelegate
     weak var reminderSortViewController : ReminderSortViewController!
     
     var inactiveLockObserver : NSObjectProtocol?
+    var itemBeginEditingObserver : NSObjectProtocol?
     
     var textViewCanResignFirstResponder: Bool = true
     
@@ -44,6 +45,11 @@ class ShoppingListItemTableViewCell: UITableViewCell, UITextViewDelegate
         if let observer = inactiveLockObserver{
             
             NotificationCenter.default.removeObserver(observer, name: NSNotification.Name(rawValue: Constants.InactiveLock), object: nil)
+        }
+        
+        if let observer = itemBeginEditingObserver{
+            
+            NotificationCenter.default.removeObserver(observer, name: NSNotification.Name(rawValue: Constants.ItemEditing), object: nil)
         }
     }
     
@@ -147,6 +153,15 @@ class ShoppingListItemTableViewCell: UITableViewCell, UITextViewDelegate
             if let lock = notification.object as? Bool {
                 
                 self.setInactiveLock(lock)
+            }
+        }
+        
+        itemBeginEditingObserver = NotificationCenter.default.addObserver(forName: NSNotification.Name(rawValue: Constants.ItemEditing), object: nil, queue: nil){
+            (notification) -> Void in
+            
+            if let isEditing = notification.object as? Bool {
+                
+                self.completedSwitch.isEnabled = !isEditing
             }
         }
     }

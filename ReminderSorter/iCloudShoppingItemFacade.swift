@@ -78,7 +78,6 @@ class iCloudShoppingItemFacade : StorageFacadeProtocol {
             if let matchingReminder : EKReminder = reminder {
                 
                 saveSuccess(self.icloudReminderManager.removeReminder(matchingReminder))
-                
             }
         }
     }

@@ -46,12 +46,12 @@ class ReminderSortViewController: UITableViewController {
     }
     
     var refreshLock : NSLock = NSLock()
+       
+    var shoppingList = [ShoppingListItem]() // All reminders from the store
     
-    var shoppingList = [ShoppingListItem]()
+    var storedShoppingList = [ShoppingListItem]() // BACKUP
     
-    var storedShoppingList = [ShoppingListItem]()
-    
-    var groupedShoppingList = [[ShoppingListItem]]()
+    var groupedShoppingList = [[ShoppingListItem]]() // Datasource
     
     var searchText : String = String()
 
@@ -107,6 +107,7 @@ class ReminderSortViewController: UITableViewController {
             (notification) -> Void in
             
             self.storageOptionChanged()
+            
             self.loadShoppingList()
         }
         
@@ -124,9 +125,12 @@ class ReminderSortViewController: UITableViewController {
         saveReminderObserver = NotificationCenter.default.addObserver(forName: NSNotification.Name(rawValue: Constants.SaveReminder), object: nil, queue: nil){
             (notification) -> Void in
             
-            if let reminder : ShoppingListItem = notification.object as? ShoppingListItem{
+            if let reminder : ShoppingListItem = notification.object as? ShoppingListItem {
 
-                self.saveReminder(reminder)
+                if reminder.title != Constants.ShoppingListItemTableViewCell.NewItemCell {
+                
+                    self.saveReminder(reminder)
+                }
             }
         }
         
@@ -162,12 +166,8 @@ class ReminderSortViewController: UITableViewController {
         searchBarCancelObserver = NotificationCenter.default.addObserver(forName: NSNotification.Name(rawValue: Constants.SearchBarCancel), object: nil, queue: nil){
             (notification) -> Void in
             
-            self.startRefreshControl()
-            
             self.searchText = String()
             self.getShoppingList(self.shoppingList)
-            
-            self.endRefreshControl()
         }
         
         setRefreshLock = NotificationCenter.default.addObserver(forName: NSNotification.Name(rawValue: Constants.SetRefreshLock), object: nil, queue: nil){
@@ -527,17 +527,6 @@ class ReminderSortViewController: UITableViewController {
         }
     }
     
-    func startRefreshControl(){
-        
-        if let refresh = refreshControl{
-            
-            if !refresh.isRefreshing {
-             
-                refresh.beginRefreshing()
-            }
-        }
-    }
-    
     func endRefreshControl(){
         
         if let refresh = refreshControl{
@@ -546,14 +535,6 @@ class ReminderSortViewController: UITableViewController {
             
                 refresh.endRefreshing()
             }
-        }
-    }
-    
-    func endRefreshControl(_ sender: UIRefreshControl?){
-        
-        if let refresh = sender{
-            
-            refresh.endRefreshing()
         }
     }
     
@@ -679,17 +660,7 @@ class ReminderSortViewController: UITableViewController {
                 return
             }
             
-            if let existingIndex : Int = self.shoppingList.index(where: {(existingReminder : ShoppingListItem) in existingReminder.calendarItemExternalIdentifier == reminder.calendarItemExternalIdentifier}) {
-                
-                self.shoppingList[existingIndex] = reminder
-            }
-            else {
-                
-                self.shoppingList.append(reminder)
-            }
-            
-            //Re-sort and Reload the list using our local copy
-            self.getShoppingList(self.shoppingList)
+            self.loadShoppingList()
         }
     }
 
@@ -910,6 +881,11 @@ class ReminderSortViewController: UITableViewController {
             storageFacade.removeShoppingListItem(shoppingListItem, saveSuccess : save)
             
             groupedShoppingList[(indexPath as NSIndexPath).section].remove(at: (indexPath as NSIndexPath).row)
+            
+            if let shoppingListIndex = shoppingList.index(of: shoppingListItem) {
+             
+                shoppingList.remove(at: shoppingListIndex)
+            }
             
             tableView.deleteRows(at: [indexPath], with: .fade)
         }

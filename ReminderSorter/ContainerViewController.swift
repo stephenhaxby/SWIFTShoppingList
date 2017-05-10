@@ -49,7 +49,10 @@ class ContainerViewController : UIViewController, UISearchBarDelegate {
             (notification) -> Void in
             
             if let isEditing = notification.object as? Bool {
+                
                 self.startStopTimer(isEditing)
+                
+                self.lockButton.isEnabled = !isEditing
             }
         }
         

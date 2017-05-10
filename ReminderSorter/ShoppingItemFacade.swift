@@ -51,8 +51,10 @@ class ShoppingItemFacade : StorageFacadeProtocol {
             
             saveSuccess(shoppingItemRepository.removeShoppingItem(shoppingItem))
         }
+        else {
         
-        saveSuccess(false)
+            saveSuccess(false)
+        }
     }
     
     //Expects a function that has a parameter that's an array of RemindMeItem
