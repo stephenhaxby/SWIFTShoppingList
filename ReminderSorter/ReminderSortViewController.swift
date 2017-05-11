@@ -327,13 +327,17 @@ class ReminderSortViewController: UITableViewController {
     
     func clearShoppingCart() {
         
-        for shoppingListItem in shoppingList {
+        for itemIndex in 0..<shoppingList.count {
+            
+            let shoppingListItem : ShoppingListItem = shoppingList[itemIndex]
             
             if shoppingListItem.notes != nil {
                 
                 shoppingListItem.notes = nil
                 
-                saveReminder(shoppingListItem)
+                let reloadList : Bool = itemIndex == shoppingList.count - 1
+                
+                saveReminderWithReload(shoppingListItem, reloadList: reloadList)
             }
         }
         
@@ -546,7 +550,7 @@ class ReminderSortViewController: UITableViewController {
         storedShoppingList = [ShoppingListItem]()
         
         //Create backup for conditional loading
-        for shoppingListItem in self.shoppingList {
+        for shoppingListItem in shoppingList {
                     
             let storedShoppingListItem : ShoppingListItem = ShoppingListItem()
             storedShoppingListItem.calendarItemExternalIdentifier = shoppingListItem.calendarItemExternalIdentifier
@@ -554,7 +558,7 @@ class ReminderSortViewController: UITableViewController {
             storedShoppingListItem.completed = shoppingListItem.completed
             storedShoppingListItem.notes = shoppingListItem.notes
             
-            self.storedShoppingList.append(storedShoppingListItem)
+            storedShoppingList.append(storedShoppingListItem)
         }
 
         filterGroupedShoppingList()
@@ -645,6 +649,26 @@ class ReminderSortViewController: UITableViewController {
             groupedShoppingList[Constants.ShoppingListSection.list.rawValue] = filteredShoppingList
             groupedShoppingList[Constants.ShoppingListSection.cart.rawValue] = filteredShoppingCart
             groupedShoppingList[Constants.ShoppingListSection.history.rawValue] = filteredShoppingHistory
+        }
+    }
+    
+    func saveReminderWithReload(_ reminder : ShoppingListItem, reloadList : Bool) {
+        
+        storageFacade.createOrUpdateShoppingListItem(reminder) { success in
+            
+            guard success else {
+                
+                self.displayError("Your shopping list item could not be saved...")
+                
+                return
+            }
+            
+            //TODO: On Clear, we're reloading the bloody list while it's trying to save all the item; causing an exception
+            
+            if reloadList {
+            
+                self.loadShoppingList()
+            }
         }
     }
     
