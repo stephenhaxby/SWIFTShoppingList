@@ -18,6 +18,8 @@ class InfoViewController : UIViewController {
     
     @IBOutlet weak var clearShoppingCartButton: UIButton!
     
+    var originalDate : Date = NSDateManager.currentDateWithHour(2, minute: 0, second: 0)
+    
     var defaults : UserDefaults {
         
         get {
@@ -47,12 +49,14 @@ class InfoViewController : UIViewController {
         }
         else {
             
-            shoppingCartExipryDatePicker.date = NSDateManager.currentDateWithHour(2, minute: 0, second: 0)
+            shoppingCartExipryDatePicker.date = originalDate
         }
         
         clearShoppingCartButton.layer.borderColor = UIColor(red:0.5, green:0.5, blue:0.5, alpha:1.0).cgColor
         clearShoppingCartButton.layer.borderWidth = 1.0
         clearShoppingCartButton.layer.cornerRadius = 5
+        
+        originalDate = shoppingCartExipryDatePicker.date
     }
     
     //When the settings butto is pressed, open the settings page at the settings for our app
@@ -78,7 +82,10 @@ class InfoViewController : UIViewController {
     
     func closeInformation(){
         
-        defaults.set(shoppingCartExipryDatePicker.date, forKey: Constants.ClearShoppingListExpire)
+        if originalDate != shoppingCartExipryDatePicker.date {
+        
+            defaults.set(shoppingCartExipryDatePicker.date, forKey: Constants.ClearShoppingListExpire)
+        }
         
         presentingViewController?.dismiss(animated: true, completion: nil)
     }

@@ -327,24 +327,42 @@ class ReminderSortViewController: UITableViewController {
     
     func clearShoppingCart() {
         
-        for itemIndex in 0..<shoppingList.count {
-            
-            let shoppingListItem : ShoppingListItem = shoppingList[itemIndex]
-            
-            if shoppingListItem.notes != nil {
-                
-                shoppingListItem.notes = nil
-                
-                let reloadList : Bool = itemIndex == shoppingList.count - 1
-                
-                saveReminderWithReload(shoppingListItem, reloadList: reloadList)
-            }
-        }
+        saveRemindersWithReload()
         
         clearPendingShoppingCartNotification()
         clearDeliveredShoppingCartNotification()
         
         //getShoppingList(shoppingList)
+    }
+    
+    func saveRemindersWithReload() {
+        
+        let shoppingCartItems : [ShoppingListItem] = shoppingList.filter({(reminder : ShoppingListItem) in reminder.notes != nil})
+        
+        var shoppingCartItemsToUpdate : Int = shoppingCartItems.count
+        
+        for shoppingCartItem in shoppingCartItems {
+            
+            shoppingCartItem.notes = nil
+            
+            storageFacade.createOrUpdateShoppingListItem(shoppingCartItem) { success in
+                
+                guard success else {
+                    
+                    self.displayError("Your shopping list item could not be saved...")
+                    
+                    return
+                }
+                
+                shoppingCartItemsToUpdate -= 1
+                
+                //Reload the list after all the async save calls have ran
+                if shoppingCartItemsToUpdate == 0 {
+                    
+                    self.loadShoppingList()
+                }
+            }
+        }
     }
     
     func getDeliveredShoppingCartNotification() -> UNNotificationRequest? {
@@ -652,25 +670,7 @@ class ReminderSortViewController: UITableViewController {
         }
     }
     
-    func saveReminderWithReload(_ reminder : ShoppingListItem, reloadList : Bool) {
-        
-        storageFacade.createOrUpdateShoppingListItem(reminder) { success in
-            
-            guard success else {
-                
-                self.displayError("Your shopping list item could not be saved...")
-                
-                return
-            }
-            
-            //TODO: On Clear, we're reloading the bloody list while it's trying to save all the item; causing an exception
-            
-            if reloadList {
-            
-                self.loadShoppingList()
-            }
-        }
-    }
+
     
     //Save a reminder to the users reminders list
     func saveReminder(_ reminder : ShoppingListItem){
