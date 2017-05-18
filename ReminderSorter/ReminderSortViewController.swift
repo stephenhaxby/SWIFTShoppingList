@@ -63,8 +63,6 @@ class ReminderSortViewController: UITableViewController {
     var saveReminderObserver : NSObjectProtocol?
     var clearShoppingCartObserver : NSObjectProtocol?
     var clearShopingCartOnOpenObserver : NSObjectProtocol?
-    var setClearShoppingCartObserver : NSObjectProtocol?
-    var clearShoppingListOnOpenObserver : NSObjectProtocol?
     var searchBarTextDidChangeObserver : NSObjectProtocol?
     var searchBarCancelObserver : NSObjectProtocol?
     var setRefreshLock : NSObjectProtocol?
@@ -138,18 +136,6 @@ class ReminderSortViewController: UITableViewController {
             (notification) -> Void in
             
             self.clearShoppingCart()
-        }
-        
-        setClearShoppingCartObserver = NotificationCenter.default.addObserver(forName: NSNotification.Name(rawValue: Constants.SetClearShoppingList), object: nil, queue: nil){
-            (notification) -> Void in
-            
-            self.setClearShoppingCart()
-        }
-        
-        clearShoppingListOnOpenObserver = NotificationCenter.default.addObserver(forName: NSNotification.Name(rawValue: Constants.ClearShoppingListOnOpen), object: nil, queue: nil){
-            (notification) -> Void in
-            
-            self.CearShoppingCartOnOpen()
         }
         
         searchBarTextDidChangeObserver = NotificationCenter.default.addObserver(forName: NSNotification.Name(rawValue: Constants.SearchBarTextDidChange), object: nil, queue: nil){
@@ -226,16 +212,6 @@ class ReminderSortViewController: UITableViewController {
             NotificationCenter.default.removeObserver(observer, name: NSNotification.Name(rawValue: Constants.ClearShoppingList), object: nil)
         }
         
-        if let observer = setClearShoppingCartObserver{
-            
-            NotificationCenter.default.removeObserver(observer, name: NSNotification.Name(rawValue: Constants.ClearShoppingList), object: nil)
-        }
-        
-        if let observer = clearShoppingListOnOpenObserver{
-            
-            NotificationCenter.default.removeObserver(observer, name: NSNotification.Name(rawValue: Constants.ClearShoppingList), object: nil)
-        }
-        
         if let observer = searchBarTextDidChangeObserver{
             
             NotificationCenter.default.removeObserver(observer, name: NSNotification.Name(rawValue: Constants.SearchBarTextDidChange), object: nil)
@@ -296,48 +272,9 @@ class ReminderSortViewController: UITableViewController {
         (UIApplication.shared.delegate as! AppDelegate).setStorageType()
     }
     
-    func clearPendingShoppingCartNotification() {
-        
-        if let clearShoppingListNotification : UNNotificationRequest = getPendingShoppingCartNotification() {
-            
-            // there should be a maximum of one match on UUID
-            UNUserNotificationCenter.current().removePendingNotificationRequests(
-                withIdentifiers: [clearShoppingListNotification.identifier])
-        }
-    }
-    
-    func clearDeliveredShoppingCartNotification() {
-        
-        UNUserNotificationCenter.current().getDeliveredNotifications { notifications in
-            
-            var requests : [UNNotificationRequest] = [UNNotificationRequest]()
-            
-            for notification in notifications {
-                
-                requests.append(notification.request)
-            }
-            
-            if let calendarNotification : UNNotificationRequest = self.getClearShoppingCartNotification(forNotifications: requests) {
-                
-                UNUserNotificationCenter.current().removeDeliveredNotifications(
-                    withIdentifiers: [calendarNotification.identifier])
-            }
-        }
-    }
-    
     func clearShoppingCart() {
         
-        saveRemindersWithReload()
-        
-        clearPendingShoppingCartNotification()
-        clearDeliveredShoppingCartNotification()
-        
-        //getShoppingList(shoppingList)
-    }
-    
-    func saveRemindersWithReload() {
-        
-        let shoppingCartItems : [ShoppingListItem] = shoppingList.filter({(reminder : ShoppingListItem) in reminder.notes != nil})
+        let shoppingCartItems : [ShoppingListItem] = shoppingList.filter({(reminder : ShoppingListItem) in Utility.itemIsInShoppingCart(reminder)})
         
         var shoppingCartItemsToUpdate : Int = shoppingCartItems.count
         
@@ -362,103 +299,6 @@ class ReminderSortViewController: UITableViewController {
                     self.loadShoppingList()
                 }
             }
-        }
-    }
-    
-    func getDeliveredShoppingCartNotification() -> UNNotificationRequest? {
-        
-        var clearShoppingListNotification : UNNotificationRequest?
-        
-        UNUserNotificationCenter.current().getDeliveredNotifications { notifications in
-            
-            var requests : [UNNotificationRequest] = [UNNotificationRequest]()
-            
-            for notification in notifications {
-                
-                requests.append(notification.request)
-            }
-            
-            clearShoppingListNotification = self.getClearShoppingCartNotification(forNotifications: requests)
-        }
-        
-        return clearShoppingListNotification
-    }
-    
-    func getPendingShoppingCartNotification() -> UNNotificationRequest? {
-        
-        var clearShoppingListNotification : UNNotificationRequest?
-        
-        UNUserNotificationCenter.current().getPendingNotificationRequests { requests in
-         
-            clearShoppingListNotification = self.getClearShoppingCartNotification(forNotifications: requests)
-        }
-        
-        return clearShoppingListNotification
-    }
-    
-    func getClearShoppingCartNotification(forNotifications requests : [UNNotificationRequest]) -> UNNotificationRequest? {
-        
-        var clearShoppingListNotification : UNNotificationRequest?
-        
-        for notification in requests { // loop through notifications...
-            
-            // ...and cancel the notification that corresponds to this TodoItem instance (matched by UUID)
-            if notification.identifier.hasPrefix(Constants.SetClearShoppingList) {
-                
-                clearShoppingListNotification = notification
-                
-                break
-            }
-        }
-        
-        return clearShoppingListNotification
-    }
-    
-    func setClearShoppingCart() {
-        
-        clearPendingShoppingCartNotification()
-        clearDeliveredShoppingCartNotification()
- 
-        if let shoppingCartExpiryTime : Date = defaults.object(forKey: Constants.ClearShoppingListExpire) as? Date {
-            
-            let dateComponents : DateComponents = NSDateManager.getDateComponentsFromDate(shoppingCartExpiryTime)
-            
-            setClearShoppingCartNotification(forDate: dateComponents)
-        }
-    }
-    
-    func setClearShoppingCartNotification(forDate dateComponents : DateComponents) {
-
-        let notification = UNMutableNotificationContent()
-        
-        notification.categoryIdentifier = Constants.NotificationCategory
-        
-        let triggerDate : Date = NSDateManager.addHoursAndMinutesToDate(Date(), hours: dateComponents.hour!, Minutes: dateComponents.minute!)
-        
-        let triggerDateComponents : DateComponents = NSDateManager.getDateComponentsFromDate(triggerDate)
-        
-        let trigger : UNNotificationTrigger =
-            UNCalendarNotificationTrigger(
-                dateMatching: triggerDateComponents,
-                repeats: false)
-        
-        //NOTE: As the find/remove methods are async, we could create a new request with this id before the old on has been deleted
-        //      thus our new notification could be removed. The find method needs to use has prefix instead...
-        let request = UNNotificationRequest(
-            identifier: Constants.SetClearShoppingList.appending(UUID().uuidString),
-            content: notification,
-            trigger: trigger
-        )
-        
-        UNUserNotificationCenter.current().add(request)
-    }
-    
-    func CearShoppingCartOnOpen() {
-        
-        //If the notification fires while we are not active it's not in the list anymore so we need to clear it...
-        if getDeliveredShoppingCartNotification() != nil {
-            
-            clearShoppingCart()
         }
     }
     

@@ -32,10 +32,6 @@ class Constants{
     
     static let ClearShoppingListExpire : String = "ClearShoppingListExpire"
     
-    static let SetClearShoppingList : String = "SetClearShoppingList"
-    
-    static let ClearShoppingListOnOpen : String = "ClearShoppingListOnOpen"
-    
     static let SearchBarTextDidChange : String = "SearchBarTextDidChange"
     
     static let SearchBarCancel : String = "SearchBarCancel"

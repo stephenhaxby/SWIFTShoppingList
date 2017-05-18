@@ -100,8 +100,6 @@ class ShoppingListItemTableViewCell: UITableViewCell, UITextViewDelegate
                     dateformatter.timeStyle = DateFormatter.Style.short
 
                     editedReminder.notes = dateformatter.string(from: Date())
-                    
-                    NotificationCenter.default.post(name: Notification.Name(rawValue: Constants.SetClearShoppingList), object: self)
                 }
                 else {
                     
