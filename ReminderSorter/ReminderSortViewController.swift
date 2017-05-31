@@ -67,6 +67,7 @@ class ReminderSortViewController: UITableViewController {
     var searchBarCancelObserver : NSObjectProtocol?
     var setRefreshLock : NSObjectProtocol?
     var inactiveLockObserver : NSObjectProtocol?
+    var reloadListObserver : NSObjectProtocol?
     
     var defaults : UserDefaults {
         
@@ -83,6 +84,12 @@ class ReminderSortViewController: UITableViewController {
         for _ in 0..<Constants.ShoppingListSections {
             
             groupedShoppingList.append([ShoppingListItem]())
+        }
+        
+        reloadListObserver = NotificationCenter.default.addObserver(forName: NSNotification.Name(rawValue: Constants.ReloadList), object: nil, queue: nil){
+            (notification) -> Void in
+            
+            self.loadShoppingList()
         }
         
         //Observer for the app for when the event store is changed in the background (or when our app isn't running (iCloud only))
@@ -187,6 +194,11 @@ class ReminderSortViewController: UITableViewController {
         
         //When this class is dealocated we are removing the observers...
         //Don't really need to do this, but it's nice...
+        if let observer = reloadListObserver{
+            
+            NotificationCenter.default.removeObserver(observer, name: NSNotification.Name(rawValue: Constants.ReloadList), object: nil)
+        }
+        
         if let observer = eventStoreObserver{
             
             NotificationCenter.default.removeObserver(observer, name: NSNotification.Name.EKEventStoreChanged, object: nil)
@@ -247,8 +259,6 @@ class ReminderSortViewController: UITableViewController {
         
         //Request access to the users reminders list; call 'requestedAccessToReminders' when done
         //reminderManager.requestAccessToReminders(requestedAccessToReminders)
-        
-        loadShoppingList()
     }
     
     override func viewWillAppear(_ animated: Bool) {

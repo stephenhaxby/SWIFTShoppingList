@@ -122,6 +122,11 @@ class ContainerViewController : UIViewController, UISearchBarDelegate {
         setLockTimer()
     }
     
+    override func viewDidLayoutSubviews() {
+        
+        NotificationCenter.default.post(name: Notification.Name(rawValue: Constants.ReloadList), object: self)
+    }
+    
     @IBAction func infoButtonTouchUpInside(_ sender: AnyObject) {
      
         performSegue(withIdentifier: "InfoSegue", sender: sender)
