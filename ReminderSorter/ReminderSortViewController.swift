@@ -89,7 +89,12 @@ class ReminderSortViewController: UITableViewController {
         reloadListObserver = NotificationCenter.default.addObserver(forName: NSNotification.Name(rawValue: Constants.ReloadList), object: nil, queue: nil){
             (notification) -> Void in
             
-            self.loadShoppingList()
+            if self.refreshLock.try() {
+                
+                self.loadShoppingList()
+                
+                self.refreshLock.unlock()
+            }
         }
         
         //Observer for the app for when the event store is changed in the background (or when our app isn't running (iCloud only))
@@ -142,7 +147,12 @@ class ReminderSortViewController: UITableViewController {
         clearShoppingCartObserver = NotificationCenter.default.addObserver(forName: NSNotification.Name(rawValue: Constants.ClearShoppingList), object: nil, queue: nil){
             (notification) -> Void in
             
-            self.clearShoppingCart()
+            if self.refreshLock.try() {
+                
+                self.clearShoppingCart()
+                
+                self.refreshLock.unlock()
+            }
         }
         
         searchBarTextDidChangeObserver = NotificationCenter.default.addObserver(forName: NSNotification.Name(rawValue: Constants.SearchBarTextDidChange), object: nil, queue: nil){
