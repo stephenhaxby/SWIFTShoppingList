@@ -12,12 +12,12 @@ class iCloudReminderManager{
     
     var eventStoreAccessGranted = false
     let eventStore = EKEventStore()
-    var remindersListName = "Reminders"
+    var remindersListName = Constants.RemindersListName
     var reminderList : EKCalendar?
     
     //Requests access to reminders. Takes in a function to find if access has been granted or not.
     //We can then perform some action like stop a refresh control...
-    func requestAccessToReminders(_ accessStatus : @escaping (Bool) -> ()){       
+    func requestAccessToReminders(_ accessStatus : @escaping (Bool) -> ()){
         
         if(!eventStoreAccessGranted){
             
@@ -28,10 +28,54 @@ class iCloudReminderManager{
                 //Save the 'granted' value - if we were granted access
                 self.eventStoreAccessGranted = granted
                 
-                self.getReminderList()
+                //Setup the Shopping Calendar
+                let _ = self.getReminderList()
                 
                 accessStatus(granted)
             })
+        }
+    }
+    
+    func getReminder(_ id : String, returnReminder : @escaping (EKReminder?) -> ()) {
+
+        var remindersList = [EKReminder]()
+
+        if(eventStoreAccessGranted && reminderList != nil){
+
+            let singlecallendarArrayForPredicate : [EKCalendar] = [reminderList!]
+            let predicate = eventStore.predicateForReminders(in: singlecallendarArrayForPredicate)
+
+            eventStore.fetchReminders(matching: predicate) { reminders in
+
+                if let matchingReminders = reminders {
+
+                    //For each reminder in iCloud
+                    for reminder in matchingReminders {
+
+                        remindersList.append(reminder)
+                    }
+                }
+
+                var foundReminder : EKReminder?
+
+                if let index = remindersList.index(where: { (reminder : EKReminder) in reminder.calendarItemExternalIdentifier == id}) {
+
+                    foundReminder = remindersList[index]
+                }
+                
+                returnReminder(foundReminder)
+            }
+        }
+    }
+    
+    func forceUpdateShoppingList() {
+
+        if let reminder : EKReminder = addReminder(Constants.ShoppingListItemTableViewCell.iCloudRefreshHelperCell) {
+            
+            if removeReminder(reminder) {
+                
+                let _ = commit()
+            }
         }
     }
     
@@ -87,7 +131,7 @@ class iCloudReminderManager{
         
         var remindersList = [EKReminder]()
         
-        if(eventStoreAccessGranted){
+        if(eventStoreAccessGranted && reminderList != nil){
             
             let singlecallendarArrayForPredicate : [EKCalendar] = [reminderList!]
             let predicate = eventStore.predicateForReminders(in: singlecallendarArrayForPredicate)
@@ -109,7 +153,7 @@ class iCloudReminderManager{
         }
     }
     
-    func addReminder(_ title : String, commit : Bool) -> EKReminder? {
+    func addReminder(_ title : String) -> EKReminder? {
         
         let calendar : EKCalendar? = getReminderList()
         
@@ -124,7 +168,7 @@ class iCloudReminderManager{
         
         do {
             
-            try eventStore.save(reminder, commit: commit)
+            try eventStore.save(reminder, commit: false)
             
         } catch {
 
@@ -134,7 +178,7 @@ class iCloudReminderManager{
         return reminder
     }
     
-    func saveReminder(_ reminder : EKReminder, commit: Bool) -> Bool{
+    func saveReminder(_ reminder : EKReminder, commit : Bool) -> Bool{
         
         do {
             
@@ -152,11 +196,11 @@ class iCloudReminderManager{
         return true
     }
     
-    func removeReminder(_ reminder : EKReminder, commit: Bool) -> Bool {
+    func removeReminder(_ reminder : EKReminder) -> Bool {
         
         do {
 
-            try eventStore.remove(reminder, commit: commit)
+            try eventStore.remove(reminder, commit: false)
             
             return true
             

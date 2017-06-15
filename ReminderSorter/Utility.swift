@@ -7,6 +7,7 @@
 //
 
 import EventKit
+import UIKit
 
 class Utility {
     
@@ -18,9 +19,24 @@ class Utility {
         }
     }
     
-    static func itemIsInShoppingCart(_ reminder : EKReminder) -> Bool {
+    func getSubviewsOfView<T>(view : UIView) -> [T] {
+        var viewsOfType = [T]()
         
-        if reminder.isCompleted && reminder.notes != nil {
+        for subview in view.subviews {
+            
+            viewsOfType += getSubviewsOfView(view: subview)
+            
+            if subview is T {
+                viewsOfType.append(subview as! T)
+            }
+        }
+        
+        return viewsOfType
+    }
+    
+    static func itemIsInShoppingCart(_ reminder : ShoppingListItem) -> Bool {
+        
+        if reminder.completed && reminder.notes != nil {
             
             let dateFormatter = DateFormatter()
             dateFormatter.dateStyle = DateFormatter.Style.medium

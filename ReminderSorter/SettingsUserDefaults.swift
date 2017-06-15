@@ -10,20 +10,6 @@ import Foundation
 
 class SettingsUserDefaults{
     
-    static var alphabeticalSortIncomplete: Bool {
-        
-        return hasDefaultValue(Constants.SettingUserDefaultAlphabeticalSortIncomplete)
-            ? UserDefaults.standard.bool(forKey: Constants.SettingUserDefaultAlphabeticalSortIncomplete)
-            : true
-    }
-    
-    static var alphabeticalSortComplete: Bool {
-        
-        return hasDefaultValue(Constants.SettingUserDefaultAlphabeticalSortComplete)
-            ? UserDefaults.standard.bool(forKey: Constants.SettingUserDefaultAlphabeticalSortComplete)
-            : true
-    }
-    
     static var autoCapitalisation: Bool {
         
         return hasDefaultValue(Constants.SettingUserDefaultAutoCapitalisation)
@@ -51,6 +37,23 @@ class SettingsUserDefaults{
             ? UserDefaults.standard.bool(forKey: Constants.SettingUserDefaultAutoLockList)
             : false
     }
+    
+    static var storageICloudReminders: Bool {
+        
+        set {
+            
+            UserDefaults.standard.set(newValue, forKey: Constants.SettingUserDefaultStorageICloudReminders)
+        }
+        
+        get {
+            
+            return hasDefaultValue(Constants.SettingUserDefaultStorageICloudReminders)
+                ? UserDefaults.standard.bool(forKey: Constants.SettingUserDefaultStorageICloudReminders)
+                : false
+        }
+    }
+    
+    
     
     static func hasDefaultValue(_ key: String) -> Bool {
         

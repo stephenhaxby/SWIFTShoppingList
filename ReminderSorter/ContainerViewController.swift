@@ -16,7 +16,6 @@ class ContainerViewController : UIViewController, UISearchBarDelegate {
     var actionOnLockedObserver : NSObjectProtocol?
     var itemBeginEditingObserver : NSObjectProtocol?
     var itemEndEditingObserver : NSObjectProtocol?
-    var settingsObserver : NSObjectProtocol?
     var resetLockObserver : NSObjectProtocol?
     
     var actionOnLockedCounter : Int = 0
@@ -50,15 +49,11 @@ class ContainerViewController : UIViewController, UISearchBarDelegate {
             (notification) -> Void in
             
             if let isEditing = notification.object as? Bool {
+                
                 self.startStopTimer(isEditing)
+                
+                self.lockButton.isEnabled = !isEditing
             }
-        }
-        
-        //Observer for when our settings change
-        settingsObserver = NotificationCenter.default.addObserver(forName: UserDefaults.didChangeNotification, object: nil, queue: nil){
-            (notification) -> Void in
-            
-            self.lockUnlock()
         }
         
         resetLockObserver = NotificationCenter.default.addObserver(forName: NSNotification.Name(rawValue: Constants.ResetLock), object: nil, queue: nil){
@@ -83,11 +78,6 @@ class ContainerViewController : UIViewController, UISearchBarDelegate {
         if let observer = itemBeginEditingObserver{
             
             NotificationCenter.default.removeObserver(observer, name: NSNotification.Name(rawValue: Constants.ItemEditing), object: nil)
-        }
-        
-        if let observer = settingsObserver{
-            
-            NotificationCenter.default.removeObserver(observer, name: UserDefaults.didChangeNotification, object: nil)
         }
         
         if let observer = resetLockObserver{
@@ -132,6 +122,11 @@ class ContainerViewController : UIViewController, UISearchBarDelegate {
         setLockTimer()
     }
     
+    override func viewDidLayoutSubviews() {
+        
+        NotificationCenter.default.post(name: Notification.Name(rawValue: Constants.ReloadList), object: self)
+    }
+    
     @IBAction func infoButtonTouchUpInside(_ sender: AnyObject) {
      
         performSegue(withIdentifier: "InfoSegue", sender: sender)
@@ -155,6 +150,7 @@ class ContainerViewController : UIViewController, UISearchBarDelegate {
                         
                         if shoppingListItemCell.shoppingListItemTextView.isFirstResponder {
                             
+                            shoppingListItemCell.textViewCanResignFirstResponder = false
                             shoppingListItemCell.shoppingListItemTextView.resignFirstResponder()
                         }
                     }

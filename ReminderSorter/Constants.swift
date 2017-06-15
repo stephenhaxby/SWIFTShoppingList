@@ -16,6 +16,8 @@ class Constants{
         static let EmptyCell:String = "<EMPTY_CELL>"
         
         static let NewItemCell:String = "<NEW_ITEM_CELL>"
+        
+        static let iCloudRefreshHelperCell:String = "<ICLOUD_REFRESH_HELPER_CELL>"
     }
     
     static let QuickScrollButtonPressed:String = "QuickScrollButtonPressed"
@@ -30,10 +32,6 @@ class Constants{
     
     static let ClearShoppingListExpire : String = "ClearShoppingListExpire"
     
-    static let SetClearShoppingList : String = "SetClearShoppingList"
-    
-    static let ClearShoppingListOnOpen : String = "ClearShoppingListOnOpen"
-    
     static let SearchBarTextDidChange : String = "SearchBarTextDidChange"
     
     static let SearchBarCancel : String = "SearchBarCancel"
@@ -47,6 +45,8 @@ class Constants{
     static let ItemEditing : String = "ItemEditing"
     
     static let ResetLock : String = "ResetLock"
+    
+    static let ReloadList : String = "ReloadList"
     
     static let ShoppingListSections = 3
     
@@ -66,7 +66,11 @@ class Constants{
     
     static let SettingUserDefaultAutoLockList = "autoLockList"
     
+    static let SettingUserDefaultStorageICloudReminders = "storageICloudReminders"
+    
     static let NotificationCategory = "NotificationCategory"
+    
+    static let RefreshNotification = "RefreshNotification"
     
     enum ShoppingListSection : Int, CustomStringConvertible {
         case list
@@ -85,5 +89,10 @@ class Constants{
                 
             }
         }
+    }
+    
+    enum StorageType {
+        case local
+        case iCloudReminders
     }
 }

@@ -139,8 +139,8 @@ class NSDateManager {
         
         let dateCompareResult = currentDate!.compare(dateComponentsDate!)
         
-        let displayHour = (dateComponents.hour! > 12) ? dateComponents.hour!-12 : dateComponents.hour
-        let displayMinute = (dateComponents.minute! < 10) ? "0\(dateComponents.minute)" : String(describing: dateComponents.minute)
+        let displayHour = (dateComponents.hour! > 12) ? dateComponents.hour!-12 : dateComponents.hour!
+        let displayMinute = (dateComponents.minute! < 10) ? "0\(dateComponents.minute!)" : String(describing: dateComponents.minute!)
         let displayAMPM = (dateComponents.hour! > 12) ? "PM" : "AM"
         
         let timeString : String = "\(displayHour):\(displayMinute) \(displayAMPM)"
@@ -162,7 +162,7 @@ class NSDateManager {
             }
             else {
                 
-                dateString = "\(dateComponents.day)/\(dateComponents.month)/\(dateComponents.year), \(timeString)"
+                dateString = "\(dateComponents.day!)/\(dateComponents.month!)/\(dateComponents.year!), \(timeString)"
             }
             break
         case ComparisonResult.orderedAscending:

@@ -18,6 +18,8 @@ class InfoViewController : UIViewController {
     
     @IBOutlet weak var clearShoppingCartButton: UIButton!
     
+    var originalDate : Date = NSDateManager.currentDateWithHour(2, minute: 0, second: 0)
+    
     var defaults : UserDefaults {
         
         get {
@@ -45,10 +47,16 @@ class InfoViewController : UIViewController {
             
             shoppingCartExipryDatePicker.date = shoppingCartExpiryTime
         }
+        else {
+            
+            shoppingCartExipryDatePicker.date = originalDate
+        }
         
         clearShoppingCartButton.layer.borderColor = UIColor(red:0.5, green:0.5, blue:0.5, alpha:1.0).cgColor
         clearShoppingCartButton.layer.borderWidth = 1.0
         clearShoppingCartButton.layer.cornerRadius = 5
+        
+        originalDate = shoppingCartExipryDatePicker.date
     }
     
     //When the settings butto is pressed, open the settings page at the settings for our app
@@ -62,20 +70,25 @@ class InfoViewController : UIViewController {
     
     @IBAction func closeButtonTouchUpInside(_ sender: AnyObject) {
         
-        closeInformation()
+        closeInformation(){}
     }
     
     @IBAction func clearShoppingCartButtonTouchUpInside(_ sender: AnyObject) {
         
-        NotificationCenter.default.post(name: Notification.Name(rawValue: Constants.ClearShoppingList), object: nil)
+        closeInformation() {
         
-        closeInformation()
+            NotificationCenter.default.post(name: Notification.Name(rawValue: Constants.ClearShoppingList), object: nil)
+        }
     }
     
-    func closeInformation(){
+    func closeInformation(completionBlock : @escaping (() -> Void)){
         
-        defaults.set(shoppingCartExipryDatePicker.date, forKey: Constants.ClearShoppingListExpire)
+        if defaults.object(forKey: Constants.ClearShoppingListExpire) == nil
+            || originalDate != shoppingCartExipryDatePicker.date {
         
-        presentingViewController?.dismiss(animated: true, completion: nil)
+            defaults.set(shoppingCartExipryDatePicker.date, forKey: Constants.ClearShoppingListExpire)
+        }
+        
+        presentingViewController?.dismiss(animated: true, completion: completionBlock)
     }
 }
