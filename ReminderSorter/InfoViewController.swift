@@ -70,23 +70,25 @@ class InfoViewController : UIViewController {
     
     @IBAction func closeButtonTouchUpInside(_ sender: AnyObject) {
         
-        closeInformation()
+        closeInformation(){}
     }
     
     @IBAction func clearShoppingCartButtonTouchUpInside(_ sender: AnyObject) {
         
-        NotificationCenter.default.post(name: Notification.Name(rawValue: Constants.ClearShoppingList), object: nil)
+        closeInformation() {
         
-        closeInformation()
+            NotificationCenter.default.post(name: Notification.Name(rawValue: Constants.ClearShoppingList), object: nil)
+        }
     }
     
-    func closeInformation(){
+    func closeInformation(completionBlock : @escaping (() -> Void)){
         
-        if originalDate != shoppingCartExipryDatePicker.date {
+        if defaults.object(forKey: Constants.ClearShoppingListExpire) == nil
+            || originalDate != shoppingCartExipryDatePicker.date {
         
             defaults.set(shoppingCartExipryDatePicker.date, forKey: Constants.ClearShoppingListExpire)
         }
         
-        presentingViewController?.dismiss(animated: true, completion: nil)
+        presentingViewController?.dismiss(animated: true, completion: completionBlock)
     }
 }

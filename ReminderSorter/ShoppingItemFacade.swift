@@ -83,6 +83,21 @@ class ShoppingItemFacade : StorageFacadeProtocol {
         
         return shoppingListItem
     }
+    
+    func clearShoppingList(complete : @escaping (Bool) -> ()){
+     
+        let shoppingList = shoppingItemRepository.getShoppingItems()
+        
+        let shoppingCartItems : [ShoppingItem] = shoppingList.filter({(reminder : ShoppingItem) in Utility.itemIsInShoppingCart(self.getShoppingItemFrom(reminder))})
+    
+        
+        for shoppingCartItem in shoppingCartItems {
+            
+            shoppingCartItem.notes = nil
+        }
+    
+        complete(true)
+    }
 }
 
 

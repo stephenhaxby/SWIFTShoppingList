@@ -294,33 +294,48 @@ class ReminderSortViewController: UITableViewController {
     
     func clearShoppingCart() {
         
-        let shoppingCartItems : [ShoppingListItem] = shoppingList.filter({(reminder : ShoppingListItem) in Utility.itemIsInShoppingCart(reminder)})
-        
-        var shoppingCartItemsToUpdate : Int = shoppingCartItems.count
-        
-        for shoppingCartItem in shoppingCartItems {
+        storageFacade.clearShoppingList {
+            success in
             
-            shoppingCartItem.notes = nil
-            
-            storageFacade.createOrUpdateShoppingListItem(shoppingCartItem) { success in
+            if !success {
                 
-                guard success else {
-                    
-                    self.displayError("Your shopping list item could not be saved...")
-                    
-                    return
-                }
-                
-                shoppingCartItemsToUpdate -= 1
-                
-                //Reload the list after all the async save calls have ran
-                if shoppingCartItemsToUpdate == 0 {
-                    
-                    self.loadShoppingList()
-                }
+                self.displayError("Your shopping list item could not be saved...")
             }
+            
+            self.loadShoppingList()
         }
     }
+    
+//    func clearShoppingCart() {
+//        
+//        let shoppingCartItems : [ShoppingListItem] = shoppingList.filter({(reminder : ShoppingListItem) in Utility.itemIsInShoppingCart(reminder)})
+//        
+//        let dispatchGroup = DispatchGroup()
+//        
+//        for shoppingCartItem in shoppingCartItems {
+//            
+//            dispatchGroup.enter()
+//            
+//            shoppingCartItem.notes = nil
+//            
+//            storageFacade.createOrUpdateShoppingListItem(shoppingCartItem) { success in
+//                
+//                dispatchGroup.leave()
+//                
+//                guard success else {
+//                    
+//                    self.displayError("Your shopping list item could not be saved...")
+//                    
+//                    return
+//                }
+//            }
+//        }
+//        
+//        dispatchGroup.notify(queue: .main){
+//            
+//            self.loadShoppingList()
+//        }
+//    }
     
     func forceRefreshShoppingList() {
         

@@ -22,4 +22,6 @@ protocol StorageFacadeProtocol {
     func forceUpdateShoppingList()
     
     func commit() -> Bool
+    
+    func clearShoppingList(complete : @escaping (Bool) -> ())
 }

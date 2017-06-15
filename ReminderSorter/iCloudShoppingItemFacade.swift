@@ -126,6 +126,29 @@ class iCloudShoppingItemFacade : StorageFacadeProtocol {
 
         return shoppingListItem
     }
+    
+    func clearShoppingList(complete : @escaping (Bool) -> ()){
+
+        icloudReminderManager.getReminders() {
+            shoppingList in
+            
+            var saveSuccess = true
+            
+            let shoppingCartItems : [EKReminder] = shoppingList.filter({(reminder : EKReminder) in Utility.itemIsInShoppingCart(self.getShoppingListItemFrom(reminder))})
+    
+            for shoppingCartItem in shoppingCartItems {
+    
+                shoppingCartItem.notes = nil
+
+                if !self.icloudReminderManager.saveReminder(shoppingCartItem, commit: false) {
+                    
+                    saveSuccess = false
+                }
+            }
+            
+            complete(saveSuccess)
+        }
+    }
 }
 
 
