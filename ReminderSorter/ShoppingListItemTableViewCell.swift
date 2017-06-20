@@ -241,7 +241,7 @@ class ShoppingListItemTableViewCell: UITableViewCell, UITextViewDelegate
                     addNewButton.isHidden = true
             }
             
-            if !checkSwitch.isOn && shoppingListItemReminder.notes == nil {
+            if !checkSwitch.isOn && !Utility.itemIsInShoppingCart(shoppingListItemReminder) {
                 
                 let string = shoppingListItemReminder.title as NSString
                 

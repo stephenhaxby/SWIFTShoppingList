@@ -38,11 +38,7 @@ class Utility {
         
         if reminder.completed && reminder.notes != nil {
             
-            let dateFormatter = DateFormatter()
-            dateFormatter.dateStyle = DateFormatter.Style.medium
-            dateFormatter.timeStyle = DateFormatter.Style.short
-            
-            if let reminderDate : Date = dateFormatter.date(from: reminder.notes!) {
+            if let reminderDate : Date = getDateFromNotes(reminder.notes) {
                 
                 if let shoppingCartExpiryTime : Date = defaults.object(forKey: Constants.ClearShoppingListExpire) as? Date {
                     
@@ -60,5 +56,31 @@ class Utility {
         }
         
         return false
+    }
+    
+    static func getDateForNotes() -> String {
+        
+        //Add the datetime to the reminder as notes (Jan 27, 2010, 1:00 PM)
+        let dateformatter = DateFormatter()
+        
+        dateformatter.dateStyle = DateFormatter.Style.medium
+        dateformatter.timeStyle = DateFormatter.Style.short
+        
+        return dateformatter.string(from: Date())
+    }
+    
+    static func getDateFromNotes(_ dateString : String?) -> Date? {
+    
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateStyle = DateFormatter.Style.medium
+        dateFormatter.timeStyle = DateFormatter.Style.short
+        
+        if let reminderDate : String = dateString,
+            let date : Date = dateFormatter.date(from: reminderDate) {
+
+            return date
+        }
+        
+        return nil
     }
 }

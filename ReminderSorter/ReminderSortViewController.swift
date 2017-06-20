@@ -389,10 +389,15 @@ class ReminderSortViewController: UITableViewController {
         //Count is different - update the list
         if storedShoppingList.count != updatedShoppingList.count {
 
+            //TODO: Find items that are in storedShoppingList and not updatedShoppingList then remove them
+            //TODO: Find items that are not in storedShoppingList but are in updatedShoppingList then add them
+            
             getShoppingList(updatedShoppingList)
         }
         else {
 
+            var reloadShoppingList = false
+            
             //Loop for all items in our local list
             for i in 0 ..< storedShoppingList.count {
 
@@ -406,22 +411,66 @@ class ReminderSortViewController: UITableViewController {
                 if updatedItemIndex != nil {
 
                     let updatedItem : ShoppingListItem = updatedShoppingList[updatedItemIndex!]
-
+                    
+                    //RULES:
+                    //*1 If remote item is in list AND local item is nil : local = remote (local was cleared)
+                    //*2 If remote date > local date : local = remote (remote was updated after us)
+                    //*3 If remote is nil and local not in shopping list : local = remote (remote was cleared)
+                    
                     if currentItem.completed != updatedItem.completed
                         || currentItem.title != updatedItem.title
                         || currentItem.notes != updatedItem.notes {
-                            
-                        getShoppingList(updatedShoppingList)
+                        
+//                        let currentItemDate : Date? = Utility.getDateFromNotes(currentItem.notes)
+//                        let updatedItemDate : Date? = Utility.getDateFromNotes(updatedItem.notes)
+//                    
+//                        //*1 If remote item is in list AND local item is nil : local = remote (local was cleared)
+//                        if !updatedItem.completed && currentItemDate == nil {
+//                            
+//                            updateCurrentItemFrom(currentItem, updatedItem: updatedItem)
+//                            break
+//                        }
+//                        
+//                        //*2 If remote date > local date : local = remote (remote was updated after us)
+//                        if currentItemDate != nil && updatedItemDate != nil
+//                            && NSDateManager.dateIsBeforeDate(currentItemDate!, date2: updatedItemDate!) {
+//                            
+//                            updateCurrentItemFrom(currentItem, updatedItem: updatedItem)
+//                            break
+//                        }
+//                        
+//                        //*3 If remote is nil and local not in shopping list : local = remote (remote was cleared)
+//                        if updatedItemDate == nil && !currentItem.completed {
+//                            
+//                            updateCurrentItemFrom(currentItem, updatedItem: updatedItem)
+//                            break
+//                        }
+                        
+                        
+                        
+                        reloadShoppingList = true
+                        break;
                     }
                 }
                 else {
                 
                     //Item doesn't exist so update our local copy
-                    getShoppingList(updatedShoppingList)
+                    reloadShoppingList = true
                     break
                 }
             }
+            
+            if reloadShoppingList {
+                getShoppingList(updatedShoppingList)
+            }
         }
+    }
+    
+    func updateCurrentItemFrom(_ currentItem: ShoppingListItem, updatedItem : ShoppingListItem) {
+        
+        currentItem.completed = updatedItem.completed
+        currentItem.title = updatedItem.title
+        currentItem.notes = updatedItem.notes
     }
     
     func endRefreshControl(){
@@ -544,8 +593,6 @@ class ReminderSortViewController: UITableViewController {
             groupedShoppingList[Constants.ShoppingListSection.history.rawValue] = filteredShoppingHistory
         }
     }
-    
-
     
     //Save a reminder to the users reminders list
     func saveReminder(_ reminder : ShoppingListItem){
