@@ -91,20 +91,7 @@ class ShoppingListItemTableViewCell: UITableViewCell, UITextViewDelegate
                 editedReminder.completed = completedSwitch.isOn
                 completedSwitch.setOn(!completedSwitch.isOn, animated: true)
 
-                if editedReminder.completed {
-                    
-                    //Add the datetime to the reminder as notes (Jan 27, 2010, 1:00 PM)
-                    let dateformatter = DateFormatter()
-                    
-                    dateformatter.dateStyle = DateFormatter.Style.medium
-                    dateformatter.timeStyle = DateFormatter.Style.short
-
-                    editedReminder.notes = dateformatter.string(from: Date())
-                }
-                else {
-                    
-                    editedReminder.notes = nil
-                }
+                editedReminder.notes = Utility.getDateForNotes()
 
                 let delayInMilliSeconds = (editedReminder.completed) ? 500.0 : 200.00
                 
@@ -290,7 +277,8 @@ class ShoppingListItemTableViewCell: UITableViewCell, UITextViewDelegate
             if textView.text != "" {
 
                 editedReminder.title = textView.text!
-
+                editedReminder.notes = Utility.getDateForNotes()
+                
                 NotificationCenter.default.post(name: Notification.Name(rawValue: Constants.SaveReminder), object: editedReminder)
             }
         }

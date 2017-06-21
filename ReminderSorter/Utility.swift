@@ -36,7 +36,7 @@ class Utility {
     
     static func itemIsInShoppingCart(_ reminder : ShoppingListItem) -> Bool {
         
-        if reminder.completed && reminder.notes != nil {
+        if reminder.completed && reminder.notes != nil && !reminder.notes!.hasPrefix(Constants.NotesClearTrolleyPrefix) {
             
             if let reminderDate : Date = getDateFromNotes(reminder.notes) {
                 
@@ -75,10 +75,14 @@ class Utility {
         dateFormatter.dateStyle = DateFormatter.Style.medium
         dateFormatter.timeStyle = DateFormatter.Style.short
         
-        if let reminderDate : String = dateString,
-            let date : Date = dateFormatter.date(from: reminderDate) {
-
-            return date
+        if let reminderDate : String = dateString {
+            
+            if reminderDate.hasPrefix(Constants.NotesClearTrolleyPrefix) && reminderDate.characters.count > 1 {
+                
+                return dateFormatter.date(from: String(reminderDate.characters.dropFirst(1)))
+            }
+            
+            return dateFormatter.date(from: reminderDate)
         }
         
         return nil

@@ -412,44 +412,17 @@ class ReminderSortViewController: UITableViewController {
 
                     let updatedItem : ShoppingListItem = updatedShoppingList[updatedItemIndex!]
                     
-                    //RULES:
-                    //*1 If remote item is in list AND local item is nil : local = remote (local was cleared)
-                    //*2 If remote date > local date : local = remote (remote was updated after us)
-                    //*3 If remote is nil and local not in shopping list : local = remote (remote was cleared)
-                    
-                    if currentItem.completed != updatedItem.completed
-                        || currentItem.title != updatedItem.title
-                        || currentItem.notes != updatedItem.notes {
-                        
-//                        let currentItemDate : Date? = Utility.getDateFromNotes(currentItem.notes)
-//                        let updatedItemDate : Date? = Utility.getDateFromNotes(updatedItem.notes)
-//                    
-//                        //*1 If remote item is in list AND local item is nil : local = remote (local was cleared)
-//                        if !updatedItem.completed && currentItemDate == nil {
-//                            
-//                            updateCurrentItemFrom(currentItem, updatedItem: updatedItem)
-//                            break
-//                        }
-//                        
-//                        //*2 If remote date > local date : local = remote (remote was updated after us)
-//                        if currentItemDate != nil && updatedItemDate != nil
-//                            && NSDateManager.dateIsBeforeDate(currentItemDate!, date2: updatedItemDate!) {
-//                            
-//                            updateCurrentItemFrom(currentItem, updatedItem: updatedItem)
-//                            break
-//                        }
-//                        
-//                        //*3 If remote is nil and local not in shopping list : local = remote (remote was cleared)
-//                        if updatedItemDate == nil && !currentItem.completed {
-//                            
-//                            updateCurrentItemFrom(currentItem, updatedItem: updatedItem)
-//                            break
-//                        }
-                        
-                        
-                        
+                    let currentItemDate : Date? = Utility.getDateFromNotes(currentItem.notes)
+                    let updatedItemDate : Date? = Utility.getDateFromNotes(updatedItem.notes)
+
+                    //If iCloud version is newer
+                    if (currentItemDate == nil && updatedItemDate != nil)
+                        || (currentItemDate != nil
+                            && updatedItemDate != nil
+                            && NSDateManager.dateIsBeforeDate(currentItemDate!, date2: updatedItemDate!))
+                    {
                         reloadShoppingList = true
-                        break;
+                        break
                     }
                 }
                 else {
