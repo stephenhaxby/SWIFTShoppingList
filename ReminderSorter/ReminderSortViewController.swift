@@ -32,6 +32,15 @@ fileprivate func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
   }
 }
 
+extension Array where Element: Equatable {
+    
+    mutating func remove(object: Element) {
+        if let itemIndex = index(of: object) {
+            remove(at: itemIndex)
+        }
+    }
+}
+
 class ReminderSortViewController: UITableViewController {
     
     //Outlet for the Table View so we can access it in code
@@ -386,56 +395,61 @@ class ReminderSortViewController: UITableViewController {
         //Filter out any blank items
         let updatedShoppingList : [ShoppingListItem] = iCloudShoppingList.filter({(reminder : ShoppingListItem) in reminder.title != ""})
         
-        //Count is different - update the list
-        if storedShoppingList.count != updatedShoppingList.count {
+        let storedShoppingListSet : Set<ShoppingListItem> = Set(storedShoppingList.map({$0}))
+        var tempStoredShoppingListSet : Set<ShoppingListItem> = Set(storedShoppingList.map({$0}))
+        
+        var updatedShoppingListSet : Set<ShoppingListItem> = Set(updatedShoppingList.map({$0}))
+        let tempUpdatedShoppingListSet : Set<ShoppingListItem> = Set(updatedShoppingList.map({$0}))
+        
+        //Find items that are not in each list
+        updatedShoppingListSet.subtract(storedShoppingListSet)
+        tempStoredShoppingListSet.subtract(tempUpdatedShoppingListSet)
 
-            //TODO: Find items that are in storedShoppingList and not updatedShoppingList then remove them
-            //TODO: Find items that are not in storedShoppingList but are in updatedShoppingList then add them
+        var reloadShoppingList = updatedShoppingListSet.count > 0 || storedShoppingListSet.count > 0
+        
+        //Add the missing items from iCloud
+        storedShoppingList.append(contentsOf: updatedShoppingListSet)
+        
+        //Remove items deleted from iCloud
+        for item in tempStoredShoppingListSet {
             
-            getShoppingList(updatedShoppingList)
+            storedShoppingList.remove(object: item)
         }
-        else {
+        
+        //Loop for all items in our local list
+        for i in 0 ..< storedShoppingList.count {
 
-            var reloadShoppingList = false
-            
-            //Loop for all items in our local list
-            for i in 0 ..< storedShoppingList.count {
+            //Get the local item
+            let currentItem : ShoppingListItem = storedShoppingList[i]
 
-                //Get the local item
-                let currentItem : ShoppingListItem = storedShoppingList[i]
+            //Find a matching item by ID in the iCloud list
+            let updatedItemIndex : Int? = updatedShoppingList.index(where: {(reminder : ShoppingListItem) in reminder.calendarItemExternalIdentifier == currentItem.calendarItemExternalIdentifier})
+
+            //If the item exists, check if we need to update our local copy
+            if updatedItemIndex != nil {
+
+                let updatedItem : ShoppingListItem = updatedShoppingList[updatedItemIndex!]
+
+                if currentItem.completed != updatedItem.completed {
                 
-                //Find a matching item by ID in the iCloud list
-                let updatedItemIndex : Int? = updatedShoppingList.index(where: {(reminder : ShoppingListItem) in reminder.calendarItemExternalIdentifier == currentItem.calendarItemExternalIdentifier})
-                
-                //If the item exists, check if we need to update our local copy
-                if updatedItemIndex != nil {
-
-                    let updatedItem : ShoppingListItem = updatedShoppingList[updatedItemIndex!]
-                    
                     let currentItemDate : Date? = Utility.getDateFromNotes(currentItem.notes)
                     let updatedItemDate : Date? = Utility.getDateFromNotes(updatedItem.notes)
 
                     //If iCloud version is newer
-                    if (currentItemDate == nil && updatedItemDate != nil)
+                    if (currentItemDate == nil && updatedItemDate != nil) //Case to handle items having their notes cleared (clear trolley adds an "*")
                         || (currentItemDate != nil
                             && updatedItemDate != nil
                             && NSDateManager.dateIsBeforeDate(currentItemDate!, date2: updatedItemDate!))
                     {
+                        currentItem.completed = updatedItem.completed
                         reloadShoppingList = true
-                        break
                     }
                 }
-                else {
-                
-                    //Item doesn't exist so update our local copy
-                    reloadShoppingList = true
-                    break
-                }
             }
-            
-            if reloadShoppingList {
-                getShoppingList(updatedShoppingList)
-            }
+        }
+        
+        if reloadShoppingList {
+            getShoppingList(updatedShoppingList)
         }
     }
     

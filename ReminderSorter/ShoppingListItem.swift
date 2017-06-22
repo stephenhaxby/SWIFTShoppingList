@@ -8,7 +8,7 @@
 
 import Foundation
 
-class ShoppingListItem : Equatable {
+class ShoppingListItem : Equatable, Hashable {
     
     var calendarItemExternalIdentifier : String = String()
     
@@ -18,11 +18,12 @@ class ShoppingListItem : Equatable {
     
     var notes : String?
     
+    var hashValue: Int {
+        return calendarItemExternalIdentifier.hashValue
+    }
+    
     static func == (lhs: ShoppingListItem, rhs: ShoppingListItem) -> Bool {
         return
             lhs.calendarItemExternalIdentifier == rhs.calendarItemExternalIdentifier
-                && lhs.title == rhs.title
-                && lhs.completed == rhs.completed
-                && lhs.notes == rhs.notes
     }
 }
