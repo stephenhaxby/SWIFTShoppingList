@@ -287,4 +287,9 @@ class ShoppingListItemTableViewCell: UITableViewCell, UITextViewDelegate
 
         NotificationCenter.default.post(name: Notification.Name(rawValue: Constants.ItemEditing), object: false)
     }
+    
+    func isShoppingListItemEditing() -> Bool {
+        
+        return shoppingListItemTextView.isFirstResponder
+    }
 }

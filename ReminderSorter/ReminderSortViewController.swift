@@ -436,7 +436,7 @@ class ReminderSortViewController: UITableViewController {
                     let updatedItemDate : Date? = Utility.getDateFromNotes(updatedItem.notes)
 
                     //If iCloud version is newer
-                    if (currentItemDate == nil && updatedItemDate != nil) //Case to handle items having their notes cleared (clear trolley adds an "*")
+                    if (currentItemDate == nil && updatedItemDate != nil) //Case to handle items having their notes cleared or modified in the Reminders app (clear trolley adds an "*")
                         || (currentItemDate != nil
                             && updatedItemDate != nil
                             && NSDateManager.dateIsBeforeDate(currentItemDate!, date2: updatedItemDate!))
@@ -800,6 +800,17 @@ class ReminderSortViewController: UITableViewController {
         return false
     }
 
+    override func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCellEditingStyle {
+
+        if let tableCell : ShoppingListItemTableViewCell = tableView.cellForRow(at: indexPath) as? ShoppingListItemTableViewCell,
+            tableCell.isShoppingListItemEditing(){
+            
+            return .none
+        }
+        
+        return .delete
+    }
+    
     //This method is for the swipe left to delete
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         
@@ -819,6 +830,10 @@ class ReminderSortViewController: UITableViewController {
              
                 shoppingList.remove(at: shoppingListIndex)
             }
+            
+            
+            
+            //reminderSortViewController.tableView.isScrollEnabled
             
             tableView.deleteRows(at: [indexPath], with: .fade)
         }
