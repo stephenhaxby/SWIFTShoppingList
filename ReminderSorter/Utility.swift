@@ -36,13 +36,9 @@ class Utility {
     
     static func itemIsInShoppingCart(_ reminder : ShoppingListItem) -> Bool {
         
-        if reminder.completed && reminder.notes != nil {
+        if reminder.completed && reminder.notes != nil && !reminder.notes!.hasPrefix(Constants.NotesClearTrolleyPrefix) {
             
-            let dateFormatter = DateFormatter()
-            dateFormatter.dateStyle = DateFormatter.Style.medium
-            dateFormatter.timeStyle = DateFormatter.Style.short
-            
-            if let reminderDate : Date = dateFormatter.date(from: reminder.notes!) {
+            if let reminderDate : Date = getDateFromNotes(reminder.notes) {
                 
                 if let shoppingCartExpiryTime : Date = defaults.object(forKey: Constants.ClearShoppingListExpire) as? Date {
                     
@@ -60,5 +56,35 @@ class Utility {
         }
         
         return false
+    }
+    
+    static func getDateForNotes() -> String {
+        
+        //Add the datetime to the reminder as notes (Jan 27, 2010, 1:00 PM)
+        let dateformatter = DateFormatter()
+        
+        dateformatter.dateStyle = DateFormatter.Style.medium
+        dateformatter.timeStyle = DateFormatter.Style.short
+        
+        return dateformatter.string(from: Date())
+    }
+    
+    static func getDateFromNotes(_ dateString : String?) -> Date? {
+    
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateStyle = DateFormatter.Style.medium
+        dateFormatter.timeStyle = DateFormatter.Style.short
+        
+        if let reminderDate : String = dateString {
+            
+            if reminderDate.hasPrefix(Constants.NotesClearTrolleyPrefix) && reminderDate.characters.count > 1 {
+                
+                return dateFormatter.date(from: String(reminderDate.characters.dropFirst(1)))
+            }
+            
+            return dateFormatter.date(from: reminderDate)
+        }
+        
+        return nil
     }
 }

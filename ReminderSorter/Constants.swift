@@ -72,6 +72,8 @@ class Constants{
     
     static let RefreshNotification = "RefreshNotification"
     
+    static let NotesClearTrolleyPrefix = "*"
+    
     enum ShoppingListSection : Int, CustomStringConvertible {
         case list
         case cart

@@ -91,22 +91,9 @@ class ShoppingListItemTableViewCell: UITableViewCell, UITextViewDelegate
                 editedReminder.completed = completedSwitch.isOn
                 completedSwitch.setOn(!completedSwitch.isOn, animated: true)
 
-                if editedReminder.completed {
-                    
-                    //Add the datetime to the reminder as notes (Jan 27, 2010, 1:00 PM)
-                    let dateformatter = DateFormatter()
-                    
-                    dateformatter.dateStyle = DateFormatter.Style.medium
-                    dateformatter.timeStyle = DateFormatter.Style.short
+                editedReminder.notes = Utility.getDateForNotes()
 
-                    editedReminder.notes = dateformatter.string(from: Date())
-                }
-                else {
-                    
-                    editedReminder.notes = nil
-                }
-
-                let delayInMilliSeconds = (editedReminder.completed) ? 500.0 : 200.00
+                let delayInMilliSeconds = (editedReminder.completed) ? 200.0 : 200.00
                 
                 //The dalay is in nano seconds so we just convert it using the standard NSEC_PER_MSEC value
                 let delay = Int64(delayInMilliSeconds * Double(NSEC_PER_MSEC))
@@ -241,7 +228,7 @@ class ShoppingListItemTableViewCell: UITableViewCell, UITextViewDelegate
                     addNewButton.isHidden = true
             }
             
-            if !checkSwitch.isOn && shoppingListItemReminder.notes == nil {
+            if Utility.itemIsInShoppingCart(shoppingListItemReminder) {
                 
                 let string = shoppingListItemReminder.title as NSString
                 
@@ -290,7 +277,7 @@ class ShoppingListItemTableViewCell: UITableViewCell, UITextViewDelegate
             if textView.text != "" {
 
                 editedReminder.title = textView.text!
-
+                
                 NotificationCenter.default.post(name: Notification.Name(rawValue: Constants.SaveReminder), object: editedReminder)
             }
         }
@@ -298,5 +285,10 @@ class ShoppingListItemTableViewCell: UITableViewCell, UITextViewDelegate
         reminderSortViewController.refreshLock.unlock()
 
         NotificationCenter.default.post(name: Notification.Name(rawValue: Constants.ItemEditing), object: false)
+    }
+    
+    func isShoppingListItemEditing() -> Bool {
+        
+        return shoppingListItemTextView.isFirstResponder
     }
 }

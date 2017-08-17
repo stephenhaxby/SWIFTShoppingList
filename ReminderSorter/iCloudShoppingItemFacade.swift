@@ -138,7 +138,9 @@ class iCloudShoppingItemFacade : StorageFacadeProtocol {
     
             for shoppingCartItem in shoppingCartItems {
     
-                shoppingCartItem.notes = nil
+                let shoppingCartItemNotes : String = ((Utility.getDateFromNotes(shoppingCartItem.notes) == nil) ? Utility.getDateForNotes() : shoppingCartItem.notes!)
+                
+                shoppingCartItem.notes = "*" + shoppingCartItemNotes
 
                 if !self.icloudReminderManager.saveReminder(shoppingCartItem, commit: false) {
                     
