@@ -93,7 +93,7 @@ class ShoppingListItemTableViewCell: UITableViewCell, UITextViewDelegate
 
                 editedReminder.notes = Utility.getDateForNotes()
 
-                let delayInMilliSeconds = (editedReminder.completed) ? 500.0 : 200.00
+                let delayInMilliSeconds = (editedReminder.completed) ? 200.0 : 200.00
                 
                 //The dalay is in nano seconds so we just convert it using the standard NSEC_PER_MSEC value
                 let delay = Int64(delayInMilliSeconds * Double(NSEC_PER_MSEC))
@@ -277,7 +277,6 @@ class ShoppingListItemTableViewCell: UITableViewCell, UITextViewDelegate
             if textView.text != "" {
 
                 editedReminder.title = textView.text!
-                editedReminder.notes = Utility.getDateForNotes()
                 
                 NotificationCenter.default.post(name: Notification.Name(rawValue: Constants.SaveReminder), object: editedReminder)
             }
