@@ -483,6 +483,11 @@ class ReminderSortViewController: UITableViewController {
             return reminder1.title.lowercased() < reminder2.title.lowercased()
         }
         
+        func reminderSortByDate(_ reminder1: ShoppingListItem, reminder2: ShoppingListItem) -> Bool {
+            
+            return Utility.getShoppingCartAddedDate(reminder1) > Utility.getShoppingCartAddedDate(reminder2)
+        }
+        
         //Find all items that are NOT completed
         var itemsToGet : [ShoppingListItem] = iCloudShoppingList.filter({(reminder : ShoppingListItem) in !reminder.completed})
         
@@ -503,8 +508,15 @@ class ReminderSortViewController: UITableViewController {
         //Alphabetical sorting of incomplete items
         itemsToGet = itemsToGet.sorted(by: reminderSort)
 
-        //Alphabetical sorting of trolley items
-        itemsGot = itemsGot.sorted(by: reminderSort)
+        if SettingsUserDefaults.trolleySorting {
+            
+            //Alphabetical sorting of trolley items
+            itemsGot = itemsGot.sorted(by: reminderSort)
+        }
+        else {
+            
+            itemsGot = itemsGot.sorted(by: reminderSortByDate)
+        }
         
         //Alphabetical sorting of complete items
         completedItems = completedItems.sorted(by: reminderSort)

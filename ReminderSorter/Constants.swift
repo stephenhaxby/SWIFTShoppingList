@@ -58,6 +58,8 @@ class Constants{
     
     static let SettingUserDefaultAlphabeticalSortComplete = "alphabeticalSortComplete"
     
+    static let SettingUserDefaultTrolleySorting = "trolleySorting"
+    
     static let SettingUserDefaultAutoCapitalisation = "autoCapitalisation"
     
     static let SettingUserDefaultDisableScreenLock = "disableScreenLock"
@@ -71,6 +73,8 @@ class Constants{
     static let NotificationCategory = "NotificationCategory"
     
     static let RefreshNotification = "RefreshNotification"
+    
+    static let TrolleyDateFormat = "d MMM yyyy, HH:mm:ss.SS"
     
     enum ShoppingListSection : Int, CustomStringConvertible {
         case list

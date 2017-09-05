@@ -39,8 +39,7 @@ class Utility {
         if reminder.completed && reminder.notes != nil {
             
             let dateFormatter = DateFormatter()
-            dateFormatter.dateStyle = DateFormatter.Style.medium
-            dateFormatter.timeStyle = DateFormatter.Style.short
+            dateFormatter.dateFormat = Constants.TrolleyDateFormat
             
             if let reminderDate : Date = dateFormatter.date(from: reminder.notes!) {
                 
@@ -60,5 +59,18 @@ class Utility {
         }
         
         return false
+    }
+    
+    static func getShoppingCartAddedDate(_ reminder : ShoppingListItem) -> Date? {
+        
+        if reminder.completed && reminder.notes != nil {
+            
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = Constants.TrolleyDateFormat
+            
+            return dateFormatter.date(from: reminder.notes!)
+        }
+        
+        return nil
     }
 }

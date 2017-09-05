@@ -94,19 +94,21 @@ class ShoppingListItemTableViewCell: UITableViewCell, UITextViewDelegate
                 if editedReminder.completed {
                     
                     //Add the datetime to the reminder as notes (Jan 27, 2010, 1:00 PM)
-                    let dateformatter = DateFormatter()
-                    
-                    dateformatter.dateStyle = DateFormatter.Style.medium
-                    dateformatter.timeStyle = DateFormatter.Style.short
+                    let dateFormatter = DateFormatter()
+//                    dateformatter.dateStyle = DateFormatter.Style.medium
+//                    dateformatter.timeStyle = DateFormatter.Style.full                    
 
-                    editedReminder.notes = dateformatter.string(from: Date())
+                    //"2 Sep 2017, 10:12:00.00"
+                    dateFormatter.dateFormat = Constants.TrolleyDateFormat
+
+                    editedReminder.notes = dateFormatter.string(from: Date())
                 }
                 else {
                     
                     editedReminder.notes = nil
                 }
 
-                let delayInMilliSeconds = (editedReminder.completed) ? 500.0 : 200.00
+                let delayInMilliSeconds = (editedReminder.completed) ? 200.0 : 200.00
                 
                 //The dalay is in nano seconds so we just convert it using the standard NSEC_PER_MSEC value
                 let delay = Int64(delayInMilliSeconds * Double(NSEC_PER_MSEC))
@@ -241,7 +243,7 @@ class ShoppingListItemTableViewCell: UITableViewCell, UITextViewDelegate
                     addNewButton.isHidden = true
             }
             
-            if !checkSwitch.isOn && shoppingListItemReminder.notes == nil {
+            if !checkSwitch.isOn && Utility.itemIsInShoppingCart(shoppingListItemReminder) {
                 
                 let string = shoppingListItemReminder.title as NSString
                 
