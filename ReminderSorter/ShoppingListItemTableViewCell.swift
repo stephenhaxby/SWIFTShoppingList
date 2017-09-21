@@ -126,18 +126,6 @@ class ShoppingListItemTableViewCell: UITableViewCell, UITextViewDelegate
         }
     }
 
-    func textViewShouldBeginEditing(_ textView: UITextView) -> Bool {
-
-        if shoppingListItemTextView.isEditable && reminderSortViewController.refreshLock.try() {
-
-            reminderSortViewController.tableView.isScrollEnabled = false
-            
-            return shoppingListItemTextView.isEditable
-        }
-        
-        return false
-    }
-
     @IBAction func addNewTouchUpInside(_ sender: AnyObject) {
         
         //When the '+' is clicked we bring up the keyboard for the text field
@@ -269,8 +257,41 @@ class ShoppingListItemTableViewCell: UITableViewCell, UITextViewDelegate
             UIView.setAnimationsEnabled(true)
         }
     }
+    
+    func textViewShouldBeginEditing(_ textView: UITextView) -> Bool {
         
+        let pointInTable:CGPoint = textView.superview!.convert(textView.frame.origin, to:reminderSortViewController.remindersTableView)
+        var contentOffset:CGPoint = reminderSortViewController.remindersTableView.contentOffset
+        
+        contentOffset.y = pointInTable.y
+        
+        // We don't actually use this here (inputAccessoryView that is), but keep it here for future reference
+        if let accessoryView = textView.inputAccessoryView {
+            contentOffset.y -= (accessoryView.frame.size.height)
+        }
+        
+        reminderSortViewController.remindersTableView.contentOffset = contentOffset
+        
+        if shoppingListItemTextView.isEditable && reminderSortViewController.refreshLock.try() {
+            
+            reminderSortViewController.tableView.isScrollEnabled = false
+            
+            return shoppingListItemTextView.isEditable
+        }
+        
+        return false
+    }
+    
     func textViewDidBeginEditing(_ textView: UITextView) {
+
+//        let pointInTable:CGPoint = textView.superview!.convert(textView.frame.origin, to:reminderSortViewController.remindersTableView)
+//        var contentOffset:CGPoint = reminderSortViewController.remindersTableView.contentOffset
+//        contentOffset.y  = pointInTable.y
+//        if let accessoryView = textView.inputAccessoryView {
+//            contentOffset.y -= (accessoryView.frame.size.height + accessoryView.frame.size.height + accessoryView.frame.size.height)
+//        }
+//        
+//        reminderSortViewController.remindersTableView.contentOffset = contentOffset
         
         reminderSortViewController.setupRightBarButtons(true)
         NotificationCenter.default.post(name: Notification.Name(rawValue: Constants.ItemEditing), object: true)

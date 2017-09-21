@@ -93,7 +93,7 @@ class ReminderSortViewController: UITableViewController {
                 
                 self.loadShoppingList()
                 
-                self.refreshLock.unlock()
+//                self.refreshLock.unlock()
             }
         }
         
@@ -108,7 +108,7 @@ class ReminderSortViewController: UITableViewController {
                 //Reload the grid only if there are new items from iCloud that we don't have
                 self.conditionalLoadShoppingList() 
                 
-                self.refreshLock.unlock()
+//                self.refreshLock.unlock()
             }
         }
         
@@ -422,6 +422,8 @@ class ReminderSortViewController: UITableViewController {
                 }
             }
         }
+        
+        refreshLock.unlock()
     }
     
     func endRefreshControl(){
@@ -467,6 +469,8 @@ class ReminderSortViewController: UITableViewController {
                 shoppingListTable.reloadData()
             }
         }
+        
+        self.refreshLock.unlock()
     }
 
     func createGroupedShoppingList(_ iCloudShoppingList : [ShoppingListItem]) {
