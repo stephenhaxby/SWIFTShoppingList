@@ -76,6 +76,8 @@ class Constants{
     
     static let TrolleyDateFormat = "d MMM yyyy, HH:mm:ss.SS"
     
+    static let NotesClearTrolleyPrefix = "*"
+    
     enum ShoppingListSection : Int, CustomStringConvertible {
         case list
         case cart

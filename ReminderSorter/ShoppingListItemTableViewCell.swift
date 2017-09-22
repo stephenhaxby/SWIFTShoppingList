@@ -91,22 +91,7 @@ class ShoppingListItemTableViewCell: UITableViewCell, UITextViewDelegate
                 editedReminder.completed = completedSwitch.isOn
                 completedSwitch.setOn(!completedSwitch.isOn, animated: true)
 
-                if editedReminder.completed {
-                    
-                    //Add the datetime to the reminder as notes (Jan 27, 2010, 1:00 PM)
-                    let dateFormatter = DateFormatter()
-//                    dateformatter.dateStyle = DateFormatter.Style.medium
-//                    dateformatter.timeStyle = DateFormatter.Style.full                    
-
-                    //"2 Sep 2017, 10:12:00.00"
-                    dateFormatter.dateFormat = Constants.TrolleyDateFormat
-
-                    editedReminder.notes = dateFormatter.string(from: Date())
-                }
-                else {
-                    
-                    editedReminder.notes = nil
-                }
+                editedReminder.notes = Utility.getDateForNotes()
 
                 let delayInMilliSeconds = (editedReminder.completed) ? 200.0 : 200.00
                 
@@ -231,7 +216,7 @@ class ShoppingListItemTableViewCell: UITableViewCell, UITextViewDelegate
                     addNewButton.isHidden = true
             }
             
-            if !checkSwitch.isOn && Utility.itemIsInShoppingCart(shoppingListItemReminder) {
+            if Utility.itemIsInShoppingCart(shoppingListItemReminder) {
                 
                 let string = shoppingListItemReminder.title as NSString
                 
@@ -313,7 +298,7 @@ class ShoppingListItemTableViewCell: UITableViewCell, UITextViewDelegate
             if textView.text != "" {
 
                 editedReminder.title = textView.text!
-
+                
                 NotificationCenter.default.post(name: Notification.Name(rawValue: Constants.SaveReminder), object: editedReminder)
             }
         }
@@ -321,5 +306,10 @@ class ShoppingListItemTableViewCell: UITableViewCell, UITextViewDelegate
         reminderSortViewController.refreshLock.unlock()
 
         NotificationCenter.default.post(name: Notification.Name(rawValue: Constants.ItemEditing), object: false)
+    }
+    
+    func isShoppingListItemEditing() -> Bool {
+        
+        return shoppingListItemTextView.isFirstResponder
     }
 }

@@ -32,6 +32,15 @@ fileprivate func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
   }
 }
 
+extension Array where Element: Equatable {
+    
+    mutating func remove(object: Element) {
+        if let itemIndex = index(of: object) {
+            remove(at: itemIndex)
+        }
+    }
+}
+
 class ReminderSortViewController: UITableViewController {
     
     //Outlet for the Table View so we can access it in code
@@ -386,44 +395,71 @@ class ReminderSortViewController: UITableViewController {
         //Filter out any blank items
         let updatedShoppingList : [ShoppingListItem] = iCloudShoppingList.filter({(reminder : ShoppingListItem) in reminder.title != ""})
         
-        //Count is different - update the list
-        if storedShoppingList.count != updatedShoppingList.count {
+        let storedShoppingListSet : Set<ShoppingListItem> = Set(storedShoppingList.map({$0}))
+        var tempStoredShoppingListSet : Set<ShoppingListItem> = Set(storedShoppingList.map({$0}))
+        
+        var updatedShoppingListSet : Set<ShoppingListItem> = Set(updatedShoppingList.map({$0}))
+        let tempUpdatedShoppingListSet : Set<ShoppingListItem> = Set(updatedShoppingList.map({$0}))
+        
+        //Find items that are not in each list
+        updatedShoppingListSet.subtract(storedShoppingListSet)
+        tempStoredShoppingListSet.subtract(tempUpdatedShoppingListSet)
 
-            getShoppingList(updatedShoppingList)
+        var reloadShoppingList = updatedShoppingListSet.count > 0 || storedShoppingListSet.count > 0
+        
+        //Add the missing items from iCloud
+        storedShoppingList.append(contentsOf: updatedShoppingListSet)
+        
+        //Remove items deleted from iCloud
+        for item in tempStoredShoppingListSet {
+            
+            storedShoppingList.remove(object: item)
         }
-        else {
+        
+        //Loop for all items in our local list
+        for i in 0 ..< storedShoppingList.count {
 
-            //Loop for all items in our local list
-            for i in 0 ..< storedShoppingList.count {
+            //Get the local item
+            let currentItem : ShoppingListItem = storedShoppingList[i]
 
-                //Get the local item
-                let currentItem : ShoppingListItem = storedShoppingList[i]
+            //Find a matching item by ID in the iCloud list
+            let updatedItemIndex : Int? = updatedShoppingList.index(where: {(reminder : ShoppingListItem) in reminder.calendarItemExternalIdentifier == currentItem.calendarItemExternalIdentifier})
+
+            //If the item exists, check if we need to update our local copy
+            if updatedItemIndex != nil {
+
+                let updatedItem : ShoppingListItem = updatedShoppingList[updatedItemIndex!]
+
+                if currentItem.completed != updatedItem.completed {
                 
-                //Find a matching item by ID in the iCloud list
-                let updatedItemIndex : Int? = updatedShoppingList.index(where: {(reminder : ShoppingListItem) in reminder.calendarItemExternalIdentifier == currentItem.calendarItemExternalIdentifier})
-                
-                //If the item exists, check if we need to update our local copy
-                if updatedItemIndex != nil {
+                    let currentItemDate : Date? = Utility.getDateFromNotes(currentItem.notes)
+                    let updatedItemDate : Date? = Utility.getDateFromNotes(updatedItem.notes)
 
-                    let updatedItem : ShoppingListItem = updatedShoppingList[updatedItemIndex!]
-
-                    if currentItem.completed != updatedItem.completed
-                        || currentItem.title != updatedItem.title
-                        || currentItem.notes != updatedItem.notes {
-                            
-                        getShoppingList(updatedShoppingList)
+                    //If iCloud version is newer
+                    if (currentItemDate == nil && updatedItemDate != nil) //Case to handle items having their notes cleared or modified in the Reminders app (clear trolley adds an "*")
+                        || (currentItemDate != nil
+                            && updatedItemDate != nil
+                            && NSDateManager.dateIsBeforeDate(currentItemDate!, date2: updatedItemDate!))
+                    {
+                        currentItem.completed = updatedItem.completed
+                        reloadShoppingList = true
                     }
-                }
-                else {
-                
-                    //Item doesn't exist so update our local copy
-                    getShoppingList(updatedShoppingList)
-                    break
                 }
             }
         }
         
         refreshLock.unlock()
+
+        if reloadShoppingList {
+            getShoppingList(updatedShoppingList)
+        }
+    }
+    
+    func updateCurrentItemFrom(_ currentItem: ShoppingListItem, updatedItem : ShoppingListItem) {
+        
+        currentItem.completed = updatedItem.completed
+        currentItem.title = updatedItem.title
+        currentItem.notes = updatedItem.notes
     }
     
     func endRefreshControl(){
@@ -560,8 +596,6 @@ class ReminderSortViewController: UITableViewController {
             groupedShoppingList[Constants.ShoppingListSection.history.rawValue] = filteredShoppingHistory
         }
     }
-    
-
     
     //Save a reminder to the users reminders list
     func saveReminder(_ reminder : ShoppingListItem){
@@ -782,6 +816,17 @@ class ReminderSortViewController: UITableViewController {
         return false
     }
 
+    override func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCellEditingStyle {
+
+        if let tableCell : ShoppingListItemTableViewCell = tableView.cellForRow(at: indexPath) as? ShoppingListItemTableViewCell,
+            tableCell.isShoppingListItemEditing(){
+            
+            return .none
+        }
+        
+        return .delete
+    }
+    
     //This method is for the swipe left to delete
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         
@@ -801,6 +846,10 @@ class ReminderSortViewController: UITableViewController {
              
                 shoppingList.remove(at: shoppingListIndex)
             }
+            
+            
+            
+            //reminderSortViewController.tableView.isScrollEnabled
             
             tableView.deleteRows(at: [indexPath], with: .fade)
         }
