@@ -525,7 +525,7 @@ class ReminderSortViewController: UITableViewController {
         
         func reminderSortByDate(_ reminder1: ShoppingListItem, reminder2: ShoppingListItem) -> Bool {
             
-            return Utility.getShoppingCartAddedDate(reminder1) > Utility.getShoppingCartAddedDate(reminder2)
+            return Utility.getDateFromNotes(reminder1.notes) > Utility.getDateFromNotes(reminder2.notes)
         }
         
         //Find all items that are NOT completed

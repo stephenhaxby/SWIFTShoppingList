@@ -58,25 +58,12 @@ class Utility {
         return false
     }
     
-    static func getShoppingCartAddedDate(_ reminder : ShoppingListItem) -> Date? {
-        
-        if reminder.completed && reminder.notes != nil {
-            
-            let dateFormatter = DateFormatter()
-            dateFormatter.dateFormat = Constants.TrolleyDateFormat
-            
-            return dateFormatter.date(from: reminder.notes!)
-        }
-        
-        return nil
-    }
-    
     static func getDateForNotes() -> String {
         
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = Constants.TrolleyDateFormat
 
-        return dateformatter.string(from: Date())
+        return dateFormatter.string(from: Date())
     }
     
     static func getDateFromNotes(_ dateString : String?) -> Date? {
