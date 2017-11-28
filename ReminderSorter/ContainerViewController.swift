@@ -17,6 +17,7 @@ class ContainerViewController : UIViewController, UISearchBarDelegate {
     var itemBeginEditingObserver : NSObjectProtocol?
     var itemEndEditingObserver : NSObjectProtocol?
     var resetLockObserver : NSObjectProtocol?
+    var clearSearchObserver : NSObjectProtocol?
     
     var actionOnLockedCounter : Int = 0
     
@@ -61,6 +62,12 @@ class ContainerViewController : UIViewController, UISearchBarDelegate {
             
             self.resetLock()
         }
+        
+        clearSearchObserver = NotificationCenter.default.addObserver(forName: NSNotification.Name(rawValue: Constants.ClearSearch), object: nil, queue: nil){
+            (notification) -> Void in
+            
+            self.clearSearch()
+        }
     }
 
     deinit{
@@ -83,6 +90,11 @@ class ContainerViewController : UIViewController, UISearchBarDelegate {
         if let observer = resetLockObserver{
             
             NotificationCenter.default.removeObserver(observer, name: NSNotification.Name(rawValue: Constants.ResetLock), object: nil)
+        }
+        
+        if let observer = clearSearchObserver{
+            
+            NotificationCenter.default.removeObserver(observer, name: NSNotification.Name(rawValue: Constants.ClearSearch), object: nil)
         }
     }
     
@@ -254,6 +266,11 @@ class ContainerViewController : UIViewController, UISearchBarDelegate {
         else {
             setInfoButtonVisible()
         }
+    }
+    
+    func clearSearch() {
+        
+        searchBar.text = String()
     }
     
     //UISearchBar Delegate methods

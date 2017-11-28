@@ -102,6 +102,8 @@ class ShoppingListItemTableViewCell: UITableViewCell, UITextViewDelegate
                 DispatchQueue.main.asyncAfter(deadline: dispatchTime) {
                     
                     NotificationCenter.default.post(name: Notification.Name(rawValue: Constants.SaveReminder), object: editedReminder)
+                    
+                    NotificationCenter.default.post(name: Notification.Name(rawValue: Constants.ClearSearch), object: nil)
                 }
             }
         }

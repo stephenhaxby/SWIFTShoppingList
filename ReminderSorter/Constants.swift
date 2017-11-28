@@ -48,6 +48,8 @@ class Constants{
     
     static let ReloadList : String = "ReloadList"
     
+    static let ClearSearch : String = "ClearSearch"
+    
     static let ShoppingListSections = 3
     
     static let ShoppingListItemFont = UIFont(name: "American Typewriter", size: 21.0)!
