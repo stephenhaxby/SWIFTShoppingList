@@ -78,7 +78,7 @@ class ShoppingListItemTableViewCell: UITableViewCell, UITextViewDelegate
         }
     }
     
-    func viewPressed(_ gestureRecognizer: UIGestureRecognizer) {
+    @objc func viewPressed(_ gestureRecognizer: UIGestureRecognizer) {
         
         if completedSwitch.isEnabled {
 
@@ -159,7 +159,7 @@ class ShoppingListItemTableViewCell: UITableViewCell, UITextViewDelegate
         
         self.reminder = reminder
         
-        let attributes = [ NSFontAttributeName: Constants.ShoppingListItemFont ]
+        let attributes = [ NSAttributedStringKey.font: Constants.ShoppingListItemFont ]
         shoppingListItemTextView.attributedText = NSMutableAttributedString(string: getAutoCapitalisationTitle(reminder.title), attributes: attributes)
         
         //Extra section for completed items
@@ -222,7 +222,7 @@ class ShoppingListItemTableViewCell: UITableViewCell, UITextViewDelegate
                 
                 let attributedString = NSMutableAttributedString(string: string as String)
                 
-                let attributes = [NSStrikethroughStyleAttributeName: 1, NSFontAttributeName: Constants.ShoppingListItemFont] as [String : Any]
+                let attributes = [NSAttributedStringKey.strikethroughStyle: 1, NSAttributedStringKey.font: Constants.ShoppingListItemFont] as [NSAttributedStringKey : Any]
                 
                 attributedString.addAttributes(attributes, range: string.range(of: string as String))
                 

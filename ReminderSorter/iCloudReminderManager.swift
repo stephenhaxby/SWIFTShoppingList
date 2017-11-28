@@ -108,7 +108,7 @@ class iCloudReminderManager{
                     
                     //Save the new calendar
                     reminderList!.title = remindersListName;
-                    reminderList!.source = eventStore.defaultCalendarForNewReminders().source
+                    reminderList!.source = eventStore.defaultCalendarForNewReminders()?.source
                     
                     do {
                         

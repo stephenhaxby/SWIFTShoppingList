@@ -266,7 +266,7 @@ class ReminderSortViewController: UITableViewController {
         UIApplication.shared.isIdleTimerDisabled = SettingsUserDefaults.disableScreenLock
         
         //Set the font size of the navigation view controller
-        self.navigationController?.navigationBar.titleTextAttributes = [NSFontAttributeName: UIFont.boldSystemFont(ofSize: 18.0)]
+        self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedStringKey.font: UIFont.boldSystemFont(ofSize: 18.0)]
         
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.estimatedRowHeight = 70

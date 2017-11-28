@@ -73,9 +73,9 @@ class Utility {
         
         if let reminderDate : String = dateString {
             
-            if reminderDate.hasPrefix(Constants.NotesClearTrolleyPrefix) && reminderDate.characters.count > 1 {
+            if reminderDate.hasPrefix(Constants.NotesClearTrolleyPrefix) && reminderDate.count > 1 {
                 
-                return dateFormatter.date(from: String(reminderDate.characters.dropFirst(1)))
+                return dateFormatter.date(from: String(reminderDate.dropFirst(1)))
             }
             
             return dateFormatter.date(from: reminderDate)
