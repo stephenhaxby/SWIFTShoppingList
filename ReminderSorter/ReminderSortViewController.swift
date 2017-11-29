@@ -148,7 +148,10 @@ class ReminderSortViewController: UITableViewController {
 
                 if reminder.title != Constants.ShoppingListItemTableViewCell.NewItemCell {
                 
-                    self.saveReminder(reminder)
+                    DispatchQueue.main.async { () -> Void in
+                    
+                        self.saveReminder(reminder)
+                    }
                 }
             }
         }
