@@ -119,7 +119,7 @@ class ContainerViewController : UIViewController, UISearchBarDelegate {
         
         self.navigationController?.navigationBar.titleTextAttributes =
             [NSAttributedStringKey.foregroundColor: UIColor.init(red: 0.0, green: 0.5, blue: 1, alpha: 1),
-             NSAttributedStringKey.font: Constants.ShoppingListItemFont]
+             NSAttributedStringKey.font: UIFont.boldSystemFont(ofSize: 22)]
     }
     
     override func viewDidLoad() {
@@ -232,7 +232,7 @@ class ContainerViewController : UIViewController, UISearchBarDelegate {
     func setDoneButtonVisible() {
         
         doneButton = UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.plain, target: self, action: #selector(doneButtonTouchUpInside))
-        doneButton.setTitleTextAttributes([NSAttributedStringKey.font: UIFont.boldSystemFont(ofSize: 15)], for: UIControlState())
+        doneButton.setTitleTextAttributes([NSAttributedStringKey.font: UIFont.boldSystemFont(ofSize: 18)], for: UIControlState())
         
         self.navigationItem.setRightBarButtonItems([doneButton], animated: true)
     }
