@@ -60,26 +60,22 @@ class Utility {
     
     static func getDateForNotes() -> String {
         
-        //Add the datetime to the reminder as notes (Jan 27, 2010, 1:00 PM)
-        let dateformatter = DateFormatter()
-        
-        dateformatter.dateStyle = DateFormatter.Style.medium
-        dateformatter.timeStyle = DateFormatter.Style.short
-        
-        return dateformatter.string(from: Date())
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = Constants.TrolleyDateFormat
+
+        return dateFormatter.string(from: Date())
     }
     
     static func getDateFromNotes(_ dateString : String?) -> Date? {
     
         let dateFormatter = DateFormatter()
-        dateFormatter.dateStyle = DateFormatter.Style.medium
-        dateFormatter.timeStyle = DateFormatter.Style.short
+        dateFormatter.dateFormat = Constants.TrolleyDateFormat
         
         if let reminderDate : String = dateString {
             
-            if reminderDate.hasPrefix(Constants.NotesClearTrolleyPrefix) && reminderDate.characters.count > 1 {
+            if reminderDate.hasPrefix(Constants.NotesClearTrolleyPrefix) && reminderDate.count > 1 {
                 
-                return dateFormatter.date(from: String(reminderDate.characters.dropFirst(1)))
+                return dateFormatter.date(from: String(reminderDate.dropFirst(1)))
             }
             
             return dateFormatter.date(from: reminderDate)

@@ -41,11 +41,11 @@ class ShoppingItemRepository {
         
         //36 is the length of a GUID.
         //This is to cater for the setReminderNotification fix in LocationNotificationManager to cater for async methods
-        if id.characters.count > 36 {
+        if id.count > 36 {
             
             let index = id.index(id.startIndex, offsetBy: 36)
             
-            shoppingItemId = shoppingItemId.substring(to: index)
+            shoppingItemId = String(shoppingItemId[..<index])
         }
         
         let shoppingItemFetch = NSFetchRequest<NSFetchRequestResult>(entityName: "ShoppingItem")

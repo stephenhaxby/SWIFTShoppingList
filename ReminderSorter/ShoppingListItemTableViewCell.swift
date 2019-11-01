@@ -78,7 +78,7 @@ class ShoppingListItemTableViewCell: UITableViewCell, UITextViewDelegate
         }
     }
     
-    func viewPressed(_ gestureRecognizer: UIGestureRecognizer) {
+    @objc func viewPressed(_ gestureRecognizer: UIGestureRecognizer) {
         
         if completedSwitch.isEnabled {
 
@@ -102,6 +102,8 @@ class ShoppingListItemTableViewCell: UITableViewCell, UITextViewDelegate
                 DispatchQueue.main.asyncAfter(deadline: dispatchTime) {
                     
                     NotificationCenter.default.post(name: Notification.Name(rawValue: Constants.SaveReminder), object: editedReminder)
+                    
+                    NotificationCenter.default.post(name: Notification.Name(rawValue: Constants.ClearSearch), object: nil)
                 }
             }
         }
@@ -109,18 +111,6 @@ class ShoppingListItemTableViewCell: UITableViewCell, UITextViewDelegate
 
             NotificationCenter.default.post(name: Notification.Name(rawValue: Constants.ActionOnLocked), object: nil)
         }
-    }
-
-    func textViewShouldBeginEditing(_ textView: UITextView) -> Bool {
-
-        if shoppingListItemTextView.isEditable && reminderSortViewController.refreshLock.try() {
-
-            reminderSortViewController.tableView.isScrollEnabled = false
-            
-            return shoppingListItemTextView.isEditable
-        }
-        
-        return false
     }
 
     @IBAction func addNewTouchUpInside(_ sender: AnyObject) {
@@ -171,7 +161,7 @@ class ShoppingListItemTableViewCell: UITableViewCell, UITextViewDelegate
         
         self.reminder = reminder
         
-        let attributes = [ NSFontAttributeName: Constants.ShoppingListItemFont ]
+        let attributes = [ NSAttributedStringKey.font: Constants.ShoppingListItemFont ]
         shoppingListItemTextView.attributedText = NSMutableAttributedString(string: getAutoCapitalisationTitle(reminder.title), attributes: attributes)
         
         //Extra section for completed items
@@ -234,7 +224,7 @@ class ShoppingListItemTableViewCell: UITableViewCell, UITextViewDelegate
                 
                 let attributedString = NSMutableAttributedString(string: string as String)
                 
-                let attributes = [NSStrikethroughStyleAttributeName: 1, NSFontAttributeName: Constants.ShoppingListItemFont] as [String : Any]
+                let attributes = [NSAttributedStringKey.strikethroughStyle: 1, NSAttributedStringKey.font: Constants.ShoppingListItemFont] as [NSAttributedStringKey : Any]
                 
                 attributedString.addAttributes(attributes, range: string.range(of: string as String))
                 
@@ -254,8 +244,41 @@ class ShoppingListItemTableViewCell: UITableViewCell, UITextViewDelegate
             UIView.setAnimationsEnabled(true)
         }
     }
+    
+    func textViewShouldBeginEditing(_ textView: UITextView) -> Bool {
         
+        let pointInTable:CGPoint = textView.superview!.convert(textView.frame.origin, to:reminderSortViewController.remindersTableView)
+        var contentOffset:CGPoint = reminderSortViewController.remindersTableView.contentOffset
+        
+        contentOffset.y = pointInTable.y
+        
+        // We don't actually use this here (inputAccessoryView that is), but keep it here for future reference
+        if let accessoryView = textView.inputAccessoryView {
+            contentOffset.y -= (accessoryView.frame.size.height)
+        }
+        
+        reminderSortViewController.remindersTableView.contentOffset = contentOffset
+        
+        if shoppingListItemTextView.isEditable && reminderSortViewController.refreshLock.try() {
+            
+            reminderSortViewController.tableView.isScrollEnabled = false
+            
+            return shoppingListItemTextView.isEditable
+        }
+        
+        return false
+    }
+    
     func textViewDidBeginEditing(_ textView: UITextView) {
+
+//        let pointInTable:CGPoint = textView.superview!.convert(textView.frame.origin, to:reminderSortViewController.remindersTableView)
+//        var contentOffset:CGPoint = reminderSortViewController.remindersTableView.contentOffset
+//        contentOffset.y  = pointInTable.y
+//        if let accessoryView = textView.inputAccessoryView {
+//            contentOffset.y -= (accessoryView.frame.size.height + accessoryView.frame.size.height + accessoryView.frame.size.height)
+//        }
+//        
+//        reminderSortViewController.remindersTableView.contentOffset = contentOffset
         
         reminderSortViewController.setupRightBarButtons(true)
         NotificationCenter.default.post(name: Notification.Name(rawValue: Constants.ItemEditing), object: true)

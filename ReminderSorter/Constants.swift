@@ -48,15 +48,19 @@ class Constants{
     
     static let ReloadList : String = "ReloadList"
     
+    static let ClearSearch : String = "ClearSearch"
+    
     static let ShoppingListSections = 3
     
-    static let ShoppingListItemFont = UIFont(name: "American Typewriter", size: 21.0)!
+    static let ShoppingListItemFont = UIFont(name: "Helvetica Neue", size: 21.0)!
     
-    static let QuickJumpListItemFont = UIFont(name: "American Typewriter", size: 14.0)!
+    static let QuickJumpListItemFont = UIFont(name: "Helvetica Neue", size: 14.0)!
     
     static let SettingUserDefaultAlphabeticalSortIncomplete = "alphabeticalSortIncomplete"
     
     static let SettingUserDefaultAlphabeticalSortComplete = "alphabeticalSortComplete"
+    
+    static let SettingUserDefaultTrolleySorting = "trolleySorting"
     
     static let SettingUserDefaultAutoCapitalisation = "autoCapitalisation"
     
@@ -71,6 +75,8 @@ class Constants{
     static let NotificationCategory = "NotificationCategory"
     
     static let RefreshNotification = "RefreshNotification"
+    
+    static let TrolleyDateFormat = "d MMM yyyy, HH:mm:ss.SS"
     
     static let NotesClearTrolleyPrefix = "*"
     

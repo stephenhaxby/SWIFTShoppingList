@@ -65,7 +65,9 @@ class iCloudShoppingItemFacade : StorageFacadeProtocol {
                 matchingReminder.isCompleted = shoppingListItem.completed
                 matchingReminder.notes = shoppingListItem.notes
                 
-                saveSuccess(self.icloudReminderManager.saveReminder(matchingReminder, commit: isNewReminder))
+                DispatchQueue.main.async { () -> Void in
+                    saveSuccess(self.icloudReminderManager.saveReminder(matchingReminder, commit: isNewReminder))
+                }
             }
         }
     }

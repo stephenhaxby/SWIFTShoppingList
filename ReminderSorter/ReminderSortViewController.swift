@@ -102,7 +102,7 @@ class ReminderSortViewController: UITableViewController {
                 
                 self.loadShoppingList()
                 
-                self.refreshLock.unlock()
+//                self.refreshLock.unlock()
             }
         }
         
@@ -117,7 +117,7 @@ class ReminderSortViewController: UITableViewController {
                 //Reload the grid only if there are new items from iCloud that we don't have
                 self.conditionalLoadShoppingList() 
                 
-                self.refreshLock.unlock()
+//                self.refreshLock.unlock()
             }
         }
         
@@ -148,7 +148,10 @@ class ReminderSortViewController: UITableViewController {
 
                 if reminder.title != Constants.ShoppingListItemTableViewCell.NewItemCell {
                 
-                    self.saveReminder(reminder)
+                    DispatchQueue.main.async { () -> Void in
+                    
+                        self.saveReminder(reminder)
+                    }
                 }
             }
         }
@@ -266,7 +269,7 @@ class ReminderSortViewController: UITableViewController {
         UIApplication.shared.isIdleTimerDisabled = SettingsUserDefaults.disableScreenLock
         
         //Set the font size of the navigation view controller
-        self.navigationController?.navigationBar.titleTextAttributes = [NSFontAttributeName: UIFont.boldSystemFont(ofSize: 18.0)]
+        self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedStringKey.font: UIFont.boldSystemFont(ofSize: 18.0)]
         
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.estimatedRowHeight = 70
@@ -448,6 +451,8 @@ class ReminderSortViewController: UITableViewController {
             }
         }
         
+        refreshLock.unlock()
+
         if reloadShoppingList {
             getShoppingList(updatedShoppingList)
         }
@@ -503,6 +508,8 @@ class ReminderSortViewController: UITableViewController {
                 shoppingListTable.reloadData()
             }
         }
+        
+        self.refreshLock.unlock()
     }
 
     func createGroupedShoppingList(_ iCloudShoppingList : [ShoppingListItem]) {
@@ -517,6 +524,11 @@ class ReminderSortViewController: UITableViewController {
         func reminderSort(_ reminder1: ShoppingListItem, reminder2: ShoppingListItem) -> Bool {
             
             return reminder1.title.lowercased() < reminder2.title.lowercased()
+        }
+        
+        func reminderSortByDate(_ reminder1: ShoppingListItem, reminder2: ShoppingListItem) -> Bool {
+            
+            return Utility.getDateFromNotes(reminder1.notes) > Utility.getDateFromNotes(reminder2.notes)
         }
         
         //Find all items that are NOT completed
@@ -539,8 +551,15 @@ class ReminderSortViewController: UITableViewController {
         //Alphabetical sorting of incomplete items
         itemsToGet = itemsToGet.sorted(by: reminderSort)
 
-        //Alphabetical sorting of trolley items
-        itemsGot = itemsGot.sorted(by: reminderSort)
+        if SettingsUserDefaults.trolleySorting {
+            
+            //Alphabetical sorting of trolley items
+            itemsGot = itemsGot.sorted(by: reminderSort)
+        }
+        else {
+            
+            itemsGot = itemsGot.sorted(by: reminderSortByDate)
+        }
         
         //Alphabetical sorting of complete items
         completedItems = completedItems.sorted(by: reminderSort)

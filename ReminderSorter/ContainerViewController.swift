@@ -17,6 +17,7 @@ class ContainerViewController : UIViewController, UISearchBarDelegate {
     var itemBeginEditingObserver : NSObjectProtocol?
     var itemEndEditingObserver : NSObjectProtocol?
     var resetLockObserver : NSObjectProtocol?
+    var clearSearchObserver : NSObjectProtocol?
     
     var actionOnLockedCounter : Int = 0
     
@@ -61,6 +62,12 @@ class ContainerViewController : UIViewController, UISearchBarDelegate {
             
             self.resetLock()
         }
+        
+        clearSearchObserver = NotificationCenter.default.addObserver(forName: NSNotification.Name(rawValue: Constants.ClearSearch), object: nil, queue: nil){
+            (notification) -> Void in
+            
+            self.clearSearch()
+        }
     }
 
     deinit{
@@ -84,6 +91,11 @@ class ContainerViewController : UIViewController, UISearchBarDelegate {
             
             NotificationCenter.default.removeObserver(observer, name: NSNotification.Name(rawValue: Constants.ResetLock), object: nil)
         }
+        
+        if let observer = clearSearchObserver{
+            
+            NotificationCenter.default.removeObserver(observer, name: NSNotification.Name(rawValue: Constants.ClearSearch), object: nil)
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -106,8 +118,8 @@ class ContainerViewController : UIViewController, UISearchBarDelegate {
         self.view.sendSubview(toBack: imageView)
         
         self.navigationController?.navigationBar.titleTextAttributes =
-            [NSForegroundColorAttributeName: UIColor.init(red: 0.0, green: 0.5, blue: 1, alpha: 1),
-             NSFontAttributeName: Constants.ShoppingListItemFont]
+            [NSAttributedStringKey.foregroundColor: UIColor.init(red: 0.0, green: 0.5, blue: 1, alpha: 1),
+             NSAttributedStringKey.font: UIFont.boldSystemFont(ofSize: 22)]
     }
     
     override func viewDidLoad() {
@@ -179,7 +191,7 @@ class ContainerViewController : UIViewController, UISearchBarDelegate {
         }
     }
     
-    func lockUnlock() {
+    @objc func lockUnlock() {
         
         //lock = U+1F512
         //unlock = U+1F513
@@ -212,7 +224,7 @@ class ContainerViewController : UIViewController, UISearchBarDelegate {
     func setInfoButtonVisible() {
         
         infoButton = UIBarButtonItem(title: "\u{24D8}", style: UIBarButtonItemStyle.plain, target: self, action: #selector(infoButtonTouchUpInside))
-        infoButton.setTitleTextAttributes([NSFontAttributeName: UIFont.boldSystemFont(ofSize: 20)], for: UIControlState())
+        infoButton.setTitleTextAttributes([NSAttributedStringKey.font: UIFont.boldSystemFont(ofSize: 20)], for: UIControlState())
         
         self.navigationItem.setRightBarButtonItems([infoButton], animated: true)
     }
@@ -220,7 +232,7 @@ class ContainerViewController : UIViewController, UISearchBarDelegate {
     func setDoneButtonVisible() {
         
         doneButton = UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.plain, target: self, action: #selector(doneButtonTouchUpInside))
-        doneButton.setTitleTextAttributes([NSFontAttributeName: UIFont.boldSystemFont(ofSize: 15)], for: UIControlState())
+        doneButton.setTitleTextAttributes([NSAttributedStringKey.font: UIFont.boldSystemFont(ofSize: 18)], for: UIControlState())
         
         self.navigationItem.setRightBarButtonItems([doneButton], animated: true)
     }
@@ -254,6 +266,11 @@ class ContainerViewController : UIViewController, UISearchBarDelegate {
         else {
             setInfoButtonVisible()
         }
+    }
+    
+    func clearSearch() {
+        
+        searchBar.text = String()
     }
     
     //UISearchBar Delegate methods

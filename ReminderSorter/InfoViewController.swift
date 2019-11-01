@@ -35,8 +35,8 @@ class InfoViewController : UIViewController {
         settingsButton.setTitle("\u{2699}", for: UIControlState())
         settingsButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 26)
         
-        let arrowAttributes = [NSFontAttributeName : UIFont.boldSystemFont(ofSize: 22.0)]
-        let textAttributes = [NSFontAttributeName : UIFont.systemFont(ofSize: 18.0)]
+        let arrowAttributes = [NSAttributedStringKey.font : UIFont.boldSystemFont(ofSize: 22.0)]
+        let textAttributes = [NSAttributedStringKey.font : UIFont.boldSystemFont(ofSize: 18.0)]
         
         let backString : NSMutableAttributedString = NSMutableAttributedString(string: "<", attributes: arrowAttributes)
         backString.append(NSMutableAttributedString(string: " Back", attributes: textAttributes))

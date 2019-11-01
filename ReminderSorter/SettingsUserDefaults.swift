@@ -10,6 +10,13 @@ import Foundation
 
 class SettingsUserDefaults{
     
+    static var trolleySorting: Bool {
+        
+        return hasDefaultValue(Constants.SettingUserDefaultTrolleySorting)
+            ? UserDefaults.standard.bool(forKey: Constants.SettingUserDefaultTrolleySorting)
+            : false
+    }
+    
     static var autoCapitalisation: Bool {
         
         return hasDefaultValue(Constants.SettingUserDefaultAutoCapitalisation)
